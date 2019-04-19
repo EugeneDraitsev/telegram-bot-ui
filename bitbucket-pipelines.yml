@@ -1,0 +1,16 @@
+image: node:latest
+
+pipelines:
+  branches:
+    master:
+      - step:
+          caches:
+            - node
+          script:
+            - yarn global add surge
+            - yarn
+            - yarn lint
+            - yarn tsc
+            - yarn build
+            - cp build/index.html build/200.html
+            - surge build telegram-bot-ui.surge.sh

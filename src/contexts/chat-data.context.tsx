@@ -1,15 +1,21 @@
 import React, { memo, useEffect, useState } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import isEmpty from 'lodash/isEmpty'
 
 import { safeParse } from '../utils'
-import { UserData } from '../types'
+import { UserData, ChatInfo } from '../types'
 
 interface ChatDataProviderProps extends RouteComponentProps {
   children: JSX.Element | JSX.Element []
 }
 
+interface ChatData {
+  usersData: UserData[],
+  chatInfo: ChatInfo
+}
+
 interface ChatDataState {
-  data: UserData [],
+  data: ChatData,
   loading: boolean
   error: string
 }
@@ -18,7 +24,7 @@ const ChatDataContext = React.createContext({} as ChatDataState)
 
 const ChatDataProvider = memo(withRouter<ChatDataProviderProps>(({ children, history }: ChatDataProviderProps) => {
   const { location: { pathname } } = history
-  const [data, setChatData] = useState<UserData []>([])
+  const [data, setChatData] = useState<ChatData>({} as ChatData)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -32,9 +38,14 @@ const ChatDataProvider = memo(withRouter<ChatDataProviderProps>(({ children, his
     socket.onmessage = (event) => {
       const newData = safeParse(event.data)
       setLoading(false)
-      if (newData && newData.length) {
-        return setChatData(newData)
+
+      if (!isEmpty(newData)) {
+        return setChatData(({ usersData, chatInfo }) => ({
+          usersData: newData.usersData || usersData,
+          chatInfo: newData.chatInfo || chatInfo,
+        }))
       }
+
       return setError(`Seems like we don't have any events for this chat (${chatId}) for last 24h`)
     }
     return () => socket.close()

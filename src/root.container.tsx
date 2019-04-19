@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import take from 'lodash/take'
 import sumBy from 'lodash/sumBy'
+import isEmpty from 'lodash/isEmpty'
 
 import UsersBarChart from './components/users-bar-chart.component'
 import UsersPieChart from './components/users-pie-chart.component'
 import Spinner from './components/spinner.component'
 import Tabs from './components/tabs.component'
 import Card from './components/card.component'
+import ChatInfo from './components/chat-info.component'
 import { ChatDataContext } from './contexts'
 
 const Wrapper = styled.div`
@@ -15,7 +17,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  max-width: 1200px;
   margin: auto;
 `
 const LoadingWrapper = styled(Wrapper)`
@@ -27,8 +28,9 @@ const GraphCard = styled(Card)`
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: 1200px;
   margin: 20px;
-  padding: 15px;
+  padding: 15px 0;
 `
 const Header = styled.div`
   display: flex;
@@ -43,6 +45,10 @@ const Title = styled.div`
   font-size: 22px;
   font-weight: 300;
   line-height: 33px;
+  @media(max-width: 800px) {
+    font-size: 16px;
+    line-height: 22px;
+  }
 `
 const SubTitle = styled.div`
   font-size: 12px;
@@ -62,17 +68,20 @@ export default () => {
     )
   }
 
-  if (error) {
+  if (error || isEmpty(data)) {
     return <LoadingWrapper>{error}</LoadingWrapper>
   }
 
+  const { usersData, chatInfo } = data
+
   return (
     <Wrapper>
+      <ChatInfo data={chatInfo} />
       <GraphCard>
         <Header>
           <Title>
             Last 24h chat users statistics (Top 10 users)
-            <SubTitle>All messages: {sumBy(data, 'messages')}</SubTitle>
+            <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
           </Title>
           <Tabs
             tabs={['Barchart', 'Piechart']}
@@ -80,8 +89,8 @@ export default () => {
             onTabClick={index => setTab(index)}
           />
         </Header>
-        {tab === 0 && <UsersBarChart data={take(data, 10)} />}
-        {tab === 1 && <UsersPieChart data={take(data, 10)} />}
+        {tab === 0 && <UsersBarChart data={take(usersData, 10)} />}
+        {tab === 1 && <UsersPieChart data={take(usersData, 10)} />}
       </GraphCard>
     </Wrapper>
   )

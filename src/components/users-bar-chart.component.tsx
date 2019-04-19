@@ -17,11 +17,11 @@ const ChartLabel = styled.text`
   font-size: 12px;
 `
 
+const getBarColor = (i: number, length: number) => tint(i / (length * 1.3), '#4A90E2')
+
 interface UsersBarChartProps {
   data: UserData[],
 }
-
-const getBarColor = (i: number, length: number) => tint(i / (length * 1.3), '#4A90E2')
 
 export default ({ data }: UsersBarChartProps) => (
   <ChartWrapper>
@@ -47,6 +47,9 @@ export default ({ data }: UsersBarChartProps) => (
         </Bar>
         <Tooltip
           cursor={false}
+          labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
+          itemStyle={{ fontSize: 12, lineHeight: '12px' }}
+          wrapperStyle={{ opacity: 0.9 }}
           labelFormatter={id => getUserName(data.find(d => d.id === id)!)}
         />
         <YAxis hide />
