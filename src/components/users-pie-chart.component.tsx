@@ -1,0 +1,78 @@
+import React from 'react'
+import styled from 'styled-components/macro'
+import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts'
+import { schemeCategory10 } from 'd3-scale-chromatic'
+
+import { UserData } from '../types'
+import { getUserName } from '../utils'
+
+const ChartWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 400px;
+  height: auto;
+  @media(max-width: 800px) {
+    flex-wrap: wrap;
+  }
+`
+const Legend = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 300px;
+`
+const LegendItem = styled.div`
+  display: flex;
+  margin: 10px 0;
+`
+const LegendCell = styled.div<{ color: string }>`
+  width: 16px;
+  height: 16px;
+  background-color: ${p => p.color};
+`
+const LegendText = styled.div`
+  font-size: 12px;
+  line-height: 14px;
+  margin-left: 10px;
+`
+
+interface UsersBarChartProps {
+  data: UserData[],
+}
+
+export default ({ data }: UsersBarChartProps) => (
+  <ChartWrapper>
+    <ResponsiveContainer height={400}>
+      <PieChart margin={{ top: 0, right: 20, left: 0, bottom: 10 }}>
+        <Pie
+          data={data}
+          dataKey="messages"
+          nameKey="id"
+          cx="50%"
+          cy="50%"
+          innerRadius={100}
+          outerRadius={140}
+          fill="#82ca9d"
+          animationBegin={0}
+          animationDuration={1250}
+          label
+        >
+          {data.map((entry, index) => (
+            <Cell key={entry.id} fill={schemeCategory10[index]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
+    <Legend>
+      {data.map((user, index) => (
+        <LegendItem key={user.id}>
+          <LegendCell color={schemeCategory10[index]} />
+          <LegendText>
+            {`${getUserName(user)}  (${user.messages})`}
+          </LegendText>
+        </LegendItem>
+      ))}
+    </Legend>
+  </ChartWrapper>
+)
