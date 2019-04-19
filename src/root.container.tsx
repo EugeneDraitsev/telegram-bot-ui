@@ -68,11 +68,11 @@ export default () => {
     )
   }
 
-  if (error || isEmpty(data)) {
+  const { usersData, chatInfo } = data
+
+  if (error || isEmpty(usersData) || isEmpty(chatInfo)) {
     return <LoadingWrapper>{error}</LoadingWrapper>
   }
-
-  const { usersData, chatInfo } = data
 
   return (
     <Wrapper>

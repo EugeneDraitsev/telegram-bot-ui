@@ -26,7 +26,7 @@ interface UsersBarChartProps {
 export default ({ data }: UsersBarChartProps) => (
   <ChartWrapper>
     <ResponsiveContainer>
-      <BarChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 10 }}>
+      <BarChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 10 }}>
         <Bar dataKey="messages" maxBarSize={50} minPointSize={5} fill="#4A90E2">
           {map(data, (d, i: number) => (
             <Cell key={i} fill={getBarColor(i, data.length)} />
