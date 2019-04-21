@@ -21,6 +21,10 @@ const Legend = styled.div`
   flex-direction: column;
   align-items: flex-start;
   min-width: 300px;
+  padding: 0 15px;
+  @media(max-width: 800px) {
+    min-width: auto;
+  }
 `
 const LegendItem = styled.div`
   display: flex;
@@ -44,15 +48,15 @@ interface UsersBarChartProps {
 export default ({ data }: UsersBarChartProps) => (
   <ChartWrapper>
     <ResponsiveContainer height={400}>
-      <PieChart margin={{ top: 0, right: 20, left: 0, bottom: 10 }}>
+      <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 10 }}>
         <Pie
           data={data}
           dataKey="messages"
           nameKey="id"
           cx="50%"
           cy="50%"
-          innerRadius={100}
-          outerRadius={140}
+          innerRadius={70}
+          outerRadius={90}
           fill="#82ca9d"
           animationBegin={0}
           animationDuration={1250}

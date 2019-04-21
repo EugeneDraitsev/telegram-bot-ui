@@ -31,6 +31,10 @@ const GraphCard = styled(Card)`
   max-width: 1200px;
   margin: 20px;
   padding: 15px 0;
+  @media(max-width: 800px) {
+    margin: 10px;
+    max-width: calc(100vw - 20px);
+  }
 `
 const Header = styled.div`
   display: flex;
@@ -53,6 +57,7 @@ const Title = styled.div`
 const SubTitle = styled.div`
   font-size: 12px;
   line-height: 18px;
+  padding: 5px 0;
   font-weight: normal;
 `
 
