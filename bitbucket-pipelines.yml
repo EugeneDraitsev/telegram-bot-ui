@@ -1,4 +1,4 @@
-image: alekzonder/puppeteer:latest
+image: node:latest
 
 pipelines:
   branches:
