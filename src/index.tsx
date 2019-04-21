@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history'
 import { Router } from 'react-router-dom'
 
 import * as serviceWorker from './serviceWorker'
-import RootContainer from './root.container'
+import RootContainer from './containers/root.container'
 import { ChatDataProvider } from './contexts'
 import Head from './head'
 import GlobalStyles from './styles/global.styles'

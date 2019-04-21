@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
+import last from 'lodash/last'
 
 import { safeParse } from '../utils'
 import { UserData, ChatInfo } from '../types'
@@ -31,7 +32,7 @@ const ChatDataProvider = memo(withRouter<ChatDataProviderProps>(({ children, his
   useEffect(() => {
     setLoading(true)
     const socket = new WebSocket('wss://97cq41uoj7.execute-api.eu-central-1.amazonaws.com/prod')
-    const chatId = pathname.replace('/', '')
+    const chatId = last(pathname.split('/'))
     socket.onopen = () => {
       socket.send(JSON.stringify({ action: 'stats', chatId }))
     }

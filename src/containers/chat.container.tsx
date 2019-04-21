@@ -4,13 +4,13 @@ import take from 'lodash/take'
 import sumBy from 'lodash/sumBy'
 import isEmpty from 'lodash/isEmpty'
 
-import UsersBarChart from './components/users-bar-chart.component'
-import UsersPieChart from './components/users-pie-chart.component'
-import Spinner from './components/spinner.component'
-import Tabs from './components/tabs.component'
-import Card from './components/card.component'
-import ChatInfo from './components/chat-info.component'
-import { ChatDataContext } from './contexts'
+import UsersBarChart from '../components/users-bar-chart.component'
+import UsersPieChart from '../components/users-pie-chart.component'
+import Spinner from '../components/spinner.component'
+import Tabs from '../components/tabs.component'
+import Card from '../components/card.component'
+import ChatInfo from '../components/chat-info.component'
+import { ChatDataContext } from '../contexts'
 
 const Wrapper = styled.div`
   display: flex;
