@@ -6,7 +6,6 @@ import { Router } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker'
 import RootContainer from './containers/root.container'
 import { ChatDataProvider } from './contexts'
-import Head from './head'
 import GlobalStyles from './styles/global.styles'
 
 const history = createBrowserHistory()
@@ -14,7 +13,6 @@ const history = createBrowserHistory()
 const App = () => (
   <Router history={history}>
     <ChatDataProvider>
-      <Head />
       <GlobalStyles />
       <RootContainer />
     </ChatDataProvider>
