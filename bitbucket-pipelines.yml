@@ -1,4 +1,4 @@
-image: node:latest
+image: alekzonder/puppeteer
 
 pipelines:
   branches:
@@ -7,9 +7,8 @@ pipelines:
           caches:
             - node
           script:
-            - yarn global add surge
             - yarn
             - yarn lint
             - yarn tsc
             - yarn build
-            - surge build telegram-bot-ui.surge.sh
+            - yarn deploy

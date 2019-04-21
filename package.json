@@ -9,6 +9,7 @@
     "tsc": "tsc",
     "lint": "eslint \"src/**\"",
     "lint:fix": "eslint \"src/**\" --fix",
+    "deploy": "surge build telegram-bot-ui.surge.sh",
     "postbuild": "react-snap"
   },
   "dependencies": {
@@ -44,6 +45,7 @@
     "puppeteer": "^1.14.0",
     "react-scripts": "2.1.8",
     "react-snap": "^1.23.0",
+    "surge": "^0.20.3",
     "typescript": "3.4.3"
   },
   "browserslist": [
