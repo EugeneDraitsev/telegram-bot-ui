@@ -16,8 +16,8 @@ const Inner = styled.div`
 `
 const Tab = styled.div<{ active: boolean, tabWidth: string, onClick(): void }>`
   display: table-cell;
-  width: ${p => p.tabWidth};
-  min-width: ${p => p.tabWidth};
+  width: ${(p) => p.tabWidth};
+  min-width: ${(p) => p.tabWidth};
   height: 50px;
   text-align: center;
   justify-content: center;
@@ -40,16 +40,16 @@ const Tab = styled.div<{ active: boolean, tabWidth: string, onClick(): void }>`
   }
 `
 const TabIndicator = styled.div<{ tabIndex: number, width: number, x: number }>`
-  display: ${p => (p.tabIndex >= 0 ? 'block' : 'none')};
+  display: ${(p) => (p.tabIndex >= 0 ? 'block' : 'none')};
   position: absolute;
   left: 0;
   bottom: 0;
   content: '';
-  width: ${p => p.width}px;
+  width: ${(p) => p.width}px;
   height: 3px;
   background-color: #4A90E2;
   transition: transform 0.6s;
-  transform: translateX(${p => p.x}px);
+  transform: translateX(${(p) => p.x}px);
 `
 
 interface TabsProps {
@@ -79,7 +79,7 @@ const Tabs = (props: TabsProps) => {
       const activeTab = allTabs[tabIndex]
       if (activeTab) {
         const newWidth = activeTab.getBoundingClientRect().width
-        const newX = sum(allTabs.slice(0, tabIndex).map(x => x.getBoundingClientRect().width))
+        const newX = sum(allTabs.slice(0, tabIndex).map((x) => x.getBoundingClientRect().width))
         return [newWidth, newX]
       }
     }
@@ -89,7 +89,7 @@ const Tabs = (props: TabsProps) => {
   return (
     <Wrapper className={className} style={style}>
       <Inner ref={tabsWrapper}>
-        {map(range(tabs.length), index => (
+        {map(range(tabs.length), (index) => (
           <Tab
             tabWidth={tabWidth ? `${tabWidth}px` : 'auto'}
             key={index}

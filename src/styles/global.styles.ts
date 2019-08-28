@@ -9,7 +9,7 @@ export default createGlobalStyle<{ background?: string }>`
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background: ${p => p.background || '#fafafa'};
+    background: ${(p) => p.background || '#fafafa'};
   }
 
   svg * {

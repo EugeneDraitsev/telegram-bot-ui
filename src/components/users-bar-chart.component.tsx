@@ -50,7 +50,7 @@ export default ({ data }: UsersBarChartProps) => (
           labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
           itemStyle={{ fontSize: 12, lineHeight: '12px' }}
           wrapperStyle={{ opacity: 0.9 }}
-          labelFormatter={id => getUserName(data.find(d => d.id === id)!)}
+          labelFormatter={(id) => getUserName(data.find((d) => d.id === id)!)}
         />
         <YAxis hide />
         <XAxis
@@ -61,7 +61,7 @@ export default ({ data }: UsersBarChartProps) => (
             <g transform={`translate(${x},${y})`}>
               <text width={width} height="auto" textAnchor="middle" fill="#4a4a4a" fontSize={12}>
                 <tspan x={0} y={0} dy={10}>
-                  {getUserName(data.find(d => d.id === payload.value)!)}
+                  {getUserName(data.find((d) => d.id === payload.value)!)}
                 </tspan>
               </text>
             </g>

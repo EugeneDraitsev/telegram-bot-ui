@@ -37,7 +37,7 @@ const Circle = styled.circle`
   stroke-dasharray: 1,200;
   stroke-dashoffset: 0;
   stroke-linecap: round;
-  stroke: ${props => props.color};
+  stroke: ${(props) => props.color};
 `
 
 interface SpinnerProps {

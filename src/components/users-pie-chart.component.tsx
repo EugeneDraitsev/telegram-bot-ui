@@ -33,7 +33,7 @@ const LegendItem = styled.div`
 const LegendCell = styled.div<{ color: string }>`
   width: 16px;
   height: 16px;
-  background-color: ${p => p.color};
+  background-color: ${(p) => p.color};
 `
 const LegendText = styled.div`
   font-size: 12px;

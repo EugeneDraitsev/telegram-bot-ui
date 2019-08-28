@@ -91,7 +91,7 @@ export default () => {
           <Tabs
             tabs={['Barchart', 'Piechart']}
             selectedIndex={tab}
-            onTabClick={index => setTab(index)}
+            onTabClick={(index) => setTab(index)}
           />
         </Header>
         {tab === 0 && <UsersBarChart data={take(usersData, 10)} />}

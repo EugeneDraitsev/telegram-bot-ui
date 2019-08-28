@@ -23,7 +23,7 @@ interface ChatDataState {
 
 const ChatDataContext = React.createContext({} as ChatDataState)
 
-const ChatDataProvider = memo(withRouter<ChatDataProviderProps>(({ children, history }: ChatDataProviderProps) => {
+const ChatDataProvider = memo(withRouter(({ children, history }: ChatDataProviderProps) => {
   const { location: { pathname } } = history
   const [data, setChatData] = useState<ChatData>({} as ChatData)
   const [loading, setLoading] = useState(false)
