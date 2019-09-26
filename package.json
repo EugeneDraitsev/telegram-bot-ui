@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "lint": "eslint \"src/**\"",
     "lint:fix": "eslint \"src/**\" --fix",
-    "deploy": "surge public telegram-bot-ui.surge.sh"
+    "deploy": "surge build telegram-bot-ui.surge.sh"
   },
   "dependencies": {
     "d3-scale-chromatic": "^1.5.0",
