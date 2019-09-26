@@ -9,39 +9,39 @@
     "tsc": "tsc",
     "lint": "eslint \"src/**\"",
     "lint:fix": "eslint \"src/**\" --fix",
-    "deploy": "surge build telegram-bot-ui.surge.sh"
+    "deploy": "surge public telegram-bot-ui.surge.sh"
   },
   "dependencies": {
     "d3-scale-chromatic": "^1.5.0",
-    "history": "^4.9.0",
+    "history": "^4.10.1",
     "lodash": "^4.17.15",
     "polished": "^3.4.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-router-dom": "^5.0.1",
+    "react-router-dom": "^5.1.0",
     "recharts": "^1.7.1",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "@types/d3-scale-chromatic": "^1.3.1",
     "@types/jest": "24.0.18",
-    "@types/lodash": "^4.14.138",
-    "@types/node": "12.7.3",
+    "@types/lodash": "^4.14.139",
+    "@types/node": "12.7.6",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
     "@types/react-router-dom": "^4.3.5",
     "@types/recharts": "^1.1.21",
-    "@types/styled-components": "^4.1.18",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
+    "@types/styled-components": "^4.1.19",
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
     "eslint-config-airbnb": "18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^2.0.1",
-    "react-scripts": "3.1.1",
+    "react-scripts": "3.1.2",
     "surge": "^0.21.3",
-    "typescript": "3.6.2"
+    "typescript": "3.6.3"
   },
   "browserslist": [
     ">0.2%",
