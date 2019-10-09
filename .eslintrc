@@ -1,36 +1,23 @@
 {
-  "extends": ["airbnb"],
+  "extends": ["airbnb", "react-app"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react-hooks"],
-  "env": {
-    "browser": true
-  },
+  "plugins": ["@typescript-eslint"],
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "useJSXTextNode": true,
-    "project": "./tsconfig.json",
-    "extraFileExtensions": [".tsx"]
+    "createDefaultProgram": true
   },
   "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
-      }
-    }
+    "import/resolver": {"node": {"extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]}}
   },
   "rules": {
     "semi": ["error", "never"],
     "max-len": ["error", 120],
     "object-curly-newline": ["error", {"consistent": true}],
     "react/jsx-filename-extension": [1, {"extensions": [".tsx", ".jsx"]}],
-    "@typescript-eslint/no-unused-vars": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/no-unused-vars": ["error", {"ignoreRestSiblings": true}],
+    "operator-linebreak": "off",
     "react/no-did-update-set-state": "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/destructuring-assignment": "warn",
-    "import/prefer-default-export": "warn"
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }
