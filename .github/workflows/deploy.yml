@@ -14,9 +14,3 @@ jobs:
       - run: yarn
       - run: yarn lint
       - run: yarn tsc
-      - run: yarn build
-      - run: cp build/index.html build/200.html
-      - run: yarn deploy
-        env:
-          SURGE_LOGIN: ${{secrets.SURGE_LOGIN}}
-          SURGE_TOKEN: ${{secrets.SURGE_TOKEN}}
