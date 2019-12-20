@@ -1,8 +1,8 @@
 import React from 'react'
-import styled from 'styled-components/macro'
-import map from 'lodash/map'
+import styled from 'styled-components'
 import { tint } from 'polished'
 import { BarChart, XAxis, Bar, Cell, ResponsiveContainer, LabelList, Tooltip, YAxis } from 'recharts'
+import { map } from 'lodash-es'
 
 import { UserData } from '../types'
 import { getUserName } from '../utils'

@@ -1,11 +1,9 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import styled from 'styled-components'
 
 const Wrapper = styled.div<{ minHeight?: string }>`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: calc(100% - 40px);
   min-height: 100vh;
   padding: 0 20px;
   align-items: center;
@@ -21,14 +19,15 @@ const Text = styled.p`
 `
 
 interface ErrorContainerProps {
+  statusCode: string
   className?: string
   title?: string | number
   text?: string
 }
 
-export default ({ className, title = '404', text = 'Page not found 😿' }: ErrorContainerProps) => (
+export default ({ className, statusCode, title, text = 'Page not found 😿' }: ErrorContainerProps) => (
   <Wrapper className={className}>
-    <Title>{title}</Title>
+    <Title>{title || statusCode}</Title>
     <Text>{text}</Text>
   </Wrapper>
 )

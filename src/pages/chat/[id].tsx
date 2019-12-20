@@ -1,16 +1,15 @@
-import React, { useContext, useState } from 'react'
-import styled from 'styled-components/macro'
-import take from 'lodash/take'
-import sumBy from 'lodash/sumBy'
-import isEmpty from 'lodash/isEmpty'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import styled from 'styled-components'
+import { take, sumBy, isEmpty } from 'lodash-es'
 
-import UsersBarChart from '../components/users-bar-chart.component'
-import UsersPieChart from '../components/users-pie-chart.component'
-import Spinner from '../components/spinner.component'
-import Tabs from '../components/tabs.component'
-import Card from '../components/card.component'
-import ChatInfo from '../components/chat-info.component'
-import { ChatDataContext } from '../contexts'
+import UsersBarChart from '../../components/users-bar-chart.component'
+import UsersPieChart from '../../components/users-pie-chart.component'
+import Spinner from '../../components/spinner.component'
+import Tabs from '../../components/tabs.component'
+import Card from '../../components/card.component'
+import ChatInfo from '../../components/chat-info.component'
+import { useChatData } from '../../hooks'
 
 const Wrapper = styled.div`
   display: flex;
@@ -62,7 +61,9 @@ const SubTitle = styled.div`
 `
 
 export default () => {
-  const { loading, data, error } = useContext(ChatDataContext)
+  const router = useRouter()
+  const { id } = router.query
+  const { loading, data, error } = useChatData(id as string)
   const [tab, setTab] = useState(0)
 
   if (loading) {

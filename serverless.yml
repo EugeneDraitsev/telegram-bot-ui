@@ -1,0 +1,20 @@
+service: telegram-bot-ui
+
+provider:
+  name: aws
+  region: eu-central-1
+  stage: prod
+  runtime: nodejs10.x
+  memorySize: 1504
+
+plugins:
+  - serverless-nextjs-plugin
+
+package:
+  exclude:
+    - ./**
+
+custom:
+  serverless-nextjs:
+    assetsBucketName: "telegram-bot-ui-static"
+    cloudFront: true
