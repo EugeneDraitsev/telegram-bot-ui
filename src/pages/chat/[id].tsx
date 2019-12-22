@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import { NextPageContext } from 'next'
 import styled from 'styled-components'
 import { take, sumBy, isEmpty } from 'lodash-es'
+import fetch from 'isomorphic-unfetch'
 
 import UsersBarChart from '../../components/users-bar-chart.component'
 import UsersPieChart from '../../components/users-pie-chart.component'
@@ -9,7 +11,7 @@ import Spinner from '../../components/spinner.component'
 import Tabs from '../../components/tabs.component'
 import Card from '../../components/card.component'
 import ChatInfo from '../../components/chat-info.component'
-import { useChatData } from '../../hooks'
+import { ChatData, useChatData } from '../../hooks'
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,10 +62,14 @@ const SubTitle = styled.div`
   font-weight: normal;
 `
 
-export default () => {
+type ChatPageProps = {
+  initialData: ChatData
+}
+
+const ChatPage = ({ initialData }: ChatPageProps) => {
   const router = useRouter()
   const { id } = router.query
-  const { loading, data, error } = useChatData(id as string)
+  const { loading, data, error } = useChatData(id as string, initialData)
   const [tab, setTab] = useState(0)
 
   if (loading) {
@@ -74,7 +80,7 @@ export default () => {
     )
   }
 
-  const { usersData, chatInfo } = data
+  const { usersData, chatInfo } = data || initialData
 
   if (error || isEmpty(usersData) || isEmpty(chatInfo)) {
     return <LoadingWrapper>{error}</LoadingWrapper>
@@ -101,3 +107,12 @@ export default () => {
     </Wrapper>
   )
 }
+
+ChatPage.getInitialProps = async ({ query }: NextPageContext) => {
+  const { id } = query
+  const url = 'https://yxol1ml0oj.execute-api.eu-central-1.amazonaws.com/prod'
+  const initialData = await fetch(`${url}/getChatStats?chatId=${id}`).then((res) => res.json()).catch(() => [])
+  return { initialData }
+}
+
+export default ChatPage

@@ -16,6 +16,7 @@
     "max-len": ["error", 120],
     "object-curly-newline": ["error", {"consistent": true}],
     "react/jsx-filename-extension": [1, {"extensions": [".tsx", ".jsx"]}],
+    "import/extensions": ["error", "ignorePackages", {"js": "never", "jsx": "never", "ts": "never", "tsx": "never"}],
     "@typescript-eslint/no-unused-vars": ["error", {"ignoreRestSiblings": true}],
     "operator-linebreak": "off",
     "react/no-did-update-set-state": "off",
