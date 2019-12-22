@@ -88,6 +88,9 @@ const ChatPage = ({ initialData }: ChatPageProps) => {
             <meta name="twitter:image" content={chatInfo.photoUrl} />
           </>
         )}
+        {chatInfo.title && (
+          <meta property="og:description" content={`${chatInfo.title} Statistics for the last 24 hours`} />
+        )}
       </Head>
       <Wrapper>
         <ChatInfo data={chatInfo} />
