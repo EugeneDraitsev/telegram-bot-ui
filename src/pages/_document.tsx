@@ -44,7 +44,6 @@ export default class MyDocument extends Document {
           />
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.png" />
-          <title>Telegram Bot Stats</title>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <meta
             name="viewport"

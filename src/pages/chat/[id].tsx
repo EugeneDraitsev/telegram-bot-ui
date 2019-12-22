@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { NextPageContext } from 'next'
+import Head from 'next/head'
 import styled from 'styled-components'
 import { take, sumBy, isEmpty } from 'lodash-es'
 import fetch from 'isomorphic-unfetch'
 
 import UsersBarChart from '../../components/users-bar-chart.component'
 import UsersPieChart from '../../components/users-pie-chart.component'
-import Spinner from '../../components/spinner.component'
 import Tabs from '../../components/tabs.component'
 import Card from '../../components/card.component'
 import ChatInfo from '../../components/chat-info.component'
@@ -69,16 +69,8 @@ type ChatPageProps = {
 const ChatPage = ({ initialData }: ChatPageProps) => {
   const router = useRouter()
   const { id } = router.query
-  const { loading, data, error } = useChatData(id as string, initialData)
+  const { data, error } = useChatData(id as string, initialData)
   const [tab, setTab] = useState(0)
-
-  if (loading) {
-    return (
-      <LoadingWrapper>
-        <Spinner />
-      </LoadingWrapper>
-    )
-  }
 
   const { usersData, chatInfo } = data || initialData
 
@@ -87,24 +79,35 @@ const ChatPage = ({ initialData }: ChatPageProps) => {
   }
 
   return (
-    <Wrapper>
-      <ChatInfo data={chatInfo} />
-      <GraphCard>
-        <Header>
-          <Title>
-            Last 24h chat users statistics (Top 10 users)
-            <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
-          </Title>
-          <Tabs
-            tabs={['Barchart', 'Piechart']}
-            selectedIndex={tab}
-            onTabClick={(index) => setTab(index)}
-          />
-        </Header>
-        {tab === 0 && <UsersBarChart data={take(usersData, 10)} />}
-        {tab === 1 && <UsersPieChart data={take(usersData, 10)} />}
-      </GraphCard>
-    </Wrapper>
+    <>
+      <Head>
+        <title>Telegram Bot Stats</title>
+        {chatInfo.photoUrl && (
+          <>
+            <meta property="og:image" content={chatInfo.photoUrl} />
+            <meta name="twitter:image" content={chatInfo.photoUrl} />
+          </>
+        )}
+      </Head>
+      <Wrapper>
+        <ChatInfo data={chatInfo} />
+        <GraphCard>
+          <Header>
+            <Title>
+              Last 24h chat users statistics (Top 10 users)
+              <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
+            </Title>
+            <Tabs
+              tabs={['Barchart', 'Piechart']}
+              selectedIndex={tab}
+              onTabClick={(index) => setTab(index)}
+            />
+          </Header>
+          {tab === 0 && <UsersBarChart data={take(usersData, 10)} />}
+          {tab === 1 && <UsersPieChart data={take(usersData, 10)} />}
+        </GraphCard>
+      </Wrapper>
+    </>
   )
 }
 
