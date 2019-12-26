@@ -11,6 +11,7 @@ import UsersPieChart from '../../components/users-pie-chart.component'
 import Tabs from '../../components/tabs.component'
 import Card from '../../components/card.component'
 import ChatInfo from '../../components/chat-info.component'
+import Spinner from '../../components/spinner.component'
 import { ChatData, useChatData } from '../../hooks'
 
 const Wrapper = styled.div`
@@ -69,13 +70,21 @@ type ChatPageProps = {
 const ChatPage = ({ initialData }: ChatPageProps) => {
   const router = useRouter()
   const { id } = router.query
-  const { data, error } = useChatData(id as string, initialData)
+  const { loading, data, error } = useChatData(id as string, initialData)
   const [tab, setTab] = useState(0)
 
   const { usersData, chatInfo } = data || initialData
 
   if (error || isEmpty(usersData) || isEmpty(chatInfo)) {
     return <LoadingWrapper>{error}</LoadingWrapper>
+  }
+
+  if (loading) {
+    return (
+      <LoadingWrapper>
+        <Spinner />
+      </LoadingWrapper>
+    )
   }
 
   return (
