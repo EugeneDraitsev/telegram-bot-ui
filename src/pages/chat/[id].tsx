@@ -4,7 +4,7 @@ import { NextPageContext } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { take, sumBy, isEmpty } from 'lodash-es'
-import fetch from 'isomorphic-unfetch'
+import fetch from 'node-fetch'
 
 import UsersBarChart from '../../components/users-bar-chart.component'
 import UsersPieChart from '../../components/users-pie-chart.component'
@@ -117,7 +117,9 @@ const ChatPage = ({ initialData }: ChatPageProps) => {
 ChatPage.getInitialProps = async ({ query }: NextPageContext) => {
   const { id } = query
   const url = 'https://yxol1ml0oj.execute-api.eu-central-1.amazonaws.com/prod'
-  const initialData = await fetch(`${url}/getChatStats?chatId=${id}`).then((res) => res.json()).catch(() => [])
+  const initialData = await fetch(`${url}/getChatStats?chatId=${id}`, { timeout: 500 })
+    .then((res) => res.json())
+    .catch(() => [])
   return { initialData }
 }
 
