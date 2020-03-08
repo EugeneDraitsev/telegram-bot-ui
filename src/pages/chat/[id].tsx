@@ -12,7 +12,8 @@ import Tabs from '../../components/tabs.component'
 import Card from '../../components/card.component'
 import ChatInfo from '../../components/chat-info.component'
 import Spinner from '../../components/spinner.component'
-import { ChatData, useChatData } from '../../hooks'
+import { useChatData } from '../../hooks'
+import { ChatInfo as ChatInfoType } from '../../types'
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,6 +38,9 @@ const GraphCard = styled(Card)`
     margin: 10px;
     max-width: calc(100vw - 20px);
   }
+`
+const LoadingCard = styled(GraphCard)`
+  height: 476px;
 `
 const Header = styled.div`
   display: flex;
@@ -64,22 +68,18 @@ const SubTitle = styled.div`
 `
 
 type ChatPageProps = {
-  initialData: ChatData
+  initialChatInfo: ChatInfoType
 }
 
-const ChatPage = ({ initialData }: ChatPageProps) => {
+const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
   const router = useRouter()
   const { id } = router.query
-  const { loading, data, error } = useChatData(id as string, initialData)
+  const { loading, data, error } = useChatData(id as string)
   const [tab, setTab] = useState(0)
 
-  const { usersData, chatInfo } = data || initialData
+  const { usersData, chatInfo = initialChatInfo } = data
 
-  if (error || isEmpty(usersData) || isEmpty(chatInfo)) {
-    return <LoadingWrapper>{error}</LoadingWrapper>
-  }
-
-  if (loading) {
+  if (loading && isEmpty(chatInfo)) {
     return (
       <LoadingWrapper>
         <Spinner />
@@ -87,37 +87,48 @@ const ChatPage = ({ initialData }: ChatPageProps) => {
     )
   }
 
+  if (error) {
+    return <LoadingWrapper>{error || 'Something Went Wrong'}</LoadingWrapper>
+  }
+
   return (
     <>
       <Head>
         <title>Telegram Bot Stats</title>
-        {chatInfo.photoUrl && (
+        {chatInfo?.photoUrl && (
           <>
-            <meta property="og:image" content={chatInfo.photoUrl} />
-            <meta name="twitter:image" content={chatInfo.photoUrl} />
+            <meta property="og:image" content={chatInfo?.photoUrl} />
+            <meta name="twitter:image" content={chatInfo?.photoUrl} />
           </>
         )}
         {chatInfo.title && (
-          <meta property="og:description" content={`${chatInfo.title} Statistics for the last 24 hours`} />
+          <meta property="og:description" content={`${chatInfo?.title} Statistics for the last 24 hours`} />
         )}
       </Head>
       <Wrapper>
         <ChatInfo data={chatInfo} />
-        <GraphCard>
-          <Header>
-            <Title>
-              Last 24h chat users statistics (Top 10 users)
-              <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
-            </Title>
-            <Tabs
-              tabs={['Barchart', 'Piechart']}
-              selectedIndex={tab}
-              onTabClick={(index) => setTab(index)}
-            />
-          </Header>
-          {tab === 0 && <UsersBarChart data={take(usersData, 10)} />}
-          {tab === 1 && <UsersPieChart data={take(usersData, 10)} />}
-        </GraphCard>
+        {loading && (
+          <LoadingCard>
+            <Spinner />
+          </LoadingCard>
+        )}
+        {!loading && (
+          <GraphCard>
+            <Header>
+              <Title>
+                Last 24h chat users statistics (Top 10 users)
+                <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
+              </Title>
+              <Tabs
+                tabs={['Barchart', 'Piechart']}
+                selectedIndex={tab}
+                onTabClick={(index) => setTab(index)}
+              />
+            </Header>
+            {tab === 0 && <UsersBarChart data={take(usersData, 10)} />}
+            {tab === 1 && <UsersPieChart data={take(usersData, 10)} />}
+          </GraphCard>
+        )}
       </Wrapper>
     </>
   )
@@ -125,11 +136,11 @@ const ChatPage = ({ initialData }: ChatPageProps) => {
 
 ChatPage.getInitialProps = async ({ query }: NextPageContext) => {
   const { id } = query
-  const url = 'https://yxol1ml0oj.execute-api.eu-central-1.amazonaws.com/prod'
-  const initialData = await fetch(`${url}/getChatStats?chatId=${id}`, { timeout: 500 })
+  const url = `https://chat-profile-data.s3.eu-central-1.amazonaws.com/${id}`
+  const initialChatInfo = await fetch(url)
     .then((res) => res.json())
-    .catch(() => [])
-  return { initialData }
+    .catch(() => {})
+  return { initialChatInfo }
 }
 
 export default ChatPage

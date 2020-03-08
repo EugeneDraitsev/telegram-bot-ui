@@ -9,14 +9,13 @@ export interface ChatData {
   chatInfo: ChatInfo
 }
 
-export const useChatData = (chatId: string | number, initialData: ChatData = {} as ChatData) => {
-  const [data, setChatData] = useState<ChatData>(initialData)
-  const [loading, setLoading] = useState(false)
+export const useChatData = (chatId: string | number) => {
+  const [data, setChatData] = useState<ChatData>({} as ChatData)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
     if (chatId) {
-      setLoading(isEmpty(initialData))
       const socket = new WebSocket('wss://97cq41uoj7.execute-api.eu-central-1.amazonaws.com/prod')
       socket.onopen = () => {
         socket.send(JSON.stringify({ action: 'stats', chatId }))
