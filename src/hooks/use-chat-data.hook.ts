@@ -16,7 +16,7 @@ export const useChatData = (chatId: string | number, initialData: ChatData = {} 
 
   useEffect(() => {
     if (chatId) {
-      setLoading(!initialData)
+      setLoading(isEmpty(initialData))
       const socket = new WebSocket('wss://97cq41uoj7.execute-api.eu-central-1.amazonaws.com/prod')
       socket.onopen = () => {
         socket.send(JSON.stringify({ action: 'stats', chatId }))
