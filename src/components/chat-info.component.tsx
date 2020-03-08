@@ -43,7 +43,7 @@ interface ChatInfoProps {
 export default ({ data }: ChatInfoProps) => (
   <Wrapper>
     <Content>
-      <ChatImage src={data.photoUrl} />
+      <ChatImage src={data.photoUrl || '/favicon.png'} />
       <Title>
         {getChatName(data)}
         <Subtitle>{data.description}</Subtitle>
