@@ -2,6 +2,7 @@
 const withTM = require('next-transpile-modules')(['lodash-es'])
 
 module.exports = withTM({
+  target: 'server',
   devIndicators: {
     autoPrerender: false,
   },
