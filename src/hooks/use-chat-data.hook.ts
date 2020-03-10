@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { isEmpty, noop } from 'lodash-es'
+import { isEmpty, noop } from 'lodash'
 
 import { safeParse } from '../utils'
 import { ChatInfo, UserData } from '../types'

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { range, map, indexOf, sum } from 'lodash-es'
+import { range, map, indexOf, sum } from 'lodash'
 
 const Wrapper = styled.div`
   position: relative;

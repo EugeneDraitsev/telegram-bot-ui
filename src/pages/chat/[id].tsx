@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { NextPageContext } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { take, sumBy, isEmpty } from 'lodash-es'
+import { take, sumBy, isEmpty } from 'lodash'
 import fetch from 'node-fetch'
 
 import UsersBarChart from '../../components/users-bar-chart.component'
