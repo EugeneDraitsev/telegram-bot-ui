@@ -6,12 +6,7 @@ import styled from 'styled-components'
 import { take, sumBy, isEmpty } from 'lodash-es'
 import fetch from 'node-fetch'
 
-import UsersBarChart from '../../components/users-bar-chart.component'
-import UsersPieChart from '../../components/users-pie-chart.component'
-import Tabs from '../../components/tabs.component'
-import Card from '../../components/card.component'
-import ChatInfo from '../../components/chat-info.component'
-import Spinner from '../../components/spinner.component'
+import { Spinner, DailyUsersBars, DailyUsersPie, Tabs, Card, ChatInfo } from '../../components'
 import { useChatData } from '../../hooks'
 import { ChatInfo as ChatInfoType } from '../../types'
 
@@ -125,8 +120,8 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
                 onTabClick={(index) => setTab(index)}
               />
             </Header>
-            {tab === 0 && <UsersBarChart data={take(usersData, 10)} />}
-            {tab === 1 && <UsersPieChart data={take(usersData, 10)} />}
+            {tab === 0 && <DailyUsersBars data={take(usersData, 10)} />}
+            {tab === 1 && <DailyUsersPie data={take(usersData, 10)} />}
           </GraphCard>
         )}
       </Wrapper>

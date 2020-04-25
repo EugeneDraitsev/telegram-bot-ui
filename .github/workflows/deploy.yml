@@ -14,3 +14,4 @@ jobs:
       - run: yarn
       - run: yarn lint
       - run: yarn tsc
+      - run: yarn test

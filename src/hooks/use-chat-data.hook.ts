@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { isEmpty, noop } from 'lodash-es'
 
 import { safeParse } from '../utils'
-import { ChatInfo, UserData } from '../types'
+import { ChatInfo, DailyUserData } from '../types'
 
 export interface ChatData {
-  usersData: UserData[],
+  usersData: DailyUserData[],
   chatInfo: ChatInfo
 }
 

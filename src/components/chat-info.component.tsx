@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { ChatInfo } from '../types'
+import { ChatInfo as ChatInfoType } from '../types'
 import { getChatName } from '../utils'
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  background: #F5F5F7;
+  background: #d6d6d6;
 `
 const Content = styled.div`
   display: flex;
@@ -37,10 +37,10 @@ const Subtitle = styled.div`
 `
 
 interface ChatInfoProps {
-  data: ChatInfo,
+  data: ChatInfoType,
 }
 
-export default ({ data }: ChatInfoProps) => (
+export const ChatInfo = ({ data }: ChatInfoProps) => (
   <Wrapper>
     <Content>
       <ChatImage src={data.photoUrl || '/favicon.png'} />
