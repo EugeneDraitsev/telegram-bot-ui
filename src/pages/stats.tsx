@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import XRay from 'aws-sdk/clients/xray'
 import Head from 'next/head'
 import XRayInfo from 'react-aws-xray-service-graph'
+import getConfig from 'next/config'
 
 
 const StyledXrayMap = styled(XRayInfo)`
@@ -22,7 +23,17 @@ export const StatsPage = ({ services }: any) => (
 
 
 StatsPage.getInitialProps = async () => {
-  const xray = new XRay({ region: 'eu-central-1', apiVersion: '2016-04-12' })
+  const { serverRuntimeConfig } = getConfig()
+
+  const xray = new XRay({
+    region: 'eu-central-1',
+    apiVersion: '2016-04-12',
+    credentials: {
+      accessKeyId: serverRuntimeConfig.AWS_ACCESS_KEY_ID!,
+      secretAccessKey: serverRuntimeConfig.AWS_SECRET_ACCESS_KEY!,
+    },
+  })
+
   const timePeriod = 60 * 1000 * 60 * 6 // 6 hours
   const params = {
     EndTime: new Date(),
