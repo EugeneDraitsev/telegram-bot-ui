@@ -87,7 +87,9 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
     return <LoadingWrapper>{error || 'Something Went Wrong'}</LoadingWrapper>
   }
 
+  console.log(4)
   console.log(process.env)
+  console.log(process.env.test)
 
   return (
     <>
