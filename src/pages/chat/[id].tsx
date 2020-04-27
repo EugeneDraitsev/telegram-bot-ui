@@ -69,7 +69,7 @@ type ChatPageProps = {
 
 const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
   const router = useRouter()
-  const { id } = router.query
+  const id = router?.query?.id
   const { loading, data, error } = useChatData(id as string)
   const [tab, setTab] = useState(0)
 

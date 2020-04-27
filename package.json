@@ -10,7 +10,7 @@
     "lint:fix": "eslint \"src/**\" --fix",
     "deploy": "sls deploy",
     "storybook": "start-storybook -p 6006 -s public",
-    "test": "jest --verbose  --coverage"
+    "test": "jest --verbose  --coverage --silent"
   },
   "dependencies": {
     "d3-scale-chromatic": "^1.5.0",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@react-mock/fetch": "^0.3.0",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-backgrounds": "^5.3.18",
     "@storybook/addon-info": "^5.3.18",
@@ -37,6 +38,8 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "@storybook/theming": "^5.3.18",
+    "@testing-library/jest-dom": "^5.5.0",
+    "@testing-library/react": "^10.0.3",
     "@types/d3-scale-chromatic": "^1.5.0",
     "@types/jest": "^25.2.1",
     "@types/lodash-es": "^4.17.3",
@@ -64,6 +67,9 @@
     "typescript": "3.9.0-beta"
   },
   "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupJest.ts"
+    ],
     "moduleNameMapper": {
       "^lodash-es$": "lodash"
     }

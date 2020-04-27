@@ -18,8 +18,8 @@ const Text = styled.p`
   text-align: center;
 `
 
-interface ErrorContainerProps {
-  statusCode: string
+type ErrorContainerProps = {
+  statusCode?: string
   className?: string
   title?: string | number
   text?: string

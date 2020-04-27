@@ -49,7 +49,7 @@ interface SpinnerProps {
 }
 
 export const Spinner = ({ size = 50, color, strokeWidth = 2, className }: SpinnerProps) => (
-  <Svg className={className} style={{ width: size, height: size }} viewBox="25 25 50 50">
+  <Svg className={className} style={{ width: size, height: size }} viewBox="25 25 50 50" aria-label="spinner">
     <Circle color={color} cx="50" cy="50" r="20" fill="none" strokeWidth={strokeWidth} strokeMiterlimit="10" />
   </Svg>
 )

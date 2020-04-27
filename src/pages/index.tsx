@@ -74,7 +74,13 @@ export default () => {
           or just invoke <Command>/s</Command> command in telegram chat.
         </p>
         <form onSubmit={onSubmit}>
-          <SearchInput value={chatName} onChange={onInputChange} icon={<Search size={22} />} />
+          <SearchInput
+            value={chatName}
+            onChange={onInputChange}
+            aria-label="chat-name"
+            placeholder="Chat Name"
+            icon={<Search size={22} />}
+          />
           <SearchButton type="submit" loading={loading}>Search</SearchButton>
         </form>
         {chats?.map((chat) => (

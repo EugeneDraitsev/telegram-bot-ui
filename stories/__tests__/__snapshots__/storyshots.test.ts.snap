@@ -362,6 +362,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
   className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
 >
   <svg
+    aria-label="spinner"
     className="spinnercomponent__Svg-sc-962b50-0 jExxaN"
     style={
       Object {
@@ -382,6 +383,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     />
   </svg>
   <svg
+    aria-label="spinner"
     className="spinnercomponent__Svg-sc-962b50-0 jExxaN"
     style={
       Object {
@@ -402,6 +404,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     />
   </svg>
   <svg
+    aria-label="spinner"
     className="spinnercomponent__Svg-sc-962b50-0 jExxaN"
     style={
       Object {
@@ -423,6 +426,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     />
   </svg>
   <svg
+    aria-label="spinner"
     className="spinnercomponent__Svg-sc-962b50-0 jExxaN"
     style={
       Object {
