@@ -87,9 +87,10 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
     return <LoadingWrapper>{error || 'Something Went Wrong'}</LoadingWrapper>
   }
 
-  console.log(4)
-  console.log(process.env)
+  console.log(5)
   console.log(process.env.test)
+  console.log(process.env.test2)
+  console.log(process.env.AWS_SECRET_ACCESS_KEY)
 
   return (
     <>
