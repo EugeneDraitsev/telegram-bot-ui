@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-export default createGlobalStyle<{ background?: string }>`
+export default createGlobalStyle`
   html, body, #root {
     height: 100vh;
   }
@@ -9,7 +9,11 @@ export default createGlobalStyle<{ background?: string }>`
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background: ${(p) => p.background || '#fafafa'};
+    background: ${(p) => p.theme?.colors?.background ?? '#fafafa'};
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
   }
 
   svg * {
@@ -18,5 +22,6 @@ export default createGlobalStyle<{ background?: string }>`
 
   a {
     text-decoration: none;
+    color: inherit;
   }
 `

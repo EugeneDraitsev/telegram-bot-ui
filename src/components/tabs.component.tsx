@@ -13,7 +13,7 @@ const Inner = styled.div`
 `
 const Tab = styled.div<{ active: boolean, tabWidth: string, onClick(): void }>`
   display: table-cell;
-  width: ${(p) => p.tabWidth};
+  max-width: ${(p) => p.tabWidth};
   min-width: ${(p) => p.tabWidth};
   height: 50px;
   text-align: center;
@@ -44,7 +44,7 @@ const TabIndicator = styled.div<{ tabIndex: number, width: number, x: number }>`
   content: '';
   width: ${(p) => p.width}px;
   height: 3px;
-  background-color: #4A90E2;
+  background-color: ${(p) => p.theme.colors.primary};
   transition: transform 0.6s;
   transform: translateX(${(p) => p.x}px);
 `
@@ -61,8 +61,10 @@ interface TabsProps {
   onTabClick(tab: number): void
 }
 
-const Tabs = (props: TabsProps) => {
-  const { tabs, tabsNames = [], className, selectedIndex, tabWidth, onTabClick, style, ...rest } = props
+export const Tabs = (props: TabsProps) => {
+  const {
+    tabs, tabsNames = [], className, selectedIndex, tabWidth, onTabClick, style, ...rest
+  } = props
   const tabsWrapper = useRef<HTMLDivElement>(null)
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])
@@ -102,10 +104,3 @@ const Tabs = (props: TabsProps) => {
     </Wrapper>
   )
 }
-
-Tabs.Tab = Tab
-Tabs.Wrapper = Wrapper
-Tabs.TabIndicator = TabIndicator
-
-
-export default Tabs

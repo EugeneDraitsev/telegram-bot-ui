@@ -4,8 +4,8 @@ import { tint } from 'polished'
 import { BarChart, XAxis, Bar, Cell, ResponsiveContainer, LabelList, Tooltip, YAxis } from 'recharts'
 import { map } from 'lodash-es'
 
-import { UserData } from '../types'
-import { getUserName } from '../utils'
+import { DailyUserData } from '../../types'
+import { getUserName } from '../../utils'
 
 const ChartWrapper = styled.div`
   width: 100%;
@@ -19,11 +19,11 @@ const ChartLabel = styled.text`
 
 const getBarColor = (i: number, length: number) => tint(i / (length * 1.3), '#4A90E2')
 
-interface UsersBarChartProps {
-  data: UserData[],
+interface DailyUsersBarsProps {
+  data: DailyUserData[],
 }
 
-export default ({ data }: UsersBarChartProps) => (
+export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => (
   <ChartWrapper>
     <ResponsiveContainer>
       <BarChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 10 }}>

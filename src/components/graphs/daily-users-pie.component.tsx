@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts'
 import { schemeCategory10 } from 'd3-scale-chromatic'
 
-import { UserData } from '../types'
-import { getUserName } from '../utils'
+import { DailyUserData } from '../../types'
+import { getUserName } from '../../utils'
 
 const ChartWrapper = styled.div`
   display: flex;
@@ -42,10 +42,10 @@ const LegendText = styled.div`
 `
 
 interface UsersBarChartProps {
-  data: UserData[],
+  data: DailyUserData[],
 }
 
-export default ({ data }: UsersBarChartProps) => (
+export const DailyUsersPie = ({ data }: UsersBarChartProps) => (
   <ChartWrapper>
     <ResponsiveContainer height={400}>
       <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 10 }}>
@@ -57,9 +57,11 @@ export default ({ data }: UsersBarChartProps) => (
           cy="50%"
           innerRadius={70}
           outerRadius={90}
+          startAngle={450}
+          endAngle={90}
           fill="#82ca9d"
           animationBegin={0}
-          animationDuration={1250}
+          animationDuration={750}
           label
         >
           {data.map((entry, index) => (

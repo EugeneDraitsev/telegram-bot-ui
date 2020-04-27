@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { ChatInfo } from '../types'
+import { Chat } from '../types'
 import { getChatName } from '../utils'
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  background: #F5F5F7;
+  background: #d6d6d6;
 `
 const Content = styled.div`
   display: flex;
@@ -16,6 +16,7 @@ const Content = styled.div`
   width: 100%;
   max-width: 1200px;
   padding: 5px 15px;
+  text-align: start;
 `
 const ChatImage = styled.div<{ src?: string }>`
   width: 70px;
@@ -37,16 +38,17 @@ const Subtitle = styled.div`
 `
 
 interface ChatInfoProps {
-  data: ChatInfo,
+  data: Chat,
+  className?: string
 }
 
-export default ({ data }: ChatInfoProps) => (
-  <Wrapper>
+export const ChatInfo = ({ data, className }: ChatInfoProps) => (
+  <Wrapper className={className}>
     <Content>
-      <ChatImage src={data.photoUrl || '/favicon.png'} />
+      <ChatImage src={data?.photoUrl || '/favicon.png'} />
       <Title>
         {getChatName(data)}
-        <Subtitle>{data.description}</Subtitle>
+        <Subtitle>{data?.description}</Subtitle>
       </Title>
     </Content>
   </Wrapper>

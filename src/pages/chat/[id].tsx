@@ -6,14 +6,10 @@ import styled from 'styled-components'
 import { take, sumBy, isEmpty } from 'lodash-es'
 import fetch from 'node-fetch'
 
-import UsersBarChart from '../../components/users-bar-chart.component'
-import UsersPieChart from '../../components/users-pie-chart.component'
-import Tabs from '../../components/tabs.component'
-import Card from '../../components/card.component'
-import ChatInfo from '../../components/chat-info.component'
-import Spinner from '../../components/spinner.component'
+import { Spinner, DailyUsersBars, DailyUsersPie, Tabs, Card, ChatInfo } from '../../components'
 import { useChatData } from '../../hooks'
-import { ChatInfo as ChatInfoType } from '../../types'
+import { Chat } from '../../types'
+import { config } from '../../api.config'
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,7 +36,7 @@ const GraphCard = styled(Card)`
   }
 `
 const LoadingCard = styled(GraphCard)`
-  height: 476px;
+  height: 506px;
 `
 const Header = styled.div`
   display: flex;
@@ -68,12 +64,12 @@ const SubTitle = styled.div`
 `
 
 type ChatPageProps = {
-  initialChatInfo: ChatInfoType
+  initialChatInfo: Chat
 }
 
 const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
   const router = useRouter()
-  const { id } = router.query
+  const id = router?.query?.id
   const { loading, data, error } = useChatData(id as string)
   const [tab, setTab] = useState(0)
 
@@ -125,8 +121,8 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
                 onTabClick={(index) => setTab(index)}
               />
             </Header>
-            {tab === 0 && <UsersBarChart data={take(usersData, 10)} />}
-            {tab === 1 && <UsersPieChart data={take(usersData, 10)} />}
+            {tab === 0 && <DailyUsersBars data={take(usersData, 10)} />}
+            {tab === 1 && <DailyUsersPie data={take(usersData, 10)} />}
           </GraphCard>
         )}
       </Wrapper>
@@ -136,7 +132,7 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
 
 ChatPage.getInitialProps = async ({ query }: NextPageContext) => {
   const { id } = query
-  const url = `https://chat-profile-data.s3.eu-central-1.amazonaws.com/${id}`
+  const url = `${config.s3}/${id}`
   const initialChatInfo = await fetch(url)
     .then((res) => res.json())
     .catch(() => {})
