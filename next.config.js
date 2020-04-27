@@ -6,9 +6,7 @@ module.exports = withTM({
     autoPrerender: false,
   },
   env: {
-    AWS_ACCESS_KEY_ID: process.env.KEY_ID,
-    AWS_SECRET_ACCESS_KEY: process.env.ACCESS_KEY,
-    test: 'test',
-    test2: process.env.AwsAccessKey,
+    AWS_ACCESS_KEY_ID: process.env.AwsAccessKey,
+    AWS_SECRET_ACCESS_KEY: process.env.AwsSecretAccessKey,
   },
 })

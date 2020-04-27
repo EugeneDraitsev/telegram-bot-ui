@@ -65,6 +65,10 @@ export default () => {
     }
   }, [chatName, setLoading, setChatName, setError])
 
+  console.log(6)
+  console.log(process.env.AWS_ACCESS_KEY_ID)
+  console.log(process.env.AWS_SECRET_ACCESS_KEY)
+
   return (
     <Wrapper>
       <Content>
