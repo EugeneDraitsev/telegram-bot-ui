@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { ChatInfo, DailyUserData } from '../types'
+import { Chat, DailyUserData } from '../types'
 
 export const safeParse = (parseString: string) => {
   try {
@@ -9,8 +9,8 @@ export const safeParse = (parseString: string) => {
   }
 }
 
-export const getUserName = (user: DailyUserData | ChatInfo) => user?.username
+export const getUserName = (user: DailyUserData | Chat) => user?.username
   || `${user?.first_name || ''} ${user?.last_name || ''}`.trim()
   || String(user?.id ?? 'Unknown Chat')
 
-export const getChatName = (chat: ChatInfo): string => chat?.title || getUserName(chat)
+export const getChatName = (chat: Chat): string => chat?.title || getUserName(chat)

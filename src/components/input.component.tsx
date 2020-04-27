@@ -7,6 +7,7 @@ const Holder = styled.div`
 `
 const Icon = styled.div`
   position: absolute;
+  height: 22px;
   top: 50%;
   left: 8px;
   transform: translateY(-50%);

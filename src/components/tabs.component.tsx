@@ -13,7 +13,7 @@ const Inner = styled.div`
 `
 const Tab = styled.div<{ active: boolean, tabWidth: string, onClick(): void }>`
   display: table-cell;
-  width: ${(p) => p.tabWidth};
+  max-width: ${(p) => p.tabWidth};
   min-width: ${(p) => p.tabWidth};
   height: 50px;
   text-align: center;

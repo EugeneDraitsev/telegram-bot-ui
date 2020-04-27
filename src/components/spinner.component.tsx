@@ -37,7 +37,7 @@ const Circle = styled.circle`
   stroke-dasharray: 1,200;
   stroke-dashoffset: 0;
   stroke-linecap: round;
-  stroke: ${(props) => props.color};
+  stroke: ${(p) => p.color || p.theme.colors.primary};
 `
 
 interface SpinnerProps {
@@ -48,7 +48,7 @@ interface SpinnerProps {
   className?: string
 }
 
-export const Spinner = ({ size = 50, color = '#4A90E2', strokeWidth = 2, className }: SpinnerProps) => (
+export const Spinner = ({ size = 50, color, strokeWidth = 2, className }: SpinnerProps) => (
   <Svg className={className} style={{ width: size, height: size }} viewBox="25 25 50 50">
     <Circle color={color} cx="50" cy="50" r="20" fill="none" strokeWidth={strokeWidth} strokeMiterlimit="10" />
   </Svg>

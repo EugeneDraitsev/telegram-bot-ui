@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { isEmpty, noop } from 'lodash-es'
 
 import { safeParse } from '../utils'
-import { ChatInfo, DailyUserData } from '../types'
+import { Chat, DailyUserData } from '../types'
+import { config } from '../api.config'
 
 export interface ChatData {
   usersData: DailyUserData[],
-  chatInfo: ChatInfo
+  chatInfo: Chat
 }
 
 export const useChatData = (chatId: string | number) => {
@@ -16,7 +17,7 @@ export const useChatData = (chatId: string | number) => {
 
   useEffect(() => {
     if (chatId) {
-      const socket = new WebSocket('wss://97cq41uoj7.execute-api.eu-central-1.amazonaws.com/prod')
+      const socket = new WebSocket(config.wss)
       socket.onopen = () => {
         socket.send(JSON.stringify({ action: 'stats', chatId }))
       }

@@ -57,9 +57,11 @@ export const DailyUsersPie = ({ data }: UsersBarChartProps) => (
           cy="50%"
           innerRadius={70}
           outerRadius={90}
+          startAngle={450}
+          endAngle={90}
           fill="#82ca9d"
           animationBegin={0}
-          animationDuration={1250}
+          animationDuration={750}
           label
         >
           {data.map((entry, index) => (
