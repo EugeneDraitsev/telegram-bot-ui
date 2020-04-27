@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import ChatPage from '../chat/[id]'
-import { Chat } from '../../types'
-import { ThemeProvider } from '../../contexts'
+import ChatPage from '../pages/chat/[id]'
+import { Chat } from '../types'
+import { ThemeProvider } from '../contexts'
 
 const useRouter = jest.spyOn(require('next/router'), 'useRouter')
-const useChatData = jest.spyOn(require('../../hooks/use-chat-data.hook'), 'useChatData')
+const useChatData = jest.spyOn(require('../hooks/use-chat-data.hook'), 'useChatData')
 
 const initialChatInfo = {
   title: 'Test Title',

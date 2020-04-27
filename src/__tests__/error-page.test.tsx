@@ -1,8 +1,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import ErrorPage from '../_error'
-import { ThemeProvider } from '../../contexts'
+import ErrorPage from '../pages/_error'
+import { ThemeProvider } from '../contexts'
 
 
 describe('Error Page', () => {

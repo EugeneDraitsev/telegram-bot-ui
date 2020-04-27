@@ -2,9 +2,9 @@ import React from 'react'
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { FetchMock } from '@react-mock/fetch'
 
-import IndexPage from '../index'
-import { ThemeProvider } from '../../contexts'
-import { config } from '../../api.config'
+import IndexPage from '../pages'
+import { ThemeProvider } from '../contexts'
+import { config } from '../api.config'
 
 
 describe('Index Page', () => {

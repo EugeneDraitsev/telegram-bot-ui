@@ -1,0 +1,8 @@
+{
+  "build": {
+    "env": {
+      "AWS_ACCESS_KEY_ID": "@AwsAccessKey",
+      "AWS_SECRET_ACCESS_KEY": "@AwsSecretAccessKey"
+    }
+  }
+}
