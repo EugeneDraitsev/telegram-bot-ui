@@ -42,9 +42,9 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 40px);
-  padding: 0 20px;
   flex-wrap: wrap;
+  width: 100%;
+  padding: 0 20px;
   margin-bottom: 15px;
 `
 const Title = styled.div`

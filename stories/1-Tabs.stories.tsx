@@ -28,7 +28,9 @@ class SimpleTabsStory extends React.Component {
     selectedIndex: 0,
   }
 
-  onTabClick = (newIndex: number) => this.setState(newIndex)
+  onTabClick = (newIndex: number) => {
+    this.setState({ selectedIndex: newIndex })
+  }
 
   render() {
     const { selectedIndex } = this.state
