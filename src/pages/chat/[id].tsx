@@ -3,13 +3,14 @@ import { useRouter } from 'next/router'
 import { NextPageContext } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { take, sumBy, isEmpty } from 'lodash-es'
+import { take, sumBy, isEmpty, orderBy } from 'lodash-es'
 import fetch from 'node-fetch'
 
 import { Spinner, DailyUsersBars, DailyUsersPie, Tabs, Card, ChatInfo } from '../../components'
 import { useChatData } from '../../hooks'
 import { Chat } from '../../types'
 import { config } from '../../api.config'
+import { HistoricalBars } from '../../components/graphs/historical-bars.component'
 
 const Wrapper = styled.div`
   display: flex;
@@ -63,6 +64,16 @@ const SubTitle = styled.div`
   font-weight: normal;
 `
 
+const UserValues = styled.div`
+  margin: 0 10px;
+`
+const HistoricalData = styled.div`
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  width: 100%;
+  padding-left: 10px;
+`
+
 type ChatPageProps = {
   initialChatInfo: Chat
 }
@@ -73,7 +84,7 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
   const { loading, data, error } = useChatData(id as string)
   const [tab, setTab] = useState(0)
 
-  const { usersData, chatInfo = initialChatInfo } = data
+  const { usersData, chatInfo = initialChatInfo, historicalData } = data
 
   if (loading && isEmpty(chatInfo)) {
     return (
@@ -86,6 +97,8 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
   if (error) {
     return <LoadingWrapper>{error || 'Something Went Wrong'}</LoadingWrapper>
   }
+
+  console.log(historicalData)
 
   return (
     <>
@@ -109,21 +122,46 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
           </LoadingCard>
         )}
         {!loading && (
-          <GraphCard>
-            <Header>
-              <Title>
-                Last 24h chat users statistics (Top 10 users)
-                <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
-              </Title>
-              <Tabs
-                tabs={['Barchart', 'Piechart']}
-                selectedIndex={tab}
-                onTabClick={(index) => setTab(index)}
-              />
-            </Header>
-            {tab === 0 && <DailyUsersBars data={take(usersData, 10)} />}
-            {tab === 1 && <DailyUsersPie data={take(usersData, 10)} />}
-          </GraphCard>
+          <>
+            <GraphCard>
+              <Header>
+                <Title>
+                  Last 24h chat users statistics (Top 10 users)
+                  <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
+                </Title>
+                <Tabs
+                  tabs={['Barchart', 'Piechart']}
+                  selectedIndex={tab}
+                  onTabClick={(index) => setTab(index)}
+                />
+              </Header>
+              {tab === 0 && <DailyUsersBars data={take(usersData, 10)} />}
+              {tab === 1 && <DailyUsersPie data={take(usersData, 10)} />}
+            </GraphCard>
+            <GraphCard>
+              {/*Users Statistic:*/}
+              {/*All messages: 1781*/}
+              {/*1781 (100.00%) - drrrrrrrr*/}
+              <Header>
+                <Title>
+                  Users Historical Date
+                  <SubTitle>All messages: {sumBy(historicalData, 'msgCount').toLocaleString()}</SubTitle>
+                </Title>
+              </Header>
+
+              <HistoricalData>
+                {orderBy(historicalData, 'msgCount', 'desc').map((user) => (
+                  <React.Fragment key={user?.id}>
+                    <UserValues>{user?.username}</UserValues>
+                    <UserValues>{user?.msgCount}</UserValues>
+                  </React.Fragment>
+                ))}
+              </HistoricalData>
+
+              <HistoricalBars data={orderBy(historicalData, 'msgCount', 'desc')} />
+
+            </GraphCard>
+          </>
         )}
       </Wrapper>
     </>
