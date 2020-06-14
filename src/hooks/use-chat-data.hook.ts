@@ -6,9 +6,9 @@ import { Chat, DailyUserData, HistoricalData } from '../types'
 import { config } from '../api.config'
 
 export type ChatData = {
-  usersData: DailyUserData[],
+  usersData: DailyUserData[]
   chatInfo: Chat
-  historicalData?: HistoricalData []
+  historicalData?: HistoricalData[]
 }
 
 export const useChatData = (chatId: string | number) => {
@@ -34,7 +34,9 @@ export const useChatData = (chatId: string | number) => {
           }))
         }
 
-        return setError(`Seems like we don't have any events for this chat (${chatId}) for last 24h`)
+        return setError(
+          `Seems like we don't have any events for this chat (${chatId}) for last 24h`,
+        )
       }
       return () => socket.close()
     }

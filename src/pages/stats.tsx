@@ -5,7 +5,6 @@ import Head from 'next/head'
 import XRayInfo from 'react-aws-xray-service-graph'
 import getConfig from 'next/config'
 
-
 const StyledXrayMap = styled(XRayInfo)`
   height: 100vh;
   .react-aws-xray-service-graph-DirectionalGraph {
@@ -20,7 +19,6 @@ export const StatsPage = ({ services }: any) => (
     <StyledXrayMap services={services} />
   </div>
 )
-
 
 StatsPage.getInitialProps = async () => {
   const { serverRuntimeConfig } = getConfig()

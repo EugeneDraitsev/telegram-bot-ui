@@ -15,7 +15,9 @@ describe('getChatName', () => {
 
 describe('getUserName', () => {
   it('should return correct user name, if it exists', () => {
-    expect(getUserName({ first_name: 'User', last_name: 'Name' } as DailyUserData)).toEqual('User Name')
+    expect(getUserName({ first_name: 'User', last_name: 'Name' } as DailyUserData)).toEqual(
+      'User Name',
+    )
     expect(getUserName({ username: 'UserName' } as Chat)).toEqual('UserName')
   })
   it('should return "Unknown Chat" if name doesn\'t exist', () => {
@@ -25,8 +27,10 @@ describe('getUserName', () => {
 
 describe('safeParse', () => {
   it('should parse json and return parsed object', () => {
-    expect(safeParse('{ "first_name": "User", "last_name": "Name" }'))
-      .toEqual({ first_name: 'User', last_name: 'Name' })
+    expect(safeParse('{ "first_name": "User", "last_name": "Name" }')).toEqual({
+      first_name: 'User',
+      last_name: 'Name',
+    })
     expect(safeParse('{}')).toEqual({})
   })
   it('should return null if JSON is not valid', () => {

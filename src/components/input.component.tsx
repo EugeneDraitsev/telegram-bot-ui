@@ -12,7 +12,7 @@ const Icon = styled.div`
   left: 8px;
   transform: translateY(-50%);
 `
-const BaseInput = styled.input<{ hasIcon: boolean, iconPadding: number }>`
+const BaseInput = styled.input<{ hasIcon: boolean; iconPadding: number }>`
   display: block;
   border: 1px solid ${(p) => p.theme.colors.inactive};
   border-radius: 6px;
@@ -24,7 +24,8 @@ const BaseInput = styled.input<{ hasIcon: boolean, iconPadding: number }>`
     color: ${(p) => p.theme.colors.inactive};
     transition: color 0.3s ease-in-out;
   }
-  &:active, &:focus {
+  &:active,
+  &:focus {
     border: 1px solid ${(p) => p.theme.colors.primary};
     outline: none;
     + ${Icon} {
@@ -34,14 +35,14 @@ const BaseInput = styled.input<{ hasIcon: boolean, iconPadding: number }>`
 `
 
 type InputProps = StyledComponentPropsWithRef<'input'> & {
-  icon?: JSX.Element | string,
-  iconPadding?: number,
+  icon?: JSX.Element | string
+  iconPadding?: number
 }
 
 export const Input = ({ icon, className, iconPadding = 35, ...props }: InputProps) => (
   <Holder className={className}>
     {/* eslint-disable-next-line react/jsx-props-no-spreading */}
     <BaseInput hasIcon={Boolean(icon)} iconPadding={iconPadding} {...props} />
-    {icon && (<Icon>{icon}</Icon>)}
+    {icon && <Icon>{icon}</Icon>}
   </Holder>
 )

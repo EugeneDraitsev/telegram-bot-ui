@@ -26,7 +26,7 @@ exports[`Storyshots Buttons Buttons 1`] = `
     Disabled
   </button>
   <button
-    className="buttoncomponent__Button-sc-1gnonws-0 kGUcjD"
+    className="buttoncomponent__Button-sc-1gnonws-0 fgYiNL"
     style={
       Object {
         "marginRight": 10,
@@ -99,7 +99,7 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
   className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
 >
   <div
-    className="daily-users-piecomponent__ChartWrapper-guyatk-0 cazuwr"
+    className="daily-users-piecomponent__ChartWrapper-guyatk-0 cLQVnv"
   >
     <div
       className="recharts-responsive-container"
@@ -117,7 +117,7 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
       <div />
     </div>
     <div
-      className="daily-users-piecomponent__Legend-guyatk-1 cirAox"
+      className="daily-users-piecomponent__Legend-guyatk-1 RAehJ"
     >
       <div
         className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
@@ -464,25 +464,25 @@ exports[`Storyshots Tabs Simple Tabs 1`] = `
         className="tabscomponent__Inner-sc-11o22cv-1 jSDLVd"
       >
         <div
-          className="tabscomponent__Tab-sc-11o22cv-2 cvdfHC tab active"
+          className="tabscomponent__Tab-sc-11o22cv-2 eXapuG tab active"
           onClick={[Function]}
         >
           Tab1
         </div>
         <div
-          className="tabscomponent__Tab-sc-11o22cv-2 cvdfHC tab"
+          className="tabscomponent__Tab-sc-11o22cv-2 eXapuG tab"
           onClick={[Function]}
         >
           Veeeeeery Loooooong Name Tab
         </div>
         <div
-          className="tabscomponent__Tab-sc-11o22cv-2 cvdfHC tab"
+          className="tabscomponent__Tab-sc-11o22cv-2 eXapuG tab"
           onClick={[Function]}
         >
           Some other tab
         </div>
         <div
-          className="tabscomponent__Tab-sc-11o22cv-2 cvdfHC tab"
+          className="tabscomponent__Tab-sc-11o22cv-2 eXapuG tab"
           onClick={[Function]}
         >
           tab 4

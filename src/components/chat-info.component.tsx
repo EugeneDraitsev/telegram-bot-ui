@@ -38,7 +38,7 @@ const Subtitle = styled.div`
 `
 
 interface ChatInfoProps {
-  data: Chat,
+  data: Chat
   className?: string
 }
 

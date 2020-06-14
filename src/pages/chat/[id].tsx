@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { NextPageContext } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { take, sumBy, isEmpty, orderBy } from 'lodash-es'
+import { isEmpty } from 'lodash-es'
 import fetch from 'node-fetch'
 
-import { Spinner, DailyUsersBars, DailyUsersPie, Tabs, Card, ChatInfo } from '../../components'
+import { Spinner, Card, ChatInfo, LastDayStatistics } from '../../components'
 import { useChatData } from '../../hooks'
 import { Chat } from '../../types'
 import { config } from '../../api.config'
-import { HistoricalBars } from '../../components/graphs/historical-bars.component'
+import { HistoricalStatistics } from '../../components/chat/historical-statistics.component'
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,47 +31,13 @@ const GraphCard = styled(Card)`
   max-width: 1200px;
   margin: 20px;
   padding: 15px 0;
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     margin: 10px;
     max-width: calc(100vw - 20px);
   }
 `
 const LoadingCard = styled(GraphCard)`
   height: 506px;
-`
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 0 20px;
-  margin-bottom: 15px;
-`
-const Title = styled.div`
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 33px;
-  @media(max-width: 800px) {
-    font-size: 16px;
-    line-height: 22px;
-  }
-`
-const SubTitle = styled.div`
-  font-size: 12px;
-  line-height: 18px;
-  padding: 5px 0;
-  font-weight: normal;
-`
-
-const UserValues = styled.div`
-  margin: 0 10px;
-`
-const HistoricalData = styled.div`
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  width: 100%;
-  padding-left: 10px;
 `
 
 type ChatPageProps = {
@@ -82,7 +48,6 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
   const router = useRouter()
   const id = router?.query?.id
   const { loading, data, error } = useChatData(id as string)
-  const [tab, setTab] = useState(0)
 
   const { usersData, chatInfo = initialChatInfo, historicalData } = data
 
@@ -98,8 +63,6 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
     return <LoadingWrapper>{error || 'Something Went Wrong'}</LoadingWrapper>
   }
 
-  console.log(historicalData)
-
   return (
     <>
       <Head>
@@ -111,56 +74,28 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
           </>
         )}
         {chatInfo?.title && (
-          <meta property="og:description" content={`${chatInfo?.title} Statistics for the last 24 hours`} />
+          <meta
+            property="og:description"
+            content={`${chatInfo?.title} Statistics for the last 24 hours`}
+          />
         )}
       </Head>
       <Wrapper>
         <ChatInfo data={chatInfo} />
         {loading && (
-          <LoadingCard>
-            <Spinner />
-          </LoadingCard>
+          <>
+            <LoadingCard>
+              <Spinner />
+            </LoadingCard>
+            <LoadingCard>
+              <Spinner />
+            </LoadingCard>
+          </>
         )}
         {!loading && (
           <>
-            <GraphCard>
-              <Header>
-                <Title>
-                  Last 24h chat users statistics (Top 10 users)
-                  <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
-                </Title>
-                <Tabs
-                  tabs={['Barchart', 'Piechart']}
-                  selectedIndex={tab}
-                  onTabClick={(index) => setTab(index)}
-                />
-              </Header>
-              {tab === 0 && <DailyUsersBars data={take(usersData, 10)} />}
-              {tab === 1 && <DailyUsersPie data={take(usersData, 10)} />}
-            </GraphCard>
-            <GraphCard>
-              {/*Users Statistic:*/}
-              {/*All messages: 1781*/}
-              {/*1781 (100.00%) - drrrrrrrr*/}
-              <Header>
-                <Title>
-                  Users Historical Date
-                  <SubTitle>All messages: {sumBy(historicalData, 'msgCount').toLocaleString()}</SubTitle>
-                </Title>
-              </Header>
-
-              <HistoricalData>
-                {orderBy(historicalData, 'msgCount', 'desc').map((user) => (
-                  <React.Fragment key={user?.id}>
-                    <UserValues>{user?.username}</UserValues>
-                    <UserValues>{user?.msgCount}</UserValues>
-                  </React.Fragment>
-                ))}
-              </HistoricalData>
-
-              <HistoricalBars data={orderBy(historicalData, 'msgCount', 'desc')} />
-
-            </GraphCard>
+            <LastDayStatistics usersData={usersData} />
+            <HistoricalStatistics historicalData={historicalData || []} />
           </>
         )}
       </Wrapper>

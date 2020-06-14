@@ -25,7 +25,12 @@ type ErrorContainerProps = {
   text?: string
 }
 
-export default ({ className, statusCode, title, text = 'Page not found 😿' }: ErrorContainerProps) => (
+export default ({
+  className,
+  statusCode,
+  title,
+  text = 'Page not found 😿',
+}: ErrorContainerProps) => (
   <Wrapper className={className}>
     <Title>{title || statusCode}</Title>
     <Text>{text}</Text>
