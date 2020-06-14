@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts'
 import { schemeCategory10 } from 'd3-scale-chromatic'
+import { isEmpty } from 'lodash-es'
 
 import { DailyUserData } from '../../types'
 import { getUserName } from '../../utils'
@@ -40,6 +41,14 @@ const LegendText = styled.div`
   line-height: 14px;
   margin-left: 10px;
 `
+const EmptyWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 400px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+`
 
 interface UsersBarChartProps {
   data: DailyUserData[]
@@ -47,36 +56,41 @@ interface UsersBarChartProps {
 
 export const DailyUsersPie = ({ data }: UsersBarChartProps) => (
   <ChartWrapper>
-    <ResponsiveContainer height={400}>
-      <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 10 }}>
-        <Pie
-          data={data}
-          dataKey="messages"
-          nameKey="id"
-          cx="50%"
-          cy="50%"
-          innerRadius={70}
-          outerRadius={90}
-          startAngle={450}
-          endAngle={90}
-          fill="#82ca9d"
-          animationBegin={0}
-          animationDuration={750}
-          label
-        >
-          {data.map((entry, index) => (
-            <Cell key={entry.id} fill={schemeCategory10[index]} />
+    {isEmpty(data) && <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>}
+    {!isEmpty(data) && (
+      <>
+        <ResponsiveContainer height={400}>
+          <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 10 }}>
+            <Pie
+              data={data}
+              dataKey="messages"
+              nameKey="id"
+              cx="50%"
+              cy="50%"
+              innerRadius={70}
+              outerRadius={90}
+              startAngle={450}
+              endAngle={90}
+              fill="#82ca9d"
+              animationBegin={0}
+              animationDuration={750}
+              label
+            >
+              {data.map((entry, index) => (
+                <Cell key={entry.id} fill={schemeCategory10[index]} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+        <Legend>
+          {data.map((user, index) => (
+            <LegendItem key={user.id}>
+              <LegendCell color={schemeCategory10[index]} />
+              <LegendText>{`${getUserName(user)}  (${user.messages})`}</LegendText>
+            </LegendItem>
           ))}
-        </Pie>
-      </PieChart>
-    </ResponsiveContainer>
-    <Legend>
-      {data.map((user, index) => (
-        <LegendItem key={user.id}>
-          <LegendCell color={schemeCategory10[index]} />
-          <LegendText>{`${getUserName(user)}  (${user.messages})`}</LegendText>
-        </LegendItem>
-      ))}
-    </Legend>
+        </Legend>
+      </>
+    )}
   </ChartWrapper>
 )

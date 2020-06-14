@@ -20,6 +20,7 @@ const HistoricalData = styled.div`
   display: grid;
   grid-template-columns: 250px 1fr;
   width: 100%;
+  min-height: 400px;
   padding-left: 10px;
 `
 

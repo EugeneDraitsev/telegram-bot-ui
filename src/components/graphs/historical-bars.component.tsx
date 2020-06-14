@@ -12,8 +12,8 @@ type HistoricalBarsProps = {
 }
 
 export const HistoricalBars = ({ data }: HistoricalBarsProps) => (
-  <ResponsiveContainer height={data.length * 30}>
-    <BarChart data={data} layout="vertical" margin={{ right: 15, left: 55 }}>
+  <ResponsiveContainer height={Math.max(data.length * 30, 400)}>
+    <BarChart data={data} layout="vertical" margin={{ right: 15, left: 55 }} barSize={30}>
       <Bar dataKey="msgCount" minPointSize={2}>
         {map(data, (d, i: number) => (
           <Cell key={i} fill={getBarColor(i, data.length)} />
