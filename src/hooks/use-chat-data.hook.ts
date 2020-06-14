@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import { isEmpty, noop } from 'lodash-es'
 
 import { safeParse } from '../utils'
-import { Chat, DailyUserData } from '../types'
+import { Chat, DailyUserData, HistoricalData } from '../types'
 import { config } from '../api.config'
 
-export interface ChatData {
-  usersData: DailyUserData[],
+export type ChatData = {
+  usersData: DailyUserData[]
   chatInfo: Chat
+  historicalData?: HistoricalData[]
 }
 
 export const useChatData = (chatId: string | number) => {
@@ -29,10 +30,13 @@ export const useChatData = (chatId: string | number) => {
           return setChatData(({ usersData, chatInfo }) => ({
             usersData: newData.usersData || usersData,
             chatInfo: newData.chatInfo || chatInfo,
+            historicalData: newData.historicalData,
           }))
         }
 
-        return setError(`Seems like we don't have any events for this chat (${chatId}) for last 24h`)
+        return setError(
+          `Seems like we don't have any events for this chat (${chatId}) for last 24h`,
+        )
       }
       return () => socket.close()
     }

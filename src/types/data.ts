@@ -25,3 +25,9 @@ export type Chat = {
   sticker_set_name?: string
   can_set_sticker_set?: boolean
 }
+
+export type HistoricalData = {
+  id: number
+  msgCount: number
+  username: string
+}

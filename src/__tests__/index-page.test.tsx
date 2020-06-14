@@ -6,7 +6,6 @@ import IndexPage from '../pages'
 import { ThemeProvider } from '../contexts'
 import { config } from '../api.config'
 
-
 describe('Index Page', () => {
   it('shows correct text', () => {
     render(
@@ -15,8 +14,10 @@ describe('Index Page', () => {
       </ThemeProvider>,
     )
 
-    expect(screen.queryByText('Hi, I\'m a Telegram chat bot.')).toBeInTheDocument()
-    expect(screen.queryByText(/If you have already added the bot to your chat/i)).toBeInTheDocument()
+    expect(screen.queryByText("Hi, I'm a Telegram chat bot.")).toBeInTheDocument()
+    expect(
+      screen.queryByText(/If you have already added the bot to your chat/i),
+    ).toBeInTheDocument()
   })
 
   it('should properly handle search', async () => {

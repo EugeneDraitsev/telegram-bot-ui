@@ -13,7 +13,6 @@ const initialChatInfo = {
   description: 'Test Description',
 }
 
-
 describe('Chat Page', () => {
   it('shows the correct children and calls useChatData with correct arguments', () => {
     useRouter.mockImplementationOnce(() => ({
@@ -51,7 +50,7 @@ describe('Chat Page', () => {
 
     expect(screen.queryByText(initialChatInfo.title)).toBeInTheDocument()
     expect(screen.queryByText(initialChatInfo.description)).toBeInTheDocument()
-    expect(screen.queryByText('Barchart')).toBeInTheDocument()
+    expect(screen.queryAllByText('Barchart')).toHaveLength(2)
     expect(screen.queryByText('Piechart')).toBeInTheDocument()
   })
 
@@ -68,9 +67,9 @@ describe('Chat Page', () => {
       </ThemeProvider>,
     )
 
-    expect(screen.queryByText('Barchart')).not.toBeInTheDocument()
+    expect(screen.queryAllByText('Barchart')).toHaveLength(0)
     expect(screen.queryByText('Piechart')).not.toBeInTheDocument()
-    expect(screen.queryByLabelText('spinner')).toBeInTheDocument()
+    expect(screen.queryAllByLabelText('spinner')).toHaveLength(2)
   })
 
   it('shows error if useChatData fails', () => {
@@ -78,7 +77,11 @@ describe('Chat Page', () => {
       query: { id: '-1' },
     }))
 
-    useChatData.mockImplementationOnce(() => ({ data: {}, loading: false, error: 'Something Went Wrong' }))
+    useChatData.mockImplementationOnce(() => ({
+      data: {},
+      loading: false,
+      error: 'Something Went Wrong',
+    }))
 
     render(
       <ThemeProvider>

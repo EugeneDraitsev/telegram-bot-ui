@@ -11,7 +11,7 @@ const Inner = styled.div`
   display: table;
   position: relative;
 `
-const Tab = styled.div<{ active: boolean, tabWidth: string, onClick(): void }>`
+const Tab = styled.div<{ active: boolean; tabWidth: string; onClick(): void }>`
   display: table-cell;
   max-width: ${(p) => p.tabWidth};
   min-width: ${(p) => p.tabWidth};
@@ -20,7 +20,7 @@ const Tab = styled.div<{ active: boolean, tabWidth: string, onClick(): void }>`
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   line-height: 50px;
   font-weight: 500;
   font-size: 12px;
@@ -33,10 +33,10 @@ const Tab = styled.div<{ active: boolean, tabWidth: string, onClick(): void }>`
     background-color: rgba(0, 0, 0, 0.025);
   }
   &.active {
-    color: #4A4A4A;
+    color: #4a4a4a;
   }
 `
-const TabIndicator = styled.div<{ tabIndex: number, width: number, x: number }>`
+const TabIndicator = styled.div<{ tabIndex: number; width: number; x: number }>`
   display: ${(p) => (p.tabIndex >= 0 ? 'block' : 'none')};
   position: absolute;
   left: 0;
@@ -63,7 +63,14 @@ interface TabsProps {
 
 export const Tabs = (props: TabsProps) => {
   const {
-    tabs, tabsNames = [], className, selectedIndex, tabWidth, onTabClick, style, ...rest
+    tabs,
+    tabsNames = [],
+    className,
+    selectedIndex,
+    tabWidth,
+    onTabClick,
+    style,
+    ...rest
   } = props
   const tabsWrapper = useRef<HTMLDivElement>(null)
   const [loaded, setLoaded] = useState(false)

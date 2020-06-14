@@ -12,12 +12,7 @@ describe('Tabs Component', () => {
 
     render(
       <ThemeProvider>
-        <Tabs
-          tabs={tabs}
-          selectedIndex={0}
-          onTabClick={handleTabClick}
-          tabWidth={100}
-        />
+        <Tabs tabs={tabs} selectedIndex={0} onTabClick={handleTabClick} tabWidth={100} />
       </ThemeProvider>,
     )
 

@@ -39,39 +39,45 @@ const SearchChatInfo = styled(ChatInfo)`
 export default () => {
   const [chatName, setChatName] = useState('')
   const [submittedName, setSubmittedName] = useState('')
-  const [chats, setChats] = useState<Chat [] | null>(null)
+  const [chats, setChats] = useState<Chat[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const onInputChange = useCallback((e: React.FormEvent<HTMLInputElement>) => {
-    setChatName(e.currentTarget.value)
-  }, [setChatName])
+  const onInputChange = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      setChatName(e.currentTarget.value)
+    },
+    [setChatName],
+  )
 
-  const onSubmit = useCallback(async (e) => {
-    e.preventDefault()
-    if (chatName) {
-      try {
-        setLoading(true)
-        setError('')
-        setSubmittedName(chatName)
-        const url = `${config.rest}/search?name=${encodeURI(chatName)}`
-        const newChats = await fetch(url).then((x) => x.json())
-        setChats(newChats)
-      } catch (err) {
-        setError('Something went wrong. Try again later')
-      } finally {
-        setLoading(false)
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault()
+      if (chatName) {
+        try {
+          setLoading(true)
+          setError('')
+          setSubmittedName(chatName)
+          const url = `${config.rest}/search?name=${encodeURI(chatName)}`
+          const newChats = await fetch(url).then((x) => x.json())
+          setChats(newChats)
+        } catch (err) {
+          setError('Something went wrong. Try again later')
+        } finally {
+          setLoading(false)
+        }
       }
-    }
-  }, [chatName, setLoading, setChatName, setError])
+    },
+    [chatName, setLoading, setError],
+  )
 
   return (
     <Wrapper>
       <Content>
         <h4>Hi, I&apos;m a Telegram chat bot.</h4>
         <p>
-          If you have already added the bot to your chat, try to find the chat by name
-          or just invoke <Command>/s</Command> command in telegram chat.
+          If you have already added the bot to your chat, try to find the chat by name or just
+          invoke <Command>/s</Command> command in telegram chat.
         </p>
         <form onSubmit={onSubmit}>
           <SearchInput
@@ -81,7 +87,9 @@ export default () => {
             placeholder="Chat Name"
             icon={<Search size={22} />}
           />
-          <SearchButton type="submit" loading={loading}>Search</SearchButton>
+          <SearchButton type="submit" loading={loading}>
+            Search
+          </SearchButton>
         </form>
         {chats?.map((chat) => (
           <Link href={`/chat/${chat.id}`} key={chat.id}>
@@ -93,7 +101,9 @@ export default () => {
         ))}
         {error && <p>{error}</p>}
         {isArray(chats) && isEmpty(chats) && !error && (
-          <p>No results for chats matching <strong>{submittedName}</strong></p>
+          <p>
+            No results for chats matching <strong>{submittedName}</strong>
+          </p>
         )}
       </Content>
     </Wrapper>

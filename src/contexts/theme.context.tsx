@@ -26,9 +26,7 @@ const ThemeProvider = memo(({ children }: PropsWithChildren<{}>) => {
   return (
     <ThemeContext.Provider value={{ theme }}>
       <GlobalStyles />
-      <StyledProvider theme={theme}>
-        {children}
-      </StyledProvider>
+      <StyledProvider theme={theme}>{children}</StyledProvider>
     </ThemeContext.Provider>
   )
 })
