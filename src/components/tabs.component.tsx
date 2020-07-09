@@ -57,7 +57,6 @@ interface TabsProps {
   tabWidth?: number
   style?: object
   tabsNames?: string[]
-
   onTabClick(tab: number): void
 }
 

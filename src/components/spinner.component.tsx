@@ -41,7 +41,6 @@ const Circle = styled.circle`
 `
 
 interface SpinnerProps {
-  style?: object
   size?: number | string
   strokeWidth?: number
   color?: string

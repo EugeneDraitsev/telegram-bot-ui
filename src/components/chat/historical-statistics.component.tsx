@@ -11,6 +11,10 @@ interface HistoricalStatisticsProps {
   historicalData: HistoricalDataType[]
 }
 
+const Wrapper = styled(GraphCard)`
+  min-height: 400px;
+  justify-content: flex-start;
+`
 const UserValues = styled.div`
   font-size: 14px;
   line-height: 1.5;
@@ -19,8 +23,8 @@ const UserValues = styled.div`
 const HistoricalData = styled.div`
   display: grid;
   grid-template-columns: 250px 1fr;
+  grid-row-gap: 5px;
   width: 100%;
-  min-height: 400px;
   padding-left: 10px;
 `
 
@@ -29,7 +33,7 @@ export const HistoricalStatistics = ({ historicalData }: HistoricalStatisticsPro
   const allMessagesCount = sumBy(historicalData, 'msgCount')
 
   return (
-    <GraphCard>
+    <Wrapper>
       <Header>
         <Title>
           Users Historical Data
@@ -55,6 +59,6 @@ export const HistoricalStatistics = ({ historicalData }: HistoricalStatisticsPro
         </HistoricalData>
       )}
       {tab === 1 && <HistoricalBars data={orderBy(historicalData, 'msgCount', 'desc')} />}
-    </GraphCard>
+    </Wrapper>
   )
 }
