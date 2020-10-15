@@ -2,10 +2,10 @@
 
 exports[`Storyshots Buttons Buttons 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <button
-    className="buttoncomponent__Button-sc-1gnonws-0 kqqjKx"
+    className="buttoncomponent__Button-sc-1gnonws-0 hyIGIy"
     style={
       Object {
         "marginRight": 10,
@@ -15,7 +15,7 @@ exports[`Storyshots Buttons Buttons 1`] = `
     Default
   </button>
   <button
-    className="buttoncomponent__Button-sc-1gnonws-0 tkCBs"
+    className="buttoncomponent__Button-sc-1gnonws-0 gfFjsb"
     disabled={true}
     style={
       Object {
@@ -26,7 +26,7 @@ exports[`Storyshots Buttons Buttons 1`] = `
     Disabled
   </button>
   <button
-    className="buttoncomponent__Button-sc-1gnonws-0 fgYiNL"
+    className="buttoncomponent__Button-sc-1gnonws-0 EFHbI"
     style={
       Object {
         "marginRight": 10,
@@ -40,24 +40,24 @@ exports[`Storyshots Buttons Buttons 1`] = `
 
 exports[`Storyshots Chat Info Chat Info 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <div
-    className="chat-infocomponent__Wrapper-ichvm3-0 jMLdPl"
+    className="chat-infocomponent__Wrapper-ichvm3-0 gJjxUW"
   >
     <div
-      className="chat-infocomponent__Content-ichvm3-1 eMhYbA"
+      className="chat-infocomponent__Content-ichvm3-1 iiNxBT"
     >
       <div
-        className="chat-infocomponent__ChatImage-ichvm3-2 ktAyrN"
+        className="chat-infocomponent__ChatImage-ichvm3-2 dUiElW"
         src="https://chat-profile-images.s3.amazonaws.com/file_70280.jpg"
       />
       <div
-        className="chat-infocomponent__Title-ichvm3-3 gWzZZz"
+        className="chat-infocomponent__Title-ichvm3-3 sRGlw"
       >
         Kabold сamp
         <div
-          className="chat-infocomponent__Subtitle-ichvm3-4 jrYnwc"
+          className="chat-infocomponent__Subtitle-ichvm3-4 hbgKxr"
         >
           The kaboldest camp
         </div>
@@ -69,24 +69,24 @@ exports[`Storyshots Chat Info Chat Info 1`] = `
 
 exports[`Storyshots Chat Info Edge Case Chat Info 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <div
-    className="chat-infocomponent__Wrapper-ichvm3-0 jMLdPl"
+    className="chat-infocomponent__Wrapper-ichvm3-0 gJjxUW"
   >
     <div
-      className="chat-infocomponent__Content-ichvm3-1 eMhYbA"
+      className="chat-infocomponent__Content-ichvm3-1 iiNxBT"
     >
       <div
-        className="chat-infocomponent__ChatImage-ichvm3-2 gHzDun"
+        className="chat-infocomponent__ChatImage-ichvm3-2 knGAPM"
         src="/favicon.png"
       />
       <div
-        className="chat-infocomponent__Title-ichvm3-3 gWzZZz"
+        className="chat-infocomponent__Title-ichvm3-3 sRGlw"
       >
         Unknown Chat
         <div
-          className="chat-infocomponent__Subtitle-ichvm3-4 jrYnwc"
+          className="chat-infocomponent__Subtitle-ichvm3-4 hbgKxr"
         />
       </div>
     </div>
@@ -96,10 +96,10 @@ exports[`Storyshots Chat Info Edge Case Chat Info 1`] = `
 
 exports[`Storyshots Graphs Bar Chart 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <div
-    className="daily-users-piecomponent__ChartWrapper-guyatk-0 cLQVnv"
+    className="daily-users-piecomponent__ChartWrapper-guyatk-0 bmwZJY"
   >
     <div
       className="recharts-responsive-container"
@@ -117,121 +117,121 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
       <div />
     </div>
     <div
-      className="daily-users-piecomponent__Legend-guyatk-1 RAehJ"
+      className="daily-users-piecomponent__Legend-guyatk-1 ktiXLe"
     >
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 krNcQZ"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 evEBLy"
           color="#1f77b4"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user1  (62)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 fNpMJc"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 kylbFn"
           color="#ff7f0e"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user2  (52)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 bZpMJV"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 bcyfxa"
           color="#2ca02c"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user3  (30)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 gyHXAV"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 PrZwO"
           color="#d62728"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user4  (27)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 jANcsO"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 hslvQp"
           color="#9467bd"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user5  (16)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 gpvjGK"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 jgbPDV"
           color="#8c564b"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user6  (10)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 fGnfGT"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 fyXrPg"
           color="#e377c2"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user7  (9)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 fVEAql"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 jmCPjy"
           color="#7f7f7f"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user8  (5)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 iCNcaK"
+        className="daily-users-piecomponent__LegendItem-guyatk-2 iyrHMR"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 dYjsNr"
+          className="daily-users-piecomponent__LegendCell-guyatk-3 jEeLTw"
           color="#bcbd22"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 cHxIeX"
+          className="daily-users-piecomponent__LegendText-guyatk-4 KoPTI"
         >
           user9  (3)
         </div>
@@ -243,10 +243,10 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
 
 exports[`Storyshots Graphs Pie Chart 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <div
-    className="daily-users-barscomponent__ChartWrapper-wi252y-0 bCDsox"
+    className="daily-users-barscomponent__ChartWrapper-wi252y-0 ypezK"
   >
     <div
       className="recharts-responsive-container"
@@ -269,21 +269,21 @@ exports[`Storyshots Graphs Pie Chart 1`] = `
 
 exports[`Storyshots Input Icon Input 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <div
-    className="sc-0-Inputstories__Story-sc-15acmoi-0 fSKctK"
+    className="sc-0-Inputstories__Story-sc-15acmoi-0 dQwktB"
   >
     <div>
       <div
-        className="inputcomponent__Holder-sc-1hahqlg-0 jOAlHf"
+        className="inputcomponent__Holder-sc-1hahqlg-0 ilnYNs"
       >
         <input
-          className="inputcomponent__BaseInput-sc-1hahqlg-2 iSQkLV"
+          className="inputcomponent__BaseInput-sc-1hahqlg-2 eVrlTW"
           value="Simple input"
         />
         <div
-          className="inputcomponent__Icon-sc-1hahqlg-1 deeGAE"
+          className="inputcomponent__Icon-sc-1hahqlg-1 ljGYcP"
         >
           <svg
             fill="none"
@@ -305,14 +305,14 @@ exports[`Storyshots Input Icon Input 1`] = `
     </div>
     <div>
       <div
-        className="inputcomponent__Holder-sc-1hahqlg-0 jOAlHf"
+        className="inputcomponent__Holder-sc-1hahqlg-0 ilnYNs"
       >
         <input
-          className="inputcomponent__BaseInput-sc-1hahqlg-2 iSQkLV"
+          className="inputcomponent__BaseInput-sc-1hahqlg-2 eVrlTW"
           value="Emoji 🦄"
         />
         <div
-          className="inputcomponent__Icon-sc-1hahqlg-1 deeGAE"
+          className="inputcomponent__Icon-sc-1hahqlg-1 ljGYcP"
         >
           🐈
         </div>
@@ -320,10 +320,10 @@ exports[`Storyshots Input Icon Input 1`] = `
     </div>
     <div>
       <div
-        className="inputcomponent__Holder-sc-1hahqlg-0 jOAlHf"
+        className="inputcomponent__Holder-sc-1hahqlg-0 ilnYNs"
       >
         <input
-          className="inputcomponent__BaseInput-sc-1hahqlg-2 bzqcuh"
+          className="inputcomponent__BaseInput-sc-1hahqlg-2 cWdKPm"
           style={
             Object {
               "width": 215,
@@ -332,7 +332,7 @@ exports[`Storyshots Input Icon Input 1`] = `
           value="123,43"
         />
         <div
-          className="inputcomponent__Icon-sc-1hahqlg-1 deeGAE"
+          className="inputcomponent__Icon-sc-1hahqlg-1 ljGYcP"
         >
           $
         </div>
@@ -344,13 +344,13 @@ exports[`Storyshots Input Icon Input 1`] = `
 
 exports[`Storyshots Input Simple Input 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <div
-    className="inputcomponent__Holder-sc-1hahqlg-0 jOAlHf"
+    className="inputcomponent__Holder-sc-1hahqlg-0 ilnYNs"
   >
     <input
-      className="inputcomponent__BaseInput-sc-1hahqlg-2 eefhof"
+      className="inputcomponent__BaseInput-sc-1hahqlg-2 gEFmZE"
       value="Simple input"
     />
   </div>
@@ -359,11 +359,11 @@ exports[`Storyshots Input Simple Input 1`] = `
 
 exports[`Storyshots Spinners Spinners 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <svg
     aria-label="spinner"
-    className="spinnercomponent__Svg-sc-962b50-0 jExxaN"
+    className="spinnercomponent__Svg-sc-962b50-0 dApYzm"
     style={
       Object {
         "height": 50,
@@ -373,7 +373,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="spinnercomponent__Circle-sc-962b50-1 kHipvl"
+      className="spinnercomponent__Circle-sc-962b50-1 dsokAG"
       cx="50"
       cy="50"
       fill="none"
@@ -384,7 +384,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="spinnercomponent__Svg-sc-962b50-0 jExxaN"
+    className="spinnercomponent__Svg-sc-962b50-0 dApYzm"
     style={
       Object {
         "height": 105,
@@ -394,7 +394,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="spinnercomponent__Circle-sc-962b50-1 kHipvl"
+      className="spinnercomponent__Circle-sc-962b50-1 dsokAG"
       cx="50"
       cy="50"
       fill="none"
@@ -405,7 +405,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="spinnercomponent__Svg-sc-962b50-0 jExxaN"
+    className="spinnercomponent__Svg-sc-962b50-0 dApYzm"
     style={
       Object {
         "height": 50,
@@ -415,7 +415,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="spinnercomponent__Circle-sc-962b50-1 ciLnba"
+      className="spinnercomponent__Circle-sc-962b50-1 igIWpN"
       color="red"
       cx="50"
       cy="50"
@@ -427,7 +427,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="spinnercomponent__Svg-sc-962b50-0 jExxaN"
+    className="spinnercomponent__Svg-sc-962b50-0 dApYzm"
     style={
       Object {
         "height": 100,
@@ -437,7 +437,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="spinnercomponent__Circle-sc-962b50-1 dLUMuC"
+      className="spinnercomponent__Circle-sc-962b50-1 irdQSR"
       color="green"
       cx="50"
       cy="50"
@@ -452,43 +452,43 @@ exports[`Storyshots Spinners Spinners 1`] = `
 
 exports[`Storyshots Tabs Simple Tabs 1`] = `
 <div
-  className="preview__StoriesWrapper-sc-1cm7iba-0 eAIbBd"
+  className="preview__StoriesWrapper-sc-1cm7iba-0 eqIpQG"
 >
   <div
-    className="sc-1-Tabsstories__Wrapper-sc-1xyi268-0 ldMpsF"
+    className="sc-1-Tabsstories__Wrapper-sc-1xyi268-0 iqNbDS"
   >
     <div
-      className="tabscomponent__Wrapper-sc-11o22cv-0 bdStYq"
+      className="tabscomponent__Wrapper-sc-11o22cv-0 qEnox"
     >
       <div
-        className="tabscomponent__Inner-sc-11o22cv-1 jSDLVd"
+        className="tabscomponent__Inner-sc-11o22cv-1 doAXZC"
       >
         <div
-          className="tabscomponent__Tab-sc-11o22cv-2 eXapuG tab active"
+          className="tabscomponent__Tab-sc-11o22cv-2 foaoBB tab active"
           onClick={[Function]}
         >
           Tab1
         </div>
         <div
-          className="tabscomponent__Tab-sc-11o22cv-2 eXapuG tab"
+          className="tabscomponent__Tab-sc-11o22cv-2 foaoBB tab"
           onClick={[Function]}
         >
           Veeeeeery Loooooong Name Tab
         </div>
         <div
-          className="tabscomponent__Tab-sc-11o22cv-2 eXapuG tab"
+          className="tabscomponent__Tab-sc-11o22cv-2 foaoBB tab"
           onClick={[Function]}
         >
           Some other tab
         </div>
         <div
-          className="tabscomponent__Tab-sc-11o22cv-2 eXapuG tab"
+          className="tabscomponent__Tab-sc-11o22cv-2 foaoBB tab"
           onClick={[Function]}
         >
           tab 4
         </div>
         <div
-          className="tabscomponent__TabIndicator-sc-11o22cv-3 dwaBiB"
+          className="tabscomponent__TabIndicator-sc-11o22cv-3 jJoJby"
           tabIndex={0}
           width={0}
           x={0}
@@ -496,7 +496,7 @@ exports[`Storyshots Tabs Simple Tabs 1`] = `
       </div>
     </div>
     <div
-      className="sc-1-Tabsstories__Content-sc-1xyi268-1 hAjRzi"
+      className="sc-1-Tabsstories__Content-sc-1xyi268-1 cRmywJ"
     >
       selected 
       Tab1

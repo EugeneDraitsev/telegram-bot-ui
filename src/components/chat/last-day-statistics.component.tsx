@@ -6,11 +6,11 @@ import { DailyUsersBars, DailyUsersPie } from '../graphs'
 import { GraphCard, Header, SubTitle, Title } from './chat.styles'
 import { DailyUserData } from '../../types'
 
-interface LastDayStatistics {
+interface LastDayStatisticsProps {
   usersData: DailyUserData[]
 }
 
-export const LastDayStatistics = ({ usersData }: LastDayStatistics) => {
+export const LastDayStatistics = ({ usersData }: LastDayStatisticsProps) => {
   const [tab, setTab] = useState(0)
 
   return (
