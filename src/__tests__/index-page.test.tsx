@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { FetchMock } from '@react-mock/fetch'
 
-import IndexPage from '../pages'
+import Index from '../pages'
 import { ThemeProvider } from '../contexts'
 import { config } from '../api.config'
 
@@ -10,7 +10,7 @@ describe('Index Page', () => {
   it('shows correct text', () => {
     render(
       <ThemeProvider>
-        <IndexPage />
+        <Index />
       </ThemeProvider>,
     )
 
@@ -31,7 +31,7 @@ describe('Index Page', () => {
         ]}
       >
         <ThemeProvider>
-          <IndexPage />
+          <Index />
         </ThemeProvider>
       </FetchMock>,
     )

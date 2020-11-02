@@ -36,7 +36,7 @@ const SearchChatInfo = styled(ChatInfo)`
   cursor: pointer;
 `
 
-export default () => {
+const IndexPage = () => {
   const [chatName, setChatName] = useState('')
   const [submittedName, setSubmittedName] = useState('')
   const [chats, setChats] = useState<Chat[] | null>(null)
@@ -109,3 +109,5 @@ export default () => {
     </Wrapper>
   )
 }
+
+export default IndexPage
