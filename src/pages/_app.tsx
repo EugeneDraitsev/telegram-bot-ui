@@ -3,7 +3,7 @@ import App from 'next/app'
 
 import { ThemeProvider } from '../contexts'
 
-export default class extends App {
+class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
     return (
@@ -16,3 +16,5 @@ export default class extends App {
     )
   }
 }
+
+export default MyApp
