@@ -103,7 +103,6 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
   >
     <div
       className="recharts-responsive-container"
-      id="undefined"
       style={
         Object {
           "height": 400,
@@ -113,9 +112,7 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
           "width": "100%",
         }
       }
-    >
-      <div />
-    </div>
+    />
     <div
       className="daily-users-piecomponent__Legend-guyatk-1 iOQnwr"
     >
@@ -250,7 +247,6 @@ exports[`Storyshots Graphs Pie Chart 1`] = `
   >
     <div
       className="recharts-responsive-container"
-      id="undefined"
       style={
         Object {
           "height": "100%",
@@ -260,9 +256,7 @@ exports[`Storyshots Graphs Pie Chart 1`] = `
           "width": "100%",
         }
       }
-    >
-      <div />
-    </div>
+    />
   </div>
 </div>
 `;
