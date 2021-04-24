@@ -13,21 +13,18 @@
     "test": "jest --verbose  --coverage --silent"
   },
   "dependencies": {
-    "aws-sdk": "^2.891.0",
     "d3-scale-chromatic": "^2.0.0",
     "lodash-es": "^4.17.21",
     "next": "^10.1.3",
     "node-fetch": "^2.6.1",
     "polished": "^4.1.1",
     "react": "^17.0.2",
-    "react-aws-xray-service-graph": "^0.0.4",
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
     "recharts": "^2.0.9",
     "styled-components": "^5.2.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.16",
     "@react-mock/fetch": "^0.3.0",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-backgrounds": "^6.2.9",
@@ -67,7 +64,6 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "^26.6.3",
-    "next-server": "^9.0.5",
     "next-transpile-modules": "^6.4.0",
     "prettier": "^2.2.1",
     "react-test-renderer": "^17.0.2",
