@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { NextPageContext } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { isEmpty } from 'lodash-es'
@@ -103,13 +103,26 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
   )
 }
 
-ChatPage.getInitialProps = async ({ query }: NextPageContext) => {
-  const { id } = query
+export const getStaticPaths = async () => {
+  const PREDEFINED_STATIC_PATHS = ['-1001306676509']
+  const paths = PREDEFINED_STATIC_PATHS.map((id) => ({ params: { id } }))
+
+  return { paths, fallback: true }
+}
+
+export const getStaticProps: GetStaticProps<ChatPageProps, { id: string }> = async ({ params }) => {
+  const id = params?.id
   const url = `${config.s3}/${id}`
   const initialChatInfo = await fetch(url)
     .then((res) => res.json())
     .catch(() => {})
-  return { initialChatInfo }
+
+  return {
+    props: {
+      initialChatInfo,
+    },
+    revalidate: 60,
+  }
 }
 
 export default ChatPage
