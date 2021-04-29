@@ -25,7 +25,7 @@ type ErrorContainerProps = {
   text?: string
 }
 
-const ErrorPage = ({
+export const ErrorPage = ({
   className,
   statusCode,
   title,
