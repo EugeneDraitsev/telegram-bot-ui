@@ -43,10 +43,6 @@ export default class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.png" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0"
-          />
           <meta name="theme-color" content="#F5F5F7" data-react-helmet="true" />
           <meta property="og:image" content="/preview.png" />
           <meta property="og:url" content="https://telegram-bot-ui.now.sh/" />
