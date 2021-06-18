@@ -104,6 +104,7 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
 }
 
 export const getStaticPaths = async () => {
+  // TODO: populate top 100 chats for dynamo
   const PREDEFINED_STATIC_PATHS = ['-1001306676509']
   const paths = PREDEFINED_STATIC_PATHS.map((id) => ({ params: { id } }))
 
