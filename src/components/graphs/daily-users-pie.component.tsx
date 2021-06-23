@@ -1,11 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts'
-import { schemeCategory10 } from 'd3-scale-chromatic'
 import { isEmpty } from 'lodash-es'
 
 import { DailyUserData } from '../../types'
 import { getUserName } from '../../utils'
+
+const schemeCategory10 = [
+  '#1f77b4',
+  '#ff7f0e',
+  '#2ca02c',
+  '#d62728',
+  '#9467bd',
+  '#8c564b',
+  '#e377c2',
+  '#7f7f7f',
+  '#bcbd22',
+  '#17becf',
+]
 
 const ChartWrapper = styled.div`
   display: flex;
