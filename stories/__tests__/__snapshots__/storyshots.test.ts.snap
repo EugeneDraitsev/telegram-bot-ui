@@ -43,21 +43,21 @@ exports[`Storyshots Chat Info Chat Info 1`] = `
   className="preview__StoriesWrapper-sc-1cm7iba-0 kDMWzf"
 >
   <div
-    className="chat-infocomponent__Wrapper-ichvm3-0 gWtHMr"
+    className="chat-infocomponent__Wrapper-sc-ichvm3-0 jtjZYm"
   >
     <div
-      className="chat-infocomponent__Content-ichvm3-1 BcxLe"
+      className="chat-infocomponent__Content-sc-ichvm3-1 jExakD"
     >
       <div
-        className="chat-infocomponent__ChatImage-ichvm3-2 eINlkv"
+        className="chat-infocomponent__ChatImage-sc-ichvm3-2 gALNHS"
         src="https://chat-profile-images.s3.amazonaws.com/file_70280.jpg"
       />
       <div
-        className="chat-infocomponent__Title-ichvm3-3 fuKkVh"
+        className="chat-infocomponent__Title-sc-ichvm3-3 eGIpDA"
       >
         Kabold сamp
         <div
-          className="chat-infocomponent__Subtitle-ichvm3-4 isMGBG"
+          className="chat-infocomponent__Subtitle-sc-ichvm3-4 PzsNv"
         >
           The kaboldest camp
         </div>
@@ -72,21 +72,21 @@ exports[`Storyshots Chat Info Edge Case Chat Info 1`] = `
   className="preview__StoriesWrapper-sc-1cm7iba-0 kDMWzf"
 >
   <div
-    className="chat-infocomponent__Wrapper-ichvm3-0 gWtHMr"
+    className="chat-infocomponent__Wrapper-sc-ichvm3-0 jtjZYm"
   >
     <div
-      className="chat-infocomponent__Content-ichvm3-1 BcxLe"
+      className="chat-infocomponent__Content-sc-ichvm3-1 jExakD"
     >
       <div
-        className="chat-infocomponent__ChatImage-ichvm3-2 OCyrh"
+        className="chat-infocomponent__ChatImage-sc-ichvm3-2 bHhvOw"
         src="/favicon.png"
       />
       <div
-        className="chat-infocomponent__Title-ichvm3-3 fuKkVh"
+        className="chat-infocomponent__Title-sc-ichvm3-3 eGIpDA"
       >
         Unknown Chat
         <div
-          className="chat-infocomponent__Subtitle-ichvm3-4 isMGBG"
+          className="chat-infocomponent__Subtitle-sc-ichvm3-4 PzsNv"
         />
       </div>
     </div>
@@ -99,7 +99,7 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
   className="preview__StoriesWrapper-sc-1cm7iba-0 kDMWzf"
 >
   <div
-    className="daily-users-piecomponent__ChartWrapper-guyatk-0 grczYh"
+    className="daily-users-piecomponent__ChartWrapper-sc-guyatk-0 aorWY"
   >
     <div
       className="recharts-responsive-container"
@@ -114,121 +114,121 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
       }
     />
     <div
-      className="daily-users-piecomponent__Legend-guyatk-1 cVDCKj"
+      className="daily-users-piecomponent__Legend-sc-guyatk-1 gDuQdi"
     >
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 fSWYyn"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 iyWATm"
           color="#1f77b4"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user1  (62)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 dYeQyO"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 dfVsPb"
           color="#ff7f0e"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user2  (52)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 clXpvj"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 folWuq"
           color="#2ca02c"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user3  (30)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 azQeH"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 bmwRlG"
           color="#d62728"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user4  (27)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 dswxns"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 kjpjWR"
           color="#9467bd"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user5  (16)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 bSFtvU"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 kGstdZ"
           color="#8c564b"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user6  (10)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 uFZOB"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 jXvGhk"
           color="#e377c2"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user7  (9)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 kMLOOD"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 fgvRtu"
           color="#7f7f7f"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user8  (5)
         </div>
       </div>
       <div
-        className="daily-users-piecomponent__LegendItem-guyatk-2 hHNwis"
+        className="daily-users-piecomponent__LegendItem-sc-guyatk-2 jLxdEh"
       >
         <div
-          className="daily-users-piecomponent__LegendCell-guyatk-3 DtdbN"
+          className="daily-users-piecomponent__LegendCell-sc-guyatk-3 fNgjyM"
           color="#bcbd22"
         />
         <div
-          className="daily-users-piecomponent__LegendText-guyatk-4 jUyUvt"
+          className="daily-users-piecomponent__LegendText-sc-guyatk-4 dwJbSQ"
         >
           user9  (3)
         </div>
@@ -243,7 +243,7 @@ exports[`Storyshots Graphs Pie Chart 1`] = `
   className="preview__StoriesWrapper-sc-1cm7iba-0 kDMWzf"
 >
   <div
-    className="daily-users-barscomponent__ChartWrapper-wi252y-0 jIkrwr"
+    className="daily-users-barscomponent__ChartWrapper-sc-wi252y-0 hCZPqu"
   >
     <div
       className="recharts-responsive-container"
