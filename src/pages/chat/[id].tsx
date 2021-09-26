@@ -41,7 +41,7 @@ const LoadingCard = styled(GraphCard)`
 `
 
 type ChatPageProps = {
-  initialChatInfo: Chat
+  initialChatInfo: Chat | unknown
 }
 
 const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
@@ -49,7 +49,7 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
   const id = router?.query?.id
   const { loading, data, error } = useChatData(id as string)
 
-  const { usersData, chatInfo = initialChatInfo, historicalData } = data
+  const { usersData, chatInfo = initialChatInfo as Chat, historicalData } = data
 
   if (loading && isEmpty(chatInfo)) {
     return (
