@@ -1,13 +1,4 @@
 {
-  "extends": ["airbnb", "react-app", "prettier"],
-  "plugins": ["@typescript-eslint"],
-  "settings": {
-    "import/resolver": {"node": {"extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]}}
-  },
-  "rules": {
-    "react/jsx-filename-extension": [1, {"extensions": [".tsx", ".jsx"]}],
-    "import/prefer-default-export": "off",
-    "import/extensions": "off",
-    "react/require-default-props": "off"
-  }
+  "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": ["@typescript-eslint"]
 }

@@ -1,4 +1,4 @@
-import React, { memo, PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from 'react'
 import { ThemeProvider as StyledProvider } from 'styled-components'
 import { tint } from 'polished'
 
@@ -20,7 +20,7 @@ type ThemeState = {
 
 const ThemeContext = React.createContext({} as ThemeState)
 
-const ThemeProvider = memo(({ children }: PropsWithChildren<{}>) => {
+const ThemeProvider = ({ children }: PropsWithChildren<{}>) => {
   const theme = { colors }
 
   return (
@@ -29,6 +29,6 @@ const ThemeProvider = memo(({ children }: PropsWithChildren<{}>) => {
       <StyledProvider theme={theme}>{children}</StyledProvider>
     </ThemeContext.Provider>
   )
-})
+}
 
 export { ThemeContext, ThemeProvider }
