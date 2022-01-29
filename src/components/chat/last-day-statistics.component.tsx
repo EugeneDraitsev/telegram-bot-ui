@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { sumBy, take } from 'lodash-es'
+import { take } from 'lodash-es'
 
 import { Tabs } from '../tabs.component'
 import { DailyUsersBars, DailyUsersPie } from '../graphs'
-import { GraphCard, Header, SubTitle, Title } from './chat.styles'
+import { GraphCard, Header, Title } from './chat.styles'
 import { DailyUserData } from '../../types'
 
 interface LastDayStatisticsProps {
@@ -16,10 +16,7 @@ export const LastDayStatistics = ({ usersData }: LastDayStatisticsProps) => {
   return (
     <GraphCard>
       <Header>
-        <Title>
-          Last 24h chat users statistics (Top 10 users)
-          <SubTitle>All messages: {sumBy(usersData, 'messages')}</SubTitle>
-        </Title>
+        <Title>Last 24h chat users statistics (Top 10 users)</Title>
         <Tabs
           tabs={['Barchart', 'Piechart']}
           selectedIndex={tab}

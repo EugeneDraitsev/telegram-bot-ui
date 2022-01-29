@@ -52,7 +52,7 @@ export const HistoricalStatistics = ({ historicalData }: HistoricalStatisticsPro
               <UserValues>{user?.username}</UserValues>
               <UserValues>
                 {user?.msgCount.toLocaleString()} (
-                {round((user?.msgCount ?? 0 / allMessagesCount) * 100, 2)}%)
+                {round((user?.msgCount / allMessagesCount) * 100, 2)}%)
               </UserValues>
             </React.Fragment>
           ))}

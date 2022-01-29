@@ -10,8 +10,9 @@ import {
   LabelList,
   Tooltip,
   YAxis,
+  Label,
 } from 'recharts'
-import { isEmpty, map } from 'lodash-es'
+import { isEmpty, map, sumBy } from 'lodash-es'
 
 import { DailyUserData } from '../../types'
 import { getUserName } from '../../utils'
@@ -40,50 +41,72 @@ interface DailyUsersBarsProps {
   data: DailyUserData[]
 }
 
-export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => (
-  <ChartWrapper>
-    {isEmpty(data) && <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>}
-    {!isEmpty(data) && (
-      <ResponsiveContainer>
-        <BarChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 10 }}>
-          <Bar dataKey="messages" maxBarSize={50} minPointSize={5} fill="#4A90E2">
-            {map(data, (d, i: number) => (
-              <Cell key={i} fill={getBarColor(i, data.length)} />
-            ))}
-            <LabelList
-              data={{} as any}
-              dataKey="messages"
-              content={({ x, y, width, value }: any) => (
-                <ChartLabel x={x + width / 2} y={y - 5} fill="#333333" textAnchor="middle">
-                  {value}
-                </ChartLabel>
-              )}
+export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => {
+  const allMessages = sumBy(data, 'messages')
+  return (
+    <ChartWrapper>
+      {isEmpty(data) && <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>}
+      {!isEmpty(data) && (
+        <ResponsiveContainer>
+          <BarChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 10 }}>
+            <text fontSize={14} textAnchor="middle" x={80} y={30}>
+              All messages: {allMessages}
+            </text>
+            <Bar dataKey="messages" maxBarSize={50} minPointSize={5} fill="#4A90E2">
+              {map(data, (d, i: number) => (
+                <Cell key={i} fill={getBarColor(i, data.length)} />
+              ))}
+              <LabelList
+                data={{} as any}
+                dataKey="messages"
+                content={({ x, y, width, value }: any) => (
+                  <ChartLabel x={x + width / 2} y={y - 5} fill="#333333" textAnchor="middle">
+                    {value}
+                  </ChartLabel>
+                )}
+              />
+            </Bar>
+            <Tooltip
+              cursor={false}
+              labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
+              itemStyle={{ fontSize: 12, lineHeight: '12px' }}
+              wrapperStyle={{ opacity: 0.9 }}
+              labelFormatter={(id) => getUserName(data.find((d) => d.id === id)!)}
             />
-          </Bar>
-          <Tooltip
-            cursor={false}
-            labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
-            itemStyle={{ fontSize: 12, lineHeight: '12px' }}
-            wrapperStyle={{ opacity: 0.9 }}
-            labelFormatter={(id) => getUserName(data.find((d) => d.id === id)!)}
-          />
-          <YAxis hide />
-          <XAxis
-            dataKey="id"
-            tickLine={false}
-            axisLine={{ stroke: ' #4A4A4A', strokeDasharray: '3 3' }}
-            tick={({ x, y, width, payload }): any => (
-              <g transform={`translate(${x},${y})`}>
-                <text width={width} height="auto" textAnchor="middle" fill="#4a4a4a" fontSize={12}>
-                  <tspan x={0} y={0} dy={10}>
-                    {getUserName(data.find((d) => d.id === payload.value)!)}
-                  </tspan>
-                </text>
+            <YAxis hide />
+            <XAxis
+              dataKey="id"
+              tickLine={false}
+              axisLine={{ stroke: ' #4A4A4A', strokeDasharray: '3 3' }}
+              tick={({ x, y, width, payload }): any => (
+                <g transform={`translate(${x},${y})`}>
+                  <text
+                    width={width}
+                    height="auto"
+                    textAnchor="middle"
+                    fill="#4a4a4a"
+                    fontSize={12}
+                  >
+                    <tspan x={0} y={0} dy={10}>
+                      {getUserName(data.find((d) => d.id === payload.value)!)}
+                    </tspan>
+                  </text>
+                </g>
+              )}
+            >
+              <g transform={`translate(${0}px ,${0}px)`}>
+                <Label
+                  value={`All messages: ${allMessages}`}
+                  offset={-140}
+                  position="left"
+                  fontSize={14}
+                  textAnchor="middle"
+                />
               </g>
-            )}
-          />
-        </BarChart>
-      </ResponsiveContainer>
-    )}
-  </ChartWrapper>
-)
+            </XAxis>
+          </BarChart>
+        </ResponsiveContainer>
+      )}
+    </ChartWrapper>
+  )
+}
