@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, times } from 'lodash-es'
 import fetch from 'node-fetch'
 
 import { Spinner, Card, ChatInfo, LastDayStatistics } from '../../components'
@@ -11,6 +11,7 @@ import { useChatData } from '../../hooks'
 import { Chat } from '../../types'
 import { config } from '../../api.config'
 import { HistoricalStatistics } from '../../components/chat/historical-statistics.component'
+import { WeeklyChatStatistics } from '../../components/chat/weekly-chat-statistics.component'
 
 const Wrapper = styled.div`
   display: flex;
@@ -84,17 +85,17 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
         <ChatInfo data={chatInfo} />
         {loading && (
           <>
-            <LoadingCard>
-              <Spinner />
-            </LoadingCard>
-            <LoadingCard>
-              <Spinner />
-            </LoadingCard>
+            {times(3, (i) => (
+              <LoadingCard key={i}>
+                <Spinner />
+              </LoadingCard>
+            ))}
           </>
         )}
         {!loading && (
           <>
             <LastDayStatistics usersData={usersData} />
+            <WeeklyChatStatistics usersData={usersData} />
             <HistoricalStatistics historicalData={historicalData || []} />
           </>
         )}
