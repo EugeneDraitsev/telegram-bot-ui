@@ -11,7 +11,6 @@ import { useChatData } from '../../hooks'
 import { Chat } from '../../types'
 import { config } from '../../api.config'
 import { HistoricalStatistics } from '../../components/chat/historical-statistics.component'
-import { WeeklyChatStatistics } from '../../components/chat/weekly-chat-statistics.component'
 
 const Wrapper = styled.div`
   display: flex;
@@ -85,7 +84,7 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
         <ChatInfo data={chatInfo} />
         {loading && (
           <>
-            {times(3, (i) => (
+            {times(2, (i) => (
               <LoadingCard key={i}>
                 <Spinner />
               </LoadingCard>
@@ -95,7 +94,6 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
         {!loading && (
           <>
             <LastDayStatistics usersData={usersData} />
-            <WeeklyChatStatistics usersData={usersData} />
             <HistoricalStatistics historicalData={historicalData || []} />
           </>
         )}
