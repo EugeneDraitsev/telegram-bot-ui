@@ -51,7 +51,7 @@ const IndexPage = () => {
   )
 
   const onSubmit = useCallback(
-    async (e) => {
+    async (e: React.FormEvent) => {
       e.preventDefault()
       if (chatName) {
         try {

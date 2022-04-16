@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-export default createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   html, body, #root {
     height: 100vh;
   }
@@ -24,4 +24,6 @@ export default createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-`
+` as any
+
+export default GlobalStyles

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import { ThemeProvider as StyledProvider } from 'styled-components'
 import { tint } from 'polished'
 
@@ -20,13 +20,19 @@ type ThemeState = {
 
 const ThemeContext = React.createContext({} as ThemeState)
 
-const ThemeProvider = ({ children }: PropsWithChildren<{}>) => {
+interface ThemeProviderProps {
+  children?: React.ReactChild
+}
+
+const TypedStyledProvider = StyledProvider as any
+
+const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const theme = { colors }
 
   return (
     <ThemeContext.Provider value={{ theme }}>
       <GlobalStyles />
-      <StyledProvider theme={theme}>{children}</StyledProvider>
+      <TypedStyledProvider theme={theme}>{children}</TypedStyledProvider>
     </ThemeContext.Provider>
   )
 }
