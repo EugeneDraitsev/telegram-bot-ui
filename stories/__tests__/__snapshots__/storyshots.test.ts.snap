@@ -1,0 +1,501 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Buttons Buttons 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <button
+    className="sc-35a1233a-0 bkAWDr"
+    style={
+      Object {
+        "marginRight": 10,
+      }
+    }
+  >
+    Default
+  </button>
+  <button
+    className="sc-35a1233a-0 kVsNqC"
+    disabled={true}
+    style={
+      Object {
+        "marginRight": 10,
+      }
+    }
+  >
+    Disabled
+  </button>
+  <button
+    className="sc-35a1233a-0 goQgXF"
+    style={
+      Object {
+        "marginRight": 10,
+      }
+    }
+  >
+    Loading
+  </button>
+</div>
+`;
+
+exports[`Storyshots Chat Info Chat Info 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <div
+    className="sc-579e933f-0 Wnsim"
+  >
+    <div
+      className="sc-579e933f-1 pAkVR"
+    >
+      <div
+        className="sc-579e933f-2 drOSmi"
+        src="https://chat-profile-images.s3.amazonaws.com/file_70280.jpg"
+      />
+      <div
+        className="sc-579e933f-3 fVbTBt"
+      >
+        Kabold сamp
+        <div
+          className="sc-579e933f-4 fvIuCK"
+        >
+          The kaboldest camp
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Chat Info Edge Case Chat Info 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <div
+    className="sc-579e933f-0 Wnsim"
+  >
+    <div
+      className="sc-579e933f-1 pAkVR"
+    >
+      <div
+        className="sc-579e933f-2 eyRDSU"
+        src="/favicon.png"
+      />
+      <div
+        className="sc-579e933f-3 fVbTBt"
+      >
+        Unknown Chat
+        <div
+          className="sc-579e933f-4 fvIuCK"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Graphs Bar Chart 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <div
+    className="sc-5106200e-0 iEswSN"
+  >
+    <div
+      className="recharts-responsive-container"
+      style={
+        Object {
+          "height": 400,
+          "maxHeight": undefined,
+          "minHeight": undefined,
+          "minWidth": undefined,
+          "width": "100%",
+        }
+      }
+    />
+    <div
+      className="sc-5106200e-1 bfHQZZ"
+    >
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 TwuTZ"
+          color="#1f77b4"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user1  (62)
+        </div>
+      </div>
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 bXaUOs"
+          color="#ff7f0e"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user2  (52)
+        </div>
+      </div>
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 fnruh"
+          color="#2ca02c"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user3  (30)
+        </div>
+      </div>
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 dPpreR"
+          color="#d62728"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user4  (27)
+        </div>
+      </div>
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 bDNDFa"
+          color="#9467bd"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user5  (16)
+        </div>
+      </div>
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 dEFxoq"
+          color="#8c564b"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user6  (10)
+        </div>
+      </div>
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 etvPpv"
+          color="#e377c2"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user7  (9)
+        </div>
+      </div>
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 kZRxzJ"
+          color="#7f7f7f"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user8  (5)
+        </div>
+      </div>
+      <div
+        className="sc-5106200e-2 jtDMBv"
+      >
+        <div
+          className="sc-5106200e-3 cJPUPD"
+          color="#bcbd22"
+        />
+        <div
+          className="sc-5106200e-4 iQFiAo"
+        >
+          user9  (3)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Graphs Pie Chart 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <div
+    className="sc-2fa4aa1-0 lgZmcL"
+  >
+    <div
+      className="recharts-responsive-container"
+      style={
+        Object {
+          "height": "100%",
+          "maxHeight": undefined,
+          "minHeight": undefined,
+          "minWidth": undefined,
+          "width": "100%",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`Storyshots Input Icon Input 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <div
+    className="sc-8bc49ac8-0 hejEaT"
+  >
+    <div>
+      <div
+        className="sc-5bf38733-0 dCeTKB"
+      >
+        <input
+          className="sc-5bf38733-2 djIetu"
+          value="Simple input"
+        />
+        <div
+          className="sc-5bf38733-1 cWkNTz"
+        >
+          <svg
+            fill="none"
+            height={24}
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            width={24}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="sc-5bf38733-0 dCeTKB"
+      >
+        <input
+          className="sc-5bf38733-2 djIetu"
+          value="Emoji 🦄"
+        />
+        <div
+          className="sc-5bf38733-1 cWkNTz"
+        >
+          🐈
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        className="sc-5bf38733-0 dCeTKB"
+      >
+        <input
+          className="sc-5bf38733-2 isXQyu"
+          style={
+            Object {
+              "width": 215,
+            }
+          }
+          value="123,43"
+        />
+        <div
+          className="sc-5bf38733-1 cWkNTz"
+        >
+          $
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Input Simple Input 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <div
+    className="sc-5bf38733-0 dCeTKB"
+  >
+    <input
+      className="sc-5bf38733-2 RkQTk"
+      value="Simple input"
+    />
+  </div>
+</div>
+`;
+
+exports[`Storyshots Spinners Spinners 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <svg
+    aria-label="spinner"
+    className="sc-789085aa-0 iyAsJP"
+    style={
+      Object {
+        "height": 50,
+        "width": 50,
+      }
+    }
+    viewBox="25 25 50 50"
+  >
+    <circle
+      className="sc-789085aa-1 kwFTfU"
+      cx="50"
+      cy="50"
+      fill="none"
+      r="20"
+      strokeMiterlimit="10"
+      strokeWidth={2}
+    />
+  </svg>
+  <svg
+    aria-label="spinner"
+    className="sc-789085aa-0 iyAsJP"
+    style={
+      Object {
+        "height": 105,
+        "width": 105,
+      }
+    }
+    viewBox="25 25 50 50"
+  >
+    <circle
+      className="sc-789085aa-1 kwFTfU"
+      cx="50"
+      cy="50"
+      fill="none"
+      r="20"
+      strokeMiterlimit="10"
+      strokeWidth={2}
+    />
+  </svg>
+  <svg
+    aria-label="spinner"
+    className="sc-789085aa-0 iyAsJP"
+    style={
+      Object {
+        "height": 50,
+        "width": 50,
+      }
+    }
+    viewBox="25 25 50 50"
+  >
+    <circle
+      className="sc-789085aa-1 fevFdn"
+      color="red"
+      cx="50"
+      cy="50"
+      fill="none"
+      r="20"
+      strokeMiterlimit="10"
+      strokeWidth={2}
+    />
+  </svg>
+  <svg
+    aria-label="spinner"
+    className="sc-789085aa-0 iyAsJP"
+    style={
+      Object {
+        "height": 100,
+        "width": 100,
+      }
+    }
+    viewBox="25 25 50 50"
+  >
+    <circle
+      className="sc-789085aa-1 dAcDqb"
+      color="green"
+      cx="50"
+      cy="50"
+      fill="none"
+      r="20"
+      strokeMiterlimit="10"
+      strokeWidth={2}
+    />
+  </svg>
+</div>
+`;
+
+exports[`Storyshots Tabs Simple Tabs 1`] = `
+<div
+  className="sc-8026f0e2-0 cgwtoa"
+>
+  <div
+    className="sc-3af09dc2-0 cRuVtl"
+  >
+    <div
+      className="sc-306c999d-0 bdwwvB"
+    >
+      <div
+        className="sc-306c999d-1 curOfl"
+      >
+        <div
+          className="sc-306c999d-2 ezDYkl tab active"
+          onClick={[Function]}
+        >
+          Tab1
+        </div>
+        <div
+          className="sc-306c999d-2 ezDYkl tab"
+          onClick={[Function]}
+        >
+          Veeeeeery Loooooong Name Tab
+        </div>
+        <div
+          className="sc-306c999d-2 ezDYkl tab"
+          onClick={[Function]}
+        >
+          Some other tab
+        </div>
+        <div
+          className="sc-306c999d-2 ezDYkl tab"
+          onClick={[Function]}
+        >
+          tab 4
+        </div>
+        <div
+          className="sc-306c999d-3 ieaAkR"
+          tabIndex={0}
+          width={0}
+          x={0}
+        />
+      </div>
+    </div>
+    <div
+      className="sc-3af09dc2-1 gnHLoU"
+    >
+      selected 
+      Tab1
+       tab!
+    </div>
+  </div>
+</div>
+`;
