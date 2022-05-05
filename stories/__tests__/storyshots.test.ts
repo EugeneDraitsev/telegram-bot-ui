@@ -1,8 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import initStoryshots from '@storybook/addon-storyshots'
-//
-// initStoryshots({ /* configuration options */ })
+import initStoryshots from '@storybook/addon-storyshots'
 
-describe('Placeholder', () => {
-  test.todo('Re-enable initStoryshots when React 18 will be supported')
+initStoryshots({
+  /* configuration options */
 })
