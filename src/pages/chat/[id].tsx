@@ -16,8 +16,11 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   margin: auto;
+`
+const Container = styled.div`
+  width: 1200px;
 `
 const LoadingWrapper = styled(Wrapper)`
   min-height: 100vh;
@@ -83,19 +86,19 @@ const ChatPage = ({ initialChatInfo }: ChatPageProps) => {
       <Wrapper>
         <ChatInfo data={chatInfo} />
         {loading && (
-          <>
+          <Container>
             {times(2, (i) => (
               <LoadingCard key={i}>
                 <Spinner />
               </LoadingCard>
             ))}
-          </>
+          </Container>
         )}
         {!loading && (
-          <>
+          <Container>
             <LastDayStatistics usersData={usersData} />
             <HistoricalStatistics historicalData={historicalData || []} />
-          </>
+          </Container>
         )}
       </Wrapper>
     </>
