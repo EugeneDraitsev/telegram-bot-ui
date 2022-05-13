@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 `
 const Container = styled.div`
   width: 1200px;
+  max-width: 100vw;
 `
 const LoadingWrapper = styled(Wrapper)`
   min-height: 100vh;
