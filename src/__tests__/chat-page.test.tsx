@@ -4,9 +4,12 @@ import { render, screen } from '@testing-library/react'
 import ChatPage from '../pages/chat/[id]'
 import { Chat } from '../types'
 import { ThemeProvider } from '../contexts'
+jest.mock('../hooks/use-chat-data.hook', () => ({
+  useChatData: jest.fn(),
+}))
+import * as hooks from '../hooks/use-chat-data.hook'
 
 const useRouter = jest.spyOn(require('next/router'), 'useRouter')
-const useChatData = jest.spyOn(require('../hooks/use-chat-data.hook'), 'useChatData')
 
 const initialChatInfo = {
   title: 'Test Title',
@@ -19,7 +22,8 @@ describe('Chat Page', () => {
       query: { id: '-1' },
     }))
 
-    useChatData.mockImplementationOnce(() => ({
+    // @ts-ignore
+    hooks.useChatData.mockReturnValue({
       data: {
         usersData: [
           { id: 1, username: 'user1', messages: 62 },
@@ -40,7 +44,7 @@ describe('Chat Page', () => {
       },
       loading: false,
       error: '',
-    }))
+    })
 
     render(
       <ThemeProvider>
@@ -59,7 +63,8 @@ describe('Chat Page', () => {
       query: { id: '-1' },
     }))
 
-    useChatData.mockImplementationOnce(() => ({ data: {}, loading: true, error: '' }))
+    // @ts-ignore
+    hooks.useChatData.mockImplementationOnce(() => ({ data: {}, loading: true, error: '' }))
 
     render(
       <ThemeProvider>
@@ -77,7 +82,8 @@ describe('Chat Page', () => {
       query: { id: '-1' },
     }))
 
-    useChatData.mockImplementationOnce(() => ({
+    // @ts-ignore
+    hooks.useChatData.mockImplementationOnce(() => ({
       data: {},
       loading: false,
       error: 'Something Went Wrong',
