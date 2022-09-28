@@ -64,6 +64,9 @@
   "resolutions": {
     "react-test-renderer": "18.1.0"
   },
+  "engines": {
+    "node": ">=16.x"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
