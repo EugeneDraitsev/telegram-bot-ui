@@ -63,3 +63,5 @@ export default async function ChatLayout({
     </>
   )
 }
+
+export const runtime = 'experimental-edge'
