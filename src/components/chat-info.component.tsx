@@ -14,7 +14,7 @@ export const ChatInfo = ({ data, className }: ChatInfoProps) => (
         style={{
           backgroundImage: `url(${
             data?.photo?.big_file_id
-              ? `/chat/image/${data?.photo?.big_file_id}`
+              ? `/chat/image/${data?.photo?.big_file_id}.jpg`
               : '/favicon.png'
           })`,
         }}
