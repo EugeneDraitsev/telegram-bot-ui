@@ -2,12 +2,12 @@
 
 exports[`Storyshots Buttons Buttons 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
 >
   <button
-    className="sc-35a1233a-0 bkAWDr"
+    className="sc-f626ec9f-0 bJSpKA"
     style={
-      Object {
+      {
         "marginRight": 10,
       }
     }
@@ -15,10 +15,10 @@ exports[`Storyshots Buttons Buttons 1`] = `
     Default
   </button>
   <button
-    className="sc-35a1233a-0 kVsNqC"
+    className="sc-f626ec9f-0 iFleQB"
     disabled={true}
     style={
-      Object {
+      {
         "marginRight": 10,
       }
     }
@@ -26,9 +26,9 @@ exports[`Storyshots Buttons Buttons 1`] = `
     Disabled
   </button>
   <button
-    className="sc-35a1233a-0 goQgXF"
+    className="sc-f626ec9f-0 kRRYDy"
     style={
-      Object {
+      {
         "marginRight": 10,
       }
     }
@@ -40,24 +40,32 @@ exports[`Storyshots Buttons Buttons 1`] = `
 
 exports[`Storyshots Chat Info Chat Info 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
 >
   <div
-    className="sc-579e933f-0 Wnsim"
+    className="flex justify-center w-full bg-neutral-300 undefined"
   >
     <div
-      className="sc-579e933f-1 pAkVR"
+      className="flex items-center w-full max-w-[1200px] text-left py-1 px-4"
     >
       <div
-        className="sc-579e933f-2 drOSmi"
-        src="https://chat-profile-images.s3.amazonaws.com/file_70280.jpg"
+        className="w-[70px] h-[70px] bg-contain rounded-full border-2 border-white"
+        style={
+          {
+            "backgroundImage": "url(/favicon.png)",
+          }
+        }
       />
       <div
-        className="sc-579e933f-3 fVbTBt"
+        className="ml-5"
       >
-        Kabold сamp
         <div
-          className="sc-579e933f-4 fvIuCK"
+          className="text-2xl font-light leading-none"
+        >
+          Kabold сamp
+        </div>
+        <div
+          className="text-sm"
         >
           The kaboldest camp
         </div>
@@ -69,24 +77,32 @@ exports[`Storyshots Chat Info Chat Info 1`] = `
 
 exports[`Storyshots Chat Info Edge Case Chat Info 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
 >
   <div
-    className="sc-579e933f-0 Wnsim"
+    className="flex justify-center w-full bg-neutral-300 undefined"
   >
     <div
-      className="sc-579e933f-1 pAkVR"
+      className="flex items-center w-full max-w-[1200px] text-left py-1 px-4"
     >
       <div
-        className="sc-579e933f-2 eyRDSU"
-        src="/favicon.png"
+        className="w-[70px] h-[70px] bg-contain rounded-full border-2 border-white"
+        style={
+          {
+            "backgroundImage": "url(/favicon.png)",
+          }
+        }
       />
       <div
-        className="sc-579e933f-3 fVbTBt"
+        className="ml-5"
       >
-        Unknown Chat
         <div
-          className="sc-579e933f-4 fvIuCK"
+          className="text-2xl font-light leading-none"
+        >
+          Unknown Chat
+        </div>
+        <div
+          className="text-sm"
         />
       </div>
     </div>
@@ -96,15 +112,15 @@ exports[`Storyshots Chat Info Edge Case Chat Info 1`] = `
 
 exports[`Storyshots Graphs Bar Chart 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
 >
   <div
-    className="sc-5106200e-0 iEswSN"
+    className="sc-4fd34fbd-0 fNCuMC"
   >
     <div
       className="recharts-responsive-container"
       style={
-        Object {
+        {
           "height": 400,
           "maxHeight": undefined,
           "minHeight": undefined,
@@ -114,121 +130,121 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
       }
     />
     <div
-      className="sc-5106200e-1 bfHQZZ"
+      className="sc-4fd34fbd-1 bGmAMu"
     >
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 TwuTZ"
+          className="sc-4fd34fbd-3 ivILxB"
           color="#1f77b4"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user1  (62)
         </div>
       </div>
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 bXaUOs"
+          className="sc-4fd34fbd-3 furick"
           color="#ff7f0e"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user2  (52)
         </div>
       </div>
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 fnruh"
+          className="sc-4fd34fbd-3 dltUwp"
           color="#2ca02c"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user3  (30)
         </div>
       </div>
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 dPpreR"
+          className="sc-4fd34fbd-3 fQokOl"
           color="#d62728"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user4  (27)
         </div>
       </div>
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 bDNDFa"
+          className="sc-4fd34fbd-3 jGtajO"
           color="#9467bd"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user5  (16)
         </div>
       </div>
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 dEFxoq"
+          className="sc-4fd34fbd-3 fSdQEa"
           color="#8c564b"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user6  (10)
         </div>
       </div>
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 etvPpv"
+          className="sc-4fd34fbd-3 jSmEXD"
           color="#e377c2"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user7  (9)
         </div>
       </div>
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 kZRxzJ"
+          className="sc-4fd34fbd-3 bXYYF"
           color="#7f7f7f"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user8  (5)
         </div>
       </div>
       <div
-        className="sc-5106200e-2 jtDMBv"
+        className="sc-4fd34fbd-2 jYdfXU"
       >
         <div
-          className="sc-5106200e-3 cJPUPD"
+          className="sc-4fd34fbd-3 iRFyQj"
           color="#bcbd22"
         />
         <div
-          className="sc-5106200e-4 iQFiAo"
+          className="sc-4fd34fbd-4 bBVCef"
         >
           user9  (3)
         </div>
@@ -240,15 +256,15 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
 
 exports[`Storyshots Graphs Pie Chart 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
 >
   <div
-    className="sc-2fa4aa1-0 lgZmcL"
+    className="sc-8a4bcb7a-0 iNbSCs"
   >
     <div
       className="recharts-responsive-container"
       style={
-        Object {
+        {
           "height": "100%",
           "maxHeight": undefined,
           "minHeight": undefined,
@@ -263,21 +279,26 @@ exports[`Storyshots Graphs Pie Chart 1`] = `
 
 exports[`Storyshots Input Icon Input 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
 >
   <div
-    className="sc-8bc49ac8-0 hejEaT"
+    className="flex"
+    style={
+      {
+        "gap": 10,
+      }
+    }
   >
     <div>
       <div
-        className="sc-5bf38733-0 dCeTKB"
+        className="sc-6bbadba6-0 fTylqh"
       >
         <input
-          className="sc-5bf38733-2 djIetu"
-          value="Simple input"
+          className="sc-6bbadba6-2 ltigW"
+          defaultValue="Simple input"
         />
         <div
-          className="sc-5bf38733-1 cWkNTz"
+          className="sc-6bbadba6-1 bKJnmb"
         >
           <svg
             fill="none"
@@ -299,14 +320,14 @@ exports[`Storyshots Input Icon Input 1`] = `
     </div>
     <div>
       <div
-        className="sc-5bf38733-0 dCeTKB"
+        className="sc-6bbadba6-0 fTylqh"
       >
         <input
-          className="sc-5bf38733-2 djIetu"
+          className="sc-6bbadba6-2 ltigW"
           value="Emoji 🦄"
         />
         <div
-          className="sc-5bf38733-1 cWkNTz"
+          className="sc-6bbadba6-1 bKJnmb"
         >
           🐈
         </div>
@@ -314,19 +335,19 @@ exports[`Storyshots Input Icon Input 1`] = `
     </div>
     <div>
       <div
-        className="sc-5bf38733-0 dCeTKB"
+        className="sc-6bbadba6-0 fTylqh"
       >
         <input
-          className="sc-5bf38733-2 isXQyu"
+          className="sc-6bbadba6-2 iPIqiS"
           style={
-            Object {
+            {
               "width": 215,
             }
           }
           value="123,43"
         />
         <div
-          className="sc-5bf38733-1 cWkNTz"
+          className="sc-6bbadba6-1 bKJnmb"
         >
           $
         </div>
@@ -336,30 +357,30 @@ exports[`Storyshots Input Icon Input 1`] = `
 </div>
 `;
 
-exports[`Storyshots Input Simple Input 1`] = `
+exports[`Storyshots Input Simple 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
 >
   <div
-    className="sc-5bf38733-0 dCeTKB"
+    className="sc-6bbadba6-0 fTylqh"
   >
     <input
-      className="sc-5bf38733-2 RkQTk"
+      className="sc-6bbadba6-2 hxYXJQ"
       value="Simple input"
     />
   </div>
 </div>
 `;
 
-exports[`Storyshots Spinners Spinners 1`] = `
+exports[`Storyshots Spinners Different Spinners 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
 >
   <svg
     aria-label="spinner"
-    className="sc-789085aa-0 iyAsJP"
+    className="sc-5a866cde-0 cqOKWK"
     style={
-      Object {
+      {
         "height": 50,
         "width": 50,
       }
@@ -367,7 +388,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-789085aa-1 kwFTfU"
+      className="sc-5a866cde-1 bWNqZO"
       cx="50"
       cy="50"
       fill="none"
@@ -378,9 +399,9 @@ exports[`Storyshots Spinners Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="sc-789085aa-0 iyAsJP"
+    className="sc-5a866cde-0 cqOKWK"
     style={
-      Object {
+      {
         "height": 105,
         "width": 105,
       }
@@ -388,7 +409,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-789085aa-1 kwFTfU"
+      className="sc-5a866cde-1 bWNqZO"
       cx="50"
       cy="50"
       fill="none"
@@ -399,9 +420,9 @@ exports[`Storyshots Spinners Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="sc-789085aa-0 iyAsJP"
+    className="sc-5a866cde-0 cqOKWK"
     style={
-      Object {
+      {
         "height": 50,
         "width": 50,
       }
@@ -409,7 +430,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-789085aa-1 fevFdn"
+      className="sc-5a866cde-1 eOGQgN"
       color="red"
       cx="50"
       cy="50"
@@ -421,9 +442,9 @@ exports[`Storyshots Spinners Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="sc-789085aa-0 iyAsJP"
+    className="sc-5a866cde-0 cqOKWK"
     style={
-      Object {
+      {
         "height": 100,
         "width": 100,
       }
@@ -431,7 +452,7 @@ exports[`Storyshots Spinners Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-789085aa-1 dAcDqb"
+      className="sc-5a866cde-1 kTWauN"
       color="green"
       cx="50"
       cy="50"
@@ -444,45 +465,73 @@ exports[`Storyshots Spinners Spinners 1`] = `
 </div>
 `;
 
-exports[`Storyshots Tabs Simple Tabs 1`] = `
+exports[`Storyshots Spinners Simple Spinner 1`] = `
 <div
-  className="sc-8026f0e2-0 cgwtoa"
+  className="sc-2bff786d-0 cbqWch"
+>
+  <svg
+    aria-label="spinner"
+    className="sc-5a866cde-0 cqOKWK"
+    style={
+      {
+        "height": 50,
+        "width": 50,
+      }
+    }
+    viewBox="25 25 50 50"
+  >
+    <circle
+      className="sc-5a866cde-1 bWNqZO"
+      cx="50"
+      cy="50"
+      fill="none"
+      r="20"
+      strokeMiterlimit="10"
+      strokeWidth={2}
+    />
+  </svg>
+</div>
+`;
+
+exports[`Storyshots Tabs Long Tabs 1`] = `
+<div
+  className="sc-2bff786d-0 cbqWch"
 >
   <div
-    className="sc-3af09dc2-0 cRuVtl"
+    className="sc-cc4f5331-0 kSmzgg"
   >
     <div
-      className="sc-306c999d-0 bdwwvB"
+      className="sc-edca5a4e-0 fllopP"
     >
       <div
-        className="sc-306c999d-1 curOfl"
+        className="sc-edca5a4e-1 kCoayL"
       >
         <div
-          className="sc-306c999d-2 ezDYkl tab active"
+          className="sc-edca5a4e-2 SpdGT tab active"
           onClick={[Function]}
         >
           Tab1
         </div>
         <div
-          className="sc-306c999d-2 ezDYkl tab"
+          className="sc-edca5a4e-2 SpdGT tab"
           onClick={[Function]}
         >
           Veeeeeery Loooooong Name Tab
         </div>
         <div
-          className="sc-306c999d-2 ezDYkl tab"
+          className="sc-edca5a4e-2 SpdGT tab"
           onClick={[Function]}
         >
           Some other tab
         </div>
         <div
-          className="sc-306c999d-2 ezDYkl tab"
+          className="sc-edca5a4e-2 SpdGT tab"
           onClick={[Function]}
         >
           tab 4
         </div>
         <div
-          className="sc-306c999d-3 ieaAkR"
+          className="sc-edca5a4e-3 dRwWEz"
           tabIndex={0}
           width={0}
           x={0}
@@ -490,11 +539,50 @@ exports[`Storyshots Tabs Simple Tabs 1`] = `
       </div>
     </div>
     <div
-      className="sc-3af09dc2-1 gnHLoU"
+      className="sc-cc4f5331-1 bVIVTB"
     >
       selected 
       Tab1
        tab!
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Tabs Simple Tabs 1`] = `
+<div
+  className="sc-2bff786d-0 cbqWch"
+>
+  <div
+    className="sc-edca5a4e-0 fllopP"
+  >
+    <div
+      className="sc-edca5a4e-1 kCoayL"
+    >
+      <div
+        className="sc-edca5a4e-2 izKQWD tab"
+        onClick={[Function]}
+      >
+        Tab1
+      </div>
+      <div
+        className="sc-edca5a4e-2 izKQWD tab"
+        onClick={[Function]}
+      >
+        Tab 2
+      </div>
+      <div
+        className="sc-edca5a4e-2 izKQWD tab"
+        onClick={[Function]}
+      >
+        Tab 3
+      </div>
+      <div
+        className="sc-edca5a4e-3 jsxhFw"
+        tabIndex={-1}
+        width={0}
+        x={0}
+      />
     </div>
   </div>
 </div>

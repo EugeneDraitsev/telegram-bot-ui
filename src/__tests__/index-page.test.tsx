@@ -2,9 +2,9 @@ import React from 'react'
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { FetchMock } from '@react-mock/fetch'
 
-import Index from '../pages'
-import { ThemeProvider } from '../contexts'
-import { config } from '../api.config'
+import Index from '../app/page'
+import { ThemeProvider } from '@/contexts'
+import { CONFIG } from '@/constants'
 
 describe('Index Page', () => {
   it('shows correct text', () => {
@@ -14,7 +14,9 @@ describe('Index Page', () => {
       </ThemeProvider>,
     )
 
-    expect(screen.queryByText("Hi, I'm a Telegram chat bot.")).toBeInTheDocument()
+    expect(
+      screen.queryByText("Hi, I'm a Telegram chat bot."),
+    ).toBeInTheDocument()
     expect(
       screen.queryByText(/If you have already added the bot to your chat/i),
     ).toBeInTheDocument()
@@ -25,8 +27,10 @@ describe('Index Page', () => {
       <FetchMock
         mocks={[
           {
-            matcher: `${config.rest}/search?name=test`,
-            response: [{ id: -1, title: 'Test Chat', description: 'Test Description' }],
+            matcher: `${CONFIG.rest}/search?name=test`,
+            response: [
+              { id: -1, title: 'Test Chat', description: 'Test Description' },
+            ],
           },
         ]}
       >

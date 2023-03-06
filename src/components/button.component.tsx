@@ -1,14 +1,24 @@
+'use client'
+
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { darken } from 'polished'
 
-// eslint-disable-next-line react/button-has-type,react/jsx-props-no-spreading
-export const Button = styled(({ loading, ...props }) => <button {...props} />)<{
+interface ButtonProps
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   loading?: boolean
-}>`
+}
+
+export const Button = styled(({ loading, ...props }: ButtonProps) => (
+  <button {...props} />
+))`
   cursor: pointer;
   height: 40px;
-  background: ${({ disabled, theme: { colors } }) => (disabled ? colors.inactive : colors.primary)};
+  background-color: ${({ disabled, theme: { colors } }) =>
+    disabled ? colors.inactive : colors.primary};
   border: none;
   box-sizing: border-box;
   border-radius: 6px;

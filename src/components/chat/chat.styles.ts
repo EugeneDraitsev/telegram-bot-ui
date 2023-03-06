@@ -1,6 +1,8 @@
+'use client'
+
 import styled from 'styled-components'
 
-import { Card } from '../card.component'
+import { Card } from '@/components'
 
 export const GraphCard = styled(Card)`
   display: flex;

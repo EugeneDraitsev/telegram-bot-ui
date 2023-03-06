@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { isEmpty, noop } from 'lodash-es'
 
-import { safeParse } from '../utils'
-import { Chat, DailyUserData, HistoricalData } from '../types'
-import { config } from '../api.config'
+import { safeParse } from '@/utils'
+import { CONFIG } from '@/constants'
+import type { DailyUserData, HistoricalData } from '@/types'
 
 export type ChatData = {
   usersData: DailyUserData[]
-  chatInfo: Chat
   historicalData?: HistoricalData[]
 }
 
@@ -18,7 +17,7 @@ export const useChatData = (chatId: string | number) => {
 
   useEffect(() => {
     if (chatId) {
-      const socket = new WebSocket(config.wss)
+      const socket = new WebSocket(CONFIG.wss)
       socket.onopen = () => {
         socket.send(JSON.stringify({ action: 'stats', chatId }))
       }
@@ -27,9 +26,8 @@ export const useChatData = (chatId: string | number) => {
         setLoading(false)
 
         if (!isEmpty(newData)) {
-          return setChatData(({ usersData, chatInfo }) => ({
+          return setChatData(({ usersData }) => ({
             usersData: newData.usersData || usersData,
-            chatInfo: newData.chatInfo || chatInfo,
             historicalData: newData.historicalData,
           }))
         }

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
@@ -47,7 +49,12 @@ interface SpinnerProps {
   className?: string
 }
 
-export const Spinner = ({ size = 50, color, strokeWidth = 2, className }: SpinnerProps) => (
+export const Spinner = ({
+  size = 50,
+  color,
+  strokeWidth = 2,
+  className,
+}: SpinnerProps) => (
   <Svg
     className={className}
     style={{ width: size, height: size }}

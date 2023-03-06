@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-import { Chat, DailyUserData } from '../types'
+import type { Chat, DailyUserData } from '@/types'
 
 export const safeParse = (parseString: string) => {
   try {
@@ -14,4 +13,5 @@ export const getUserName = (user: DailyUserData | Chat) =>
   `${user?.first_name || ''} ${user?.last_name || ''}`.trim() ||
   String(user?.id ?? 'Unknown Chat')
 
-export const getChatName = (chat: Chat): string => chat?.title || getUserName(chat)
+export const getChatName = (chat: Chat): string =>
+  chat?.title || getUserName(chat)

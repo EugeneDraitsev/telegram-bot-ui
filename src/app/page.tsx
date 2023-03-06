@@ -1,12 +1,14 @@
+'use client'
+
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { Search } from 'react-feather'
 import { isArray, isEmpty } from 'lodash-es'
 
-import { Button, ChatInfo, Input } from '../components'
-import { config } from '../api.config'
-import { Chat } from '../types'
+import { Button, ChatInfo, Input } from '@/components'
+import { CONFIG } from '@/constants'
+import type { Chat } from '@/types'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -58,7 +60,7 @@ const IndexPage = () => {
           setLoading(true)
           setError('')
           setSubmittedName(chatName)
-          const url = `${config.rest}/search?name=${encodeURI(chatName)}`
+          const url = `${CONFIG.rest}/search?name=${encodeURI(chatName)}`
           const newChats = await fetch(url).then((x) => x.json())
           setChats(newChats)
         } catch (err) {
@@ -74,10 +76,12 @@ const IndexPage = () => {
   return (
     <Wrapper>
       <Content>
-        <h4>Hi, I&apos;m a Telegram chat bot.</h4>
-        <p>
-          If you have already added the bot to your chat, try to find the chat by name or just
-          invoke <Command>/s</Command> command in telegram chat.
+        <h4 className="text-md font-bold my-4">
+          Hi, I&apos;m a Telegram chat bot.
+        </h4>
+        <p className="my-2">
+          If you have already added the bot to your chat, try to find the chat
+          by name or just invoke <Command>/s</Command> command in telegram chat.
         </p>
         <form onSubmit={onSubmit}>
           <SearchInput
@@ -93,10 +97,7 @@ const IndexPage = () => {
         </form>
         {chats?.map((chat) => (
           <Link href={`/chat/${chat.id}`} key={chat.id}>
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a>
-              <SearchChatInfo data={chat} />
-            </a>
+            <SearchChatInfo data={chat} />
           </Link>
         ))}
         {error && <p>{error}</p>}

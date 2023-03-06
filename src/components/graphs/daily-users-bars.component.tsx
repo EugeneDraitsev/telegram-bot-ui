@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import styled from 'styled-components'
 import { tint } from 'polished'
@@ -13,8 +15,8 @@ import {
 } from 'recharts'
 import { isEmpty, map } from 'lodash-es'
 
-import { DailyUserData } from '../../types'
-import { getUserName } from '../../utils'
+import { getUserName } from '@/utils'
+import type { DailyUserData } from '@/types'
 
 const ChartWrapper = styled.div`
   width: 100%;
@@ -34,7 +36,8 @@ const EmptyWrapper = styled.div`
   padding: 20px;
 `
 
-const getBarColor = (i: number, length: number) => tint(i / (length * 1.3), '#4A90E2')
+const getBarColor = (i: number, length: number) =>
+  tint(i / (length * 1.3), '#4A90E2')
 
 interface DailyUsersBarsProps {
   data: DailyUserData[]
@@ -42,11 +45,21 @@ interface DailyUsersBarsProps {
 
 export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => (
   <ChartWrapper>
-    {isEmpty(data) && <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>}
+    {isEmpty(data) && (
+      <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>
+    )}
     {!isEmpty(data) && (
       <ResponsiveContainer>
-        <BarChart data={data} margin={{ top: 20, right: 20, left: 20, bottom: 10 }}>
-          <Bar dataKey="messages" maxBarSize={50} minPointSize={5} fill="#4A90E2">
+        <BarChart
+          data={data}
+          margin={{ top: 20, right: 20, left: 20, bottom: 10 }}
+        >
+          <Bar
+            dataKey="messages"
+            maxBarSize={50}
+            minPointSize={5}
+            fill="#4A90E2"
+          >
             {map(data, (d, i: number) => (
               <Cell key={i} fill={getBarColor(i, data.length)} />
             ))}
@@ -54,7 +67,12 @@ export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => (
               data={{} as any}
               dataKey="messages"
               content={({ x, y, width, value }: any) => (
-                <ChartLabel x={x + width / 2} y={y - 5} fill="#333333" textAnchor="middle">
+                <ChartLabel
+                  x={x + width / 2}
+                  y={y - 5}
+                  fill="#333333"
+                  textAnchor="middle"
+                >
                   {value}
                 </ChartLabel>
               )}
@@ -74,7 +92,13 @@ export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => (
             axisLine={{ stroke: ' #4A4A4A', strokeDasharray: '3 3' }}
             tick={({ x, y, width, payload }): any => (
               <g transform={`translate(${x},${y})`}>
-                <text width={width} height="auto" textAnchor="middle" fill="#4a4a4a" fontSize={12}>
+                <text
+                  width={width}
+                  height="auto"
+                  textAnchor="middle"
+                  fill="#4a4a4a"
+                  fontSize={12}
+                >
                   <tspan x={0} y={0} dy={10}>
                     {getUserName(data.find((d) => d.id === payload.value)!)}
                   </tspan>

@@ -1,7 +1,5 @@
-import React from 'react'
-
-import { DailyUsersPie, DailyUsersBars } from '../src/components'
-import { DailyUserData } from '../src/types'
+import { DailyUsersPie, DailyUsersBars } from '@/components'
+import type { DailyUserData } from '@/types'
 
 export default {
   title: 'Graphs',

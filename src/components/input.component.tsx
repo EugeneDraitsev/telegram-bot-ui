@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import styled, { StyledComponentPropsWithRef } from 'styled-components'
+import styled from 'styled-components'
 
 const Holder = styled.div`
   position: relative;
@@ -12,12 +14,12 @@ const Icon = styled.div`
   left: 8px;
   transform: translateY(-50%);
 `
-const BaseInput = styled.input<{ hasIcon: boolean; iconPadding: number }>`
+const BaseInput = styled.input<{ $hasIcon: boolean; $iconPadding: number }>`
   display: block;
   border: 1px solid ${(p) => p.theme.colors.inactive};
   border-radius: 6px;
   height: 35px;
-  padding: ${(p) => (p.hasIcon ? `0 8px 0 ${p.iconPadding}px` : '0 8px')};
+  padding: ${(p) => (p.$hasIcon ? `0 8px 0 ${p.$iconPadding}px` : '0 8px')};
   transition: border 0.3s ease-in-out;
   font-size: 14px;
   + ${Icon} {
@@ -34,15 +36,24 @@ const BaseInput = styled.input<{ hasIcon: boolean; iconPadding: number }>`
   }
 `
 
-type InputProps = StyledComponentPropsWithRef<'input'> & {
+interface InputProps
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   icon?: JSX.Element | string
   iconPadding?: number
+  className?: string
 }
 
-export const Input = ({ icon, className, iconPadding = 35, ...props }: InputProps) => (
+export const Input = ({
+  icon,
+  className,
+  iconPadding = 35,
+  ...props
+}: InputProps) => (
   <Holder className={className}>
-    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-    <BaseInput hasIcon={Boolean(icon)} iconPadding={iconPadding} {...props} />
+    <BaseInput $hasIcon={Boolean(icon)} $iconPadding={iconPadding} {...props} />
     {icon && <Icon>{icon}</Icon>}
   </Holder>
 )

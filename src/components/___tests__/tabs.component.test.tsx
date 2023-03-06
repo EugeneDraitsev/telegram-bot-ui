@@ -1,18 +1,27 @@
 import React from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { render, screen, act, fireEvent } from '@testing-library/react'
 
 import { Tabs } from '..'
-import { ThemeProvider } from '../../contexts'
+import { ThemeProvider } from '@/contexts'
 
 describe('Tabs Component', () => {
   it('handles tab switching properly', () => {
-    const tabs = ['Tab1', 'Veeeeeery Loooooong Name Tab', 'Some other tab', 'tab 4']
+    const tabs = [
+      'Tab1',
+      'Veeeeeery Loooooong Name Tab',
+      'Some other tab',
+      'tab 4',
+    ]
     const handleTabClick = jest.fn()
 
     render(
       <ThemeProvider>
-        <Tabs tabs={tabs} selectedIndex={0} onTabClick={handleTabClick} tabWidth={100} />
+        <Tabs
+          tabs={tabs}
+          selectedIndex={0}
+          onTabClick={handleTabClick}
+          tabWidth={100}
+        />
       </ThemeProvider>,
     )
 

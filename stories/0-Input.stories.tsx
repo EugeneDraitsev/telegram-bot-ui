@@ -1,40 +1,40 @@
-import React from 'react'
 import { GitHub } from 'react-feather'
-import styled from 'styled-components'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { text } from '@storybook/addon-knobs'
 
-import { Input } from '../src/components'
+import { Input } from '@/components'
 
 export default {
   title: 'Input',
+  component: Input,
+  argTypes: {
+    icon: {
+      control: { type: 'text' },
+    },
+  },
 }
 
-const Story = styled.div`
-  > div {
-    margin: 10px 0;
-  }
-`
-
-export const SimpleInput = () => {
-  const value = text('value', 'Simple input')
-  return (
-    <>
-      <Input value={value} />
-    </>
-  )
+export const Simple = {
+  args: {
+    value: 'Simple input',
+  },
 }
 
-export const IconInput = () => {
-  const valueIcon = text('valueIcon', 'Simple input')
-  const valueEmoji = text('valueEmoji', 'Emoji 🦄')
-  const valueCurrency = text('valueCurrency', '123,43')
-
-  return (
-    <Story>
-      <div><Input icon={<GitHub />} value={valueIcon} /></div>
-      <div><Input icon="🐈" value={valueEmoji} /></div>
-      <div><Input icon="$" iconPadding={20} value={valueCurrency} style={{ width: 215 }} /></div>
-    </Story>
-  )
+export const IconInput = {
+  render: () => (
+    <div className="flex" style={{ gap: 10 }}>
+      <div>
+        <Input icon={<GitHub />} defaultValue={'Simple input'} />
+      </div>
+      <div>
+        <Input icon="🐈" value={'Emoji 🦄'} />
+      </div>
+      <div>
+        <Input
+          icon="$"
+          iconPadding={20}
+          value={'123,43'}
+          style={{ width: 215 }}
+        />
+      </div>
+    </div>
+  ),
 }

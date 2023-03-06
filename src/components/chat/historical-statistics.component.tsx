@@ -1,11 +1,13 @@
+'use client'
+
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { orderBy, round, sumBy } from 'lodash-es'
 
-import { Tabs } from '../tabs.component'
+import { Tabs } from '@/components'
 import { GraphCard, Header, SubTitle, Title } from './chat.styles'
-import { HistoricalData as HistoricalDataType } from '../../types'
 import { HistoricalBars } from '../graphs/historical-bars.component'
+import type { HistoricalData as HistoricalDataType } from '@/types'
 
 interface HistoricalStatisticsProps {
   historicalData: HistoricalDataType[]
@@ -28,7 +30,9 @@ const HistoricalData = styled.div`
   padding-left: 10px;
 `
 
-export const HistoricalStatistics = ({ historicalData }: HistoricalStatisticsProps) => {
+export const HistoricalStatistics = ({
+  historicalData,
+}: HistoricalStatisticsProps) => {
   const [tab, setTab] = useState(0)
   const allMessagesCount = sumBy(historicalData, 'msgCount')
 
@@ -58,7 +62,9 @@ export const HistoricalStatistics = ({ historicalData }: HistoricalStatisticsPro
           ))}
         </HistoricalData>
       )}
-      {tab === 1 && <HistoricalBars data={orderBy(historicalData, 'msgCount', 'desc')} />}
+      {tab === 1 && (
+        <HistoricalBars data={orderBy(historicalData, 'msgCount', 'desc')} />
+      )}
     </Wrapper>
   )
 }

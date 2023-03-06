@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 export type DailyUserData = {
   id: number
   is_bot: boolean
@@ -10,6 +8,13 @@ export type DailyUserData = {
   language_code?: string
 }
 
+interface Photo {
+  big_file_unique_id: string
+  big_file_id: string
+  small_file_id: string
+  small_file_unique_id: string
+}
+
 export type Chat = {
   id: number
   type: 'private' | 'group' | 'supergroup' | 'channel'
@@ -18,7 +23,7 @@ export type Chat = {
   first_name?: string
   last_name?: string
   all_members_are_administrators?: boolean
-  photoUrl?: string
+  photo?: Photo
   description?: string
   invite_link?: string
   pinned_message?: any

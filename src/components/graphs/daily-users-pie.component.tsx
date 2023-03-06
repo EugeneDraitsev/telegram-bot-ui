@@ -1,10 +1,12 @@
+'use client'
+
 import React from 'react'
 import styled from 'styled-components'
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts'
 import { isEmpty } from 'lodash-es'
 
-import { DailyUserData } from '../../types'
-import { getUserName } from '../../utils'
+import { getUserName } from '@/utils'
+import type { DailyUserData } from '@/types'
 
 const schemeCategory10 = [
   '#1f77b4',
@@ -68,7 +70,9 @@ interface UsersBarChartProps {
 
 export const DailyUsersPie = ({ data }: UsersBarChartProps) => (
   <ChartWrapper>
-    {isEmpty(data) && <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>}
+    {isEmpty(data) && (
+      <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>
+    )}
     {!isEmpty(data) && (
       <>
         <ResponsiveContainer height={400}>
@@ -98,7 +102,9 @@ export const DailyUsersPie = ({ data }: UsersBarChartProps) => (
           {data.map((user, index) => (
             <LegendItem key={user.id}>
               <LegendCell color={schemeCategory10[index]} />
-              <LegendText>{`${getUserName(user)}  (${user.messages})`}</LegendText>
+              <LegendText>{`${getUserName(user)}  (${
+                user.messages
+              })`}</LegendText>
             </LegendItem>
           ))}
         </Legend>

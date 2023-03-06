@@ -1,10 +1,12 @@
+'use client'
+
 import React, { useState } from 'react'
 import { sumBy, take } from 'lodash-es'
 
-import { Tabs } from '../tabs.component'
+import { Tabs } from '@/components'
 import { DailyUsersBars, DailyUsersPie } from '../graphs'
 import { GraphCard, Header, SubTitle, Title } from './chat.styles'
-import { DailyUserData } from '../../types'
+import type { DailyUserData } from '@/types'
 
 interface LastDayStatisticsProps {
   usersData: DailyUserData[]

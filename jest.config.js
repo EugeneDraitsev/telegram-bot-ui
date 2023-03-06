@@ -15,6 +15,7 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/setupJest.ts'],
   moduleNameMapper: {
     '^lodash-es$': 'lodash',
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
 }
 

@@ -1,41 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
-
-import { Chat } from '../types'
-import { getChatName } from '../utils'
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  background: #d6d6d6;
-`
-const Content = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  padding: 5px 15px;
-  text-align: start;
-`
-const ChatImage = styled.div<{ src?: string }>`
-  width: 70px;
-  min-width: 70px;
-  height: 70px;
-  background: ${({ src }) => `url("${src}") center center no-repeat`};
-  background-size: contain;
-  border-radius: 50%;
-  border: 2px solid white;
-`
-const Title = styled.div`
-  margin-left: 20px;
-  font-size: 24px;
-  font-weight: 300;
-`
-
-const Subtitle = styled.div`
-  font-size: 14px;
-`
+import { Chat } from '@/types'
+import { getChatName } from '@/utils'
 
 interface ChatInfoProps {
   data: Chat
@@ -43,13 +7,24 @@ interface ChatInfoProps {
 }
 
 export const ChatInfo = ({ data, className }: ChatInfoProps) => (
-  <Wrapper className={className}>
-    <Content>
-      <ChatImage src={data?.photoUrl || '/favicon.png'} />
-      <Title>
-        {getChatName(data)}
-        <Subtitle>{data?.description}</Subtitle>
-      </Title>
-    </Content>
-  </Wrapper>
+  <div className={`flex justify-center w-full bg-neutral-300 ${className}`}>
+    <div className="flex items-center w-full max-w-[1200px] text-left py-1 px-4">
+      <div
+        className="w-[70px] h-[70px] bg-contain rounded-full border-2 border-white"
+        style={{
+          backgroundImage: `url(${
+            data?.photo?.big_file_id
+              ? `/chat/image/${data?.photo?.big_file_id}`
+              : '/favicon.png'
+          })`,
+        }}
+      />
+      <div className="ml-5">
+        <div className="text-2xl font-light leading-none">
+          {getChatName(data)}
+        </div>
+        <div className="text-sm">{data?.description}</div>
+      </div>
+    </div>
+  </div>
 )

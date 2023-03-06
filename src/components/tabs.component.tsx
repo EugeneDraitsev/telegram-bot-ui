@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { range, map, indexOf, sum } from 'lodash-es'
@@ -11,10 +13,14 @@ const Inner = styled.div`
   display: table;
   position: relative;
 `
-const Tab = styled.div<{ active: boolean; tabWidth: string; onClick(): void }>`
+const Tab = styled.div<{
+  $active: boolean
+  $tabWidth: string
+  onClick(): void
+}>`
   display: table-cell;
-  max-width: ${(p) => p.tabWidth};
-  min-width: ${(p) => p.tabWidth};
+  max-width: ${(p) => p.$tabWidth};
+  min-width: ${(p) => p.$tabWidth};
   height: 50px;
   text-align: center;
   justify-content: center;
@@ -84,7 +90,11 @@ export const Tabs = (props: TabsProps) => {
       const activeTab = allTabs[tabIndex]
       if (activeTab) {
         const newWidth = activeTab.getBoundingClientRect().width
-        const newX = sum(allTabs.slice(0, tabIndex).map((x) => x.getBoundingClientRect().width))
+        const newX = sum(
+          allTabs
+            .slice(0, tabIndex)
+            .map((x) => x.getBoundingClientRect().width),
+        )
         return [newWidth, newX]
       }
     }
@@ -96,16 +106,20 @@ export const Tabs = (props: TabsProps) => {
       <Inner ref={tabsWrapper}>
         {map(range(tabs.length), (index) => (
           <Tab
-            tabWidth={tabWidth ? `${tabWidth}px` : 'auto'}
+            $tabWidth={tabWidth ? `${tabWidth}px` : 'auto'}
+            $active={selectedTab === tabs[index]}
             key={index}
-            active={selectedTab === tabs[index]}
             className={selectedTab === tabs[index] ? 'tab active' : 'tab'}
             onClick={() => onTabClick(index)}
           >
             {tabsNames[index] || tabs[index]}
           </Tab>
         ))}
-        <TabIndicator width={indicatorWidth} x={indicatorX} tabIndex={tabIndex} />
+        <TabIndicator
+          width={indicatorWidth}
+          x={indicatorX}
+          tabIndex={tabIndex}
+        />
       </Inner>
     </Wrapper>
   )

@@ -1,22 +1,26 @@
-import React from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { text, number } from '@storybook/addon-knobs'
-
-import { Spinner } from '../src/components'
+import { Spinner } from '@/components'
 
 export default {
   title: 'Spinners',
+  component: Spinner,
+  argTypes: {
+    size: {
+      control: { type: 'number' },
+    },
+  },
 }
 
-export const Spinners = () => {
-  const radius = number('radius', 100)
-  const color = text('color', 'green')
+export const SimpleSpinner = {}
+
+export const DifferentSpinners = () => {
+  const radius = 100 // number('radius', 100)
+  const color = 'green' // text('color', 'green')
   return (
     <>
       <Spinner />
-      <Spinner style={{ marginLeft: 20 }} size={105} />
-      <Spinner style={{ marginLeft: 20 }} color="red" />
-      <Spinner style={{ marginLeft: 20 }} size={radius} color={color} />
+      <Spinner size={105} />
+      <Spinner color="red" />
+      <Spinner size={radius} color={color} />
     </>
   )
 }
