@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: ChatLayoutParams) {
   const chatInfo = await getChatInfo(params.id)
   const title = 'Telegram Bot Stats'
   const description = `${chatInfo?.title} Statistics for the last 24 hours`
-  const imageUrl = chatInfo?.photo?.big_file_id
-    ? `/chat/image/${chatInfo?.photo?.big_file_id}.jpg`
+  const imageUrl = chatInfo?.photo?.small_file_id
+    ? `/chat/image/${chatInfo?.photo?.small_file_id}.jpg`
     : '/favicon.png'
 
   return {
