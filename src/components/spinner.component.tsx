@@ -1,41 +1,16 @@
 'use client'
 
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
-
-const rotate360 = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`
-
-const spinnerDash = keyframes`
-  0% {
-    stroke-dasharray: 1,200;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dasharray: 89,200;
-    stroke-dashoffset: -35px;
-  }
-  100% {
-    stroke-dasharray: 89,200;
-    stroke-dashoffset: -124px;
-  }
-`
+import styled from 'styled-components'
 
 const Svg = styled.svg`
-  animation: ${rotate360} 2s linear infinite;
+  animation: rotate-360 2s linear infinite;
   height: 100%;
   transform-origin: center center;
   width: 100%;
 `
 
 const Circle = styled.circle`
-  animation: ${spinnerDash} 1.5s ease-in-out infinite;
+  animation: spinner-dash 1.5s ease-in-out infinite;
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
   stroke-linecap: round;

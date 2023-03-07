@@ -62,16 +62,8 @@ export const Button = styled(({ loading, ...props }: ButtonProps) => (
           &:after {
             border: 4px solid;
             border-color: #fff transparent transparent;
-            animation: button-spin 0.6s linear;
+            animation: rotate-360 0.6s linear;
             animation-iteration-count: infinite;
-          }
-          @keyframes button-spin {
-            from {
-              transform: rotate(0);
-            }
-            to {
-              transform: rotate(360deg);
-            }
           }
         `
       : ''}

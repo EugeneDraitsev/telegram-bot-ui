@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react'
+import { cache } from 'react'
 
 import { ChatInfo } from '@/components'
 import { BASE_TG_URL } from '@/constants'
 
-async function getChatInfo(chatId: string) {
+const getChatInfo = cache(async (chatId: string) => {
   const chat = await fetch(`${BASE_TG_URL}/getChat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -12,7 +13,7 @@ async function getChatInfo(chatId: string) {
   }).then((r) => r.json())
 
   return chat.result
-}
+})
 
 interface ChatLayoutParams {
   params: { id: string }
@@ -64,4 +65,11 @@ export default async function ChatLayout({
   )
 }
 
-export const runtime = 'experimental-edge'
+export async function generateStaticParams() {
+  // TODO: fetch 100 last active chats
+  const chats = ['-1001306676509']
+
+  return chats.map((chatId) => ({
+    id: chatId,
+  }))
+}

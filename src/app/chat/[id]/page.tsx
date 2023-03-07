@@ -79,5 +79,3 @@ const ChatPage = ({ params }: ChatPageProps) => {
 }
 
 export default ChatPage
-
-export const runtime = 'experimental-edge'
