@@ -5,7 +5,7 @@ exports[`Storyshots Buttons Buttons 1`] = `
   className="sc-2bff786d-0 cbqWch"
 >
   <button
-    className="sc-f626ec9f-0 bJSpKA"
+    className="sc-9d00118e-0 bKzPjt"
     style={
       {
         "marginRight": 10,
@@ -15,7 +15,7 @@ exports[`Storyshots Buttons Buttons 1`] = `
     Default
   </button>
   <button
-    className="sc-f626ec9f-0 iFleQB"
+    className="sc-9d00118e-0 iUVMjA"
     disabled={true}
     style={
       {
@@ -26,7 +26,7 @@ exports[`Storyshots Buttons Buttons 1`] = `
     Disabled
   </button>
   <button
-    className="sc-f626ec9f-0 kRRYDy"
+    className="sc-9d00118e-0 OayCX"
     style={
       {
         "marginRight": 10,
@@ -124,7 +124,7 @@ exports[`Storyshots Graphs Bar Chart 1`] = `
           "height": 400,
           "maxHeight": undefined,
           "minHeight": undefined,
-          "minWidth": undefined,
+          "minWidth": 0,
           "width": "100%",
         }
       }
@@ -268,7 +268,7 @@ exports[`Storyshots Graphs Pie Chart 1`] = `
           "height": "100%",
           "maxHeight": undefined,
           "minHeight": undefined,
-          "minWidth": undefined,
+          "minWidth": 0,
           "width": "100%",
         }
       }
@@ -378,7 +378,7 @@ exports[`Storyshots Spinners Different Spinners 1`] = `
 >
   <svg
     aria-label="spinner"
-    className="sc-5a866cde-0 cqOKWK"
+    className="sc-c7059ab5-0 eJDjbO"
     style={
       {
         "height": 50,
@@ -388,7 +388,7 @@ exports[`Storyshots Spinners Different Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-5a866cde-1 bWNqZO"
+      className="sc-c7059ab5-1 kqgnh"
       cx="50"
       cy="50"
       fill="none"
@@ -399,7 +399,7 @@ exports[`Storyshots Spinners Different Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="sc-5a866cde-0 cqOKWK"
+    className="sc-c7059ab5-0 eJDjbO"
     style={
       {
         "height": 105,
@@ -409,7 +409,7 @@ exports[`Storyshots Spinners Different Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-5a866cde-1 bWNqZO"
+      className="sc-c7059ab5-1 kqgnh"
       cx="50"
       cy="50"
       fill="none"
@@ -420,7 +420,7 @@ exports[`Storyshots Spinners Different Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="sc-5a866cde-0 cqOKWK"
+    className="sc-c7059ab5-0 eJDjbO"
     style={
       {
         "height": 50,
@@ -430,7 +430,7 @@ exports[`Storyshots Spinners Different Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-5a866cde-1 eOGQgN"
+      className="sc-c7059ab5-1 jTPfia"
       color="red"
       cx="50"
       cy="50"
@@ -442,7 +442,7 @@ exports[`Storyshots Spinners Different Spinners 1`] = `
   </svg>
   <svg
     aria-label="spinner"
-    className="sc-5a866cde-0 cqOKWK"
+    className="sc-c7059ab5-0 eJDjbO"
     style={
       {
         "height": 100,
@@ -452,7 +452,7 @@ exports[`Storyshots Spinners Different Spinners 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-5a866cde-1 kTWauN"
+      className="sc-c7059ab5-1 fxjpiO"
       color="green"
       cx="50"
       cy="50"
@@ -471,7 +471,7 @@ exports[`Storyshots Spinners Simple Spinner 1`] = `
 >
   <svg
     aria-label="spinner"
-    className="sc-5a866cde-0 cqOKWK"
+    className="sc-c7059ab5-0 eJDjbO"
     style={
       {
         "height": 50,
@@ -481,7 +481,7 @@ exports[`Storyshots Spinners Simple Spinner 1`] = `
     viewBox="25 25 50 50"
   >
     <circle
-      className="sc-5a866cde-1 bWNqZO"
+      className="sc-c7059ab5-1 kqgnh"
       cx="50"
       cy="50"
       fill="none"
