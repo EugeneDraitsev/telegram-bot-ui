@@ -1,13 +1,11 @@
 import React from 'react'
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
-import { FetchMock } from '@react-mock/fetch'
 
 import Index from '../app/page'
 import { ThemeProvider } from '@/contexts'
-import { CONFIG } from '@/constants'
 
 describe('Index Page', () => {
-  it('shows correct text', () => {
+  it('shows the correct text', () => {
     render(
       <ThemeProvider>
         <Index />
@@ -23,21 +21,19 @@ describe('Index Page', () => {
   })
 
   it('should properly handle search', async () => {
+    // Comments are in English as requested
+    const mockPayload = [
+      { id: -1, title: 'Test Chat', description: 'Test Description' },
+    ]
+
+    // Save original fetch to restore later
+    const originalFetch = globalThis.fetch
+    globalThis.fetch = jest.fn().mockResolvedValue(mockPayload)
+
     render(
-      <FetchMock
-        mocks={[
-          {
-            matcher: `${CONFIG.rest}/search?name=test`,
-            response: [
-              { id: -1, title: 'Test Chat', description: 'Test Description' },
-            ],
-          },
-        ]}
-      >
-        <ThemeProvider>
-          <Index />
-        </ThemeProvider>
-      </FetchMock>,
+      <ThemeProvider>
+        <Index />
+      </ThemeProvider>,
     )
 
     const input = screen.getByLabelText('chat-name')
@@ -58,5 +54,7 @@ describe('Index Page', () => {
     await waitFor(() => {
       expect(screen.queryByText('Test Chat')).not.toBeInTheDocument()
     })
+
+    globalThis.fetch = originalFetch
   })
 })
