@@ -30,13 +30,13 @@ describe('Tabs Component', () => {
     })
 
     expect(handleTabClick).toHaveBeenCalledTimes(1)
-    expect(handleTabClick).toBeCalledWith(1)
+    expect(handleTabClick).toHaveBeenCalledWith(1)
 
     act(() => {
       fireEvent.click(screen.getByText(/tab 4/i))
     })
 
     expect(handleTabClick).toHaveBeenCalledTimes(2)
-    expect(handleTabClick).toBeCalledWith(3)
+    expect(handleTabClick).toHaveBeenCalledWith(3)
   })
 })

@@ -1,5 +1,6 @@
 'use client'
 
+import { use } from 'react'
 import styled from 'styled-components'
 import { times } from 'lodash-es'
 
@@ -44,11 +45,12 @@ const LoadingCard = styled(GraphCard)`
 `
 
 type ChatPageProps = {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 const ChatPage = ({ params }: ChatPageProps) => {
-  const { loading, data, error } = useChatData(params.id)
+  const { id } = use(params)
+  const { loading, data, error } = useChatData(id)
   const { usersData, historicalData } = data
 
   if (error) {

@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 
 class ResizeObserver {
   observe() {
@@ -11,4 +11,5 @@ class ResizeObserver {
     // do nothing
   }
 }
+// @ts-ignore
 window.ResizeObserver = ResizeObserver

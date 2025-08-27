@@ -1,29 +1,23 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
+// ChatPage.test.tsx
+import React, { Suspense } from 'react'
+import { render, screen, waitFor, act } from '@testing-library/react'
 
 import ChatPage from '../app/chat/[id]/page'
-import { Chat } from '../types'
 import { ThemeProvider } from '../contexts'
+
 jest.mock('../hooks/use-chat-data.hook', () => ({
   useChatData: jest.fn(),
 }))
 import * as hooks from '../hooks/use-chat-data.hook'
 
-const useRouter = jest.spyOn(require('next/router'), 'useRouter')
-
-const initialChatInfo = {
-  title: 'Test Title',
-  description: 'Test Description',
-}
+// If you do not use next/router in this page, remove the spy to avoid noise
+// If you really need it, switch to next/navigation for App Router
+// const useRouter = jest.spyOn(require('next/router'), 'useRouter')
 
 describe('Chat Page', () => {
-  it('shows the correct children and calls useChatData with correct arguments', () => {
-    useRouter.mockImplementationOnce(() => ({
-      query: { id: '-1' },
-    }))
-
+  it('shows the correct children and calls useChatData with correct arguments', async () => {
     // @ts-ignore
-    hooks.useChatData.mockReturnValue({
+    ;(hooks.useChatData as jest.Mock).mockReturnValue({
       data: {
         usersData: [
           { id: 1, username: 'user1', messages: 62 },
@@ -41,59 +35,71 @@ describe('Chat Page', () => {
       error: '',
     })
 
-    render(
-      <ThemeProvider>
-        <ChatPage params={{ id: 'test-chat-id' }} />
-      </ThemeProvider>,
-    )
+    const params = Promise.resolve({ id: 'test-chat-id' })
 
-    // expect(screen.queryByText(initialChatInfo.title)).toBeInTheDocument()
-    // expect(screen.queryByText(initialChatInfo.description)).toBeInTheDocument()
-    expect(screen.queryAllByText('Barchart')).toHaveLength(2)
-    expect(screen.queryByText('Piechart')).toBeInTheDocument()
+    await act(async () => {
+      render(
+        <ThemeProvider>
+          <ChatPage params={params} />
+        </ThemeProvider>,
+      )
+      // Important: let the suspended promise settle INSIDE act
+      await params
+    })
+
+    // Use find* to wait for the post-suspense UI
+    expect(await screen.findAllByText('Barchart')).toHaveLength(2)
+    expect(await screen.findByText('Piechart')).toBeInTheDocument()
   })
 
-  it('shows spinner while loading', () => {
-    useRouter.mockImplementationOnce(() => ({
-      query: { id: '-1' },
-    }))
-
+  it('shows spinner while loading', async () => {
     // @ts-ignore
-    hooks.useChatData.mockImplementationOnce(() => ({
+    ;(hooks.useChatData as jest.Mock).mockReturnValue({
       data: {},
       loading: true,
       error: '',
-    }))
+    })
 
-    render(
-      <ThemeProvider>
-        <ChatPage params={{ id: 'test-chat-id' }} />
-      </ThemeProvider>,
-    )
+    const params = Promise.resolve({ id: 'test-chat-id' })
 
-    expect(screen.queryAllByText('Barchart')).toHaveLength(0)
-    expect(screen.queryByText('Piechart')).not.toBeInTheDocument()
-    expect(screen.queryAllByLabelText('spinner')).toHaveLength(2)
+    await act(async () => {
+      render(
+        <ThemeProvider>
+          <ChatPage params={params} />
+        </ThemeProvider>,
+      )
+      await params
+    })
+
+    // Wait for the loading UI
+    expect(await screen.findAllByLabelText('spinner')).toHaveLength(2)
+
+    // While loading, charts should not be there; use waitFor with a negative assertion
+    await waitFor(() => {
+      expect(screen.queryAllByText('Barchart')).toHaveLength(0)
+      expect(screen.queryByText('Piechart')).not.toBeInTheDocument()
+    })
   })
 
-  it('shows error if useChatData fails', () => {
-    useRouter.mockImplementationOnce(() => ({
-      query: { id: '-1' },
-    }))
-
+  it('shows error if useChatData fails', async () => {
     // @ts-ignore
-    hooks.useChatData.mockImplementationOnce(() => ({
+    ;(hooks.useChatData as jest.Mock).mockReturnValue({
       data: {},
       loading: false,
       error: 'Something Went Wrong',
-    }))
+    })
 
-    render(
-      <ThemeProvider>
-        <ChatPage params={{ id: 'test-chat-id' }} />
-      </ThemeProvider>,
-    )
+    const params = Promise.resolve({ id: 'test-chat-id' })
 
-    expect(screen.queryByText('Something Went Wrong')).toBeInTheDocument()
+    await act(async () => {
+      render(
+        <ThemeProvider>
+          <ChatPage params={params} />
+        </ThemeProvider>,
+      )
+      await params
+    })
+
+    expect(await screen.findByText('Something Went Wrong')).toBeInTheDocument()
   })
 })

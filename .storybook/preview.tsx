@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type { Preview, Decorator } from '@storybook/react'
+import type { Preview, Decorator } from '@storybook/nextjs'
 
 import { ThemeProvider } from '@/contexts'
 import '../src/app/global.css'

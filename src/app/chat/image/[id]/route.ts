@@ -1,17 +1,16 @@
 import { BASE_TG_URL, TG_FILE_URL } from '@/constants'
 
 interface ChatImageParams {
-  params: {
-    id: string
-  }
+  params: Promise<{ id: string }>
 }
 
 export async function GET(request: Request, { params }: ChatImageParams) {
-  const id = params.id.split('.').at(0)
+  const { id } = await params
+  const file_id = id.split('.').at(0)
   const imgFile = await fetch(`${BASE_TG_URL}/getFile`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ file_id: id }),
+    body: JSON.stringify({ file_id }),
     next: { revalidate: 30 }, // 30 sec revalidation
   }).then((r) => r.json())
 

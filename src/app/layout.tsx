@@ -1,5 +1,6 @@
 import { Roboto } from 'next/font/google'
 import type { ReactNode } from 'react'
+import type { Viewport, Metadata } from 'next'
 
 import StyledComponentsRegistry from '@/lib/registry'
 import './global.css'
@@ -10,22 +11,14 @@ const roboto = Roboto({
   subsets: ['latin'],
 })
 
-export const metadata = {
-  title: 'Telegram Bot Stats',
-  viewport:
-    'width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0',
+export const metadata: Metadata = {
+  metadataBase: new URL('https://telegram-bot-ui.vercel.app/'),
   openGraph: {
     title: 'Telegram Bot Stats',
     description: 'Chat Statistics for the last 24 hours',
     url: 'https://telegram-bot-ui.vercel.app/',
     siteName: 'Telegram Bot Stats',
-    images: [
-      {
-        url: '/preview.png',
-        width: 512,
-        height: 512,
-      },
-    ],
+    images: '/preview.png',
     locale: 'en',
     type: 'website',
   },
@@ -34,10 +27,18 @@ export const metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={roboto.className}>
       <head>
+        <title>Telegram Bot Stats</title>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.png" />
       </head>

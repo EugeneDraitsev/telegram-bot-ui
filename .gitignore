@@ -27,3 +27,6 @@ yarn-error.log*
 .serverless
 .env
 .vscode
+storybook-static
+tsconfig.tsbuildinfo
+debug-storybook.log

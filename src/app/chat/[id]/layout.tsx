@@ -1,5 +1,7 @@
-import type { ReactNode } from 'react'
 import { cache } from 'react'
+
+import type { ReactNode } from 'react'
+import type { Metadata } from 'next'
 
 import { ChatInfo } from '@/components'
 import { BASE_TG_URL } from '@/constants'
@@ -16,7 +18,7 @@ const getChatInfo = cache(async (chatId: string) => {
 })
 
 interface ChatLayoutParams {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 interface ChatLayoutProps extends ChatLayoutParams {
@@ -24,7 +26,8 @@ interface ChatLayoutProps extends ChatLayoutParams {
 }
 
 export async function generateMetadata({ params }: ChatLayoutParams) {
-  const chatInfo = await getChatInfo(params.id)
+  const { id } = await params
+  const chatInfo = await getChatInfo(id)
   const title = 'Telegram Bot Stats'
   const description = `${chatInfo?.title} Statistics for the last 24 hours`
   const imageUrl = chatInfo?.photo?.small_file_id
@@ -48,14 +51,15 @@ export async function generateMetadata({ params }: ChatLayoutParams) {
     twitter: {
       images: [imageUrl],
     },
-  }
+  } as Metadata
 }
 
 export default async function ChatLayout({
   children,
   params,
 }: ChatLayoutProps) {
-  const chatInfo = await getChatInfo(params.id)
+  const { id } = await params
+  const chatInfo = await getChatInfo(id)
 
   return (
     <>
