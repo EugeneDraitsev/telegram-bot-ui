@@ -4,11 +4,10 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { darken } from 'polished'
 
-interface ButtonProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+interface ButtonProps extends React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> {
   loading?: boolean
 }
 

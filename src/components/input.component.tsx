@@ -36,11 +36,10 @@ const BaseInput = styled.input<{ $hasIcon: boolean; $iconPadding: number }>`
   }
 `
 
-interface InputProps
-  extends React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > {
+interface InputProps extends React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+> {
   icon?: JSX.Element | string
   iconPadding?: number
   className?: string
