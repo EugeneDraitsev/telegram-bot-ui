@@ -1,7 +1,7 @@
 import { ChatInfo as ChatInfoComponent } from '@/components'
 import { Chat } from '@/types'
 
-export default {
+const defaultStory = {
   title: 'Chat Info',
 }
 
@@ -27,3 +27,5 @@ export const EdgeCaseChatInfo = () => {
     </>
   )
 }
+
+export default defaultStory

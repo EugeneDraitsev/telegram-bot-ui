@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { Tabs } from '@/components'
 
-export default {
+const defaultStory = {
   title: 'Tabs',
   component: Tabs,
 }
@@ -46,3 +46,5 @@ export const LongTabs = () => {
     </Wrapper>
   )
 }
+
+export default defaultStory

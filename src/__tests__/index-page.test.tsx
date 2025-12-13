@@ -5,13 +5,15 @@ import Index from '../app/page'
 import { ThemeProvider } from '@/contexts'
 
 describe('Index Page', () => {
-  it('shows the correct text', () => {
+  beforeAll(() => {
     render(
       <ThemeProvider>
         <Index />
       </ThemeProvider>,
     )
+  })
 
+  it('shows the correct text', () => {
     expect(
       screen.queryByText("Hi, I'm a Telegram chat bot."),
     ).toBeInTheDocument()
@@ -29,12 +31,6 @@ describe('Index Page', () => {
     // Save original fetch to restore later
     const originalFetch = globalThis.fetch
     globalThis.fetch = jest.fn().mockResolvedValue(mockPayload)
-
-    render(
-      <ThemeProvider>
-        <Index />
-      </ThemeProvider>,
-    )
 
     const input = screen.getByLabelText('chat-name')
     expect(input).toBeInTheDocument()

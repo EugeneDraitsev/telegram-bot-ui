@@ -64,7 +64,6 @@ export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => (
               <Cell key={i} fill={getBarColor(i, data.length)} />
             ))}
             <LabelList
-              data={{} as any}
               dataKey="messages"
               content={({ x, y, width, value }: any) => (
                 <ChartLabel

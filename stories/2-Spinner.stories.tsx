@@ -1,6 +1,6 @@
 import { Spinner } from '@/components'
 
-export default {
+const defaultStory = {
   title: 'Spinners',
   component: Spinner,
   argTypes: {
@@ -24,3 +24,5 @@ export const DifferentSpinners = () => {
     </>
   )
 }
+
+export default defaultStory

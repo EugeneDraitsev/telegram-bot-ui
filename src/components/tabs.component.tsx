@@ -85,7 +85,9 @@ export const Tabs = (props: TabsProps) => {
   const tabIndex = indexOf(tabs, selectedTab)
 
   const [indicatorWidth, indicatorX] = useMemo(() => {
+    // eslint-disable-next-line react-hooks/refs
     if (tabsWrapper.current && loaded) {
+      // eslint-disable-next-line react-hooks/refs
       const allTabs = Array.from(tabsWrapper.current.querySelectorAll('.tab'))
       const activeTab = allTabs[tabIndex]
       if (activeTab) {

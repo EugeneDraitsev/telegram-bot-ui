@@ -1,6 +1,6 @@
 import { Button } from '@/components'
 
-export default {
+const defaultStory = {
   title: 'Buttons',
 }
 
@@ -27,3 +27,5 @@ export const Buttons = {
     )
   },
 }
+
+export default defaultStory

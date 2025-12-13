@@ -1,8 +1,8 @@
 import { DailyUsersPie, DailyUsersBars } from '@/components'
 import type { DailyUserData } from '@/types'
 
-export default {
-  title: 'Graphs',
+const defaultStory = {
+  title: 'Charts',
 }
 
 const data = [
@@ -19,3 +19,5 @@ const data = [
 
 export const BarChart = () => <DailyUsersPie data={data as DailyUserData[]} />
 export const PieChart = () => <DailyUsersBars data={data as DailyUserData[]} />
+
+export default defaultStory

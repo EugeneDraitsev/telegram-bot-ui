@@ -2,7 +2,7 @@ import { GitHub } from 'react-feather'
 
 import { Input } from '@/components'
 
-export default {
+const defaultStory = {
   title: 'Input',
   component: Input,
   argTypes: {
@@ -38,3 +38,5 @@ export const IconInput = {
     </div>
   ),
 }
+
+export default defaultStory

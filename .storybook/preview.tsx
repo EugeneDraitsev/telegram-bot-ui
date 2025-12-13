@@ -1,5 +1,6 @@
+import React from 'react'
 import styled from 'styled-components'
-import type { Preview, Decorator } from '@storybook/nextjs'
+import { definePreview } from '@storybook/nextjs-vite'
 
 import { ThemeProvider } from '@/contexts'
 import '../src/app/global.css'
@@ -13,18 +14,23 @@ const StoriesWrapper = styled.div`
   background-color: transparent;
 `
 
-// We need to duplicate it for storyshots plugin
-export const decorators: Decorator[] = [
-  (Story) => (
-    <ThemeProvider>
-      <StoriesWrapper>
-        <Story />
-      </StoriesWrapper>
-    </ThemeProvider>
-  ),
-]
+export default definePreview({
+  parameters: {
+    backgrounds: {},
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+  },
 
-const preview: Preview = {
+  initialGlobals: {
+    backgrounds: {
+      value: 'light',
+    },
+  },
   decorators: [
     (Story) => (
       <ThemeProvider>
@@ -34,18 +40,4 @@ const preview: Preview = {
       </ThemeProvider>
     ),
   ],
-  parameters: {
-    backgrounds: {
-      default: 'light',
-    },
-    actions: { argTypesRegex: '^on[A-Z].*' },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/,
-      },
-    },
-  },
-}
-
-export default preview
+})
