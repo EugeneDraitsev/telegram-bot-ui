@@ -8,10 +8,10 @@ export const safeParse = (parseString: string) => {
   }
 }
 
-export const getUserName = (user: DailyUserData | Chat) =>
+export const getUserName = (user?: DailyUserData | Chat | null) =>
   user?.username ||
   `${user?.first_name || ''} ${user?.last_name || ''}`.trim() ||
   String(user?.id ?? 'Unknown Chat')
 
-export const getChatName = (chat: Chat): string =>
+export const getChatName = (chat?: Chat | null): string =>
   chat?.title || getUserName(chat)

@@ -4,18 +4,10 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 
 import { ChatInfo } from '@/components'
-import { BASE_TG_URL } from '@/constants'
+import { getTelegramChat } from '@/lib/telegram'
+import { getChatName } from '@/utils'
 
-const getChatInfo = cache(async (chatId: string) => {
-  const chat = await fetch(`${BASE_TG_URL}/getChat`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: chatId }),
-    next: { revalidate: 30 }, // 30 sec revalidation
-  }).then((r) => r.json())
-
-  return chat.result
-})
+const getChatInfo = cache((chatId: string) => getTelegramChat(chatId))
 
 interface ChatLayoutParams {
   params: Promise<{ id: string }>
@@ -29,7 +21,8 @@ export async function generateMetadata({ params }: ChatLayoutParams) {
   const { id } = await params
   const chatInfo = await getChatInfo(id)
   const title = 'Telegram Bot Stats'
-  const description = `${chatInfo?.title} Statistics for the last 24 hours`
+  const chatName = getChatName(chatInfo)
+  const description = `${chatName} statistics for the last 24 hours`
   const imageUrl = chatInfo?.photo?.small_file_id
     ? `/chat/image/${chatInfo?.photo?.small_file_id}.jpg`
     : '/favicon.png'

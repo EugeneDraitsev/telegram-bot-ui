@@ -1,24 +1,52 @@
-import { BASE_TG_URL, TG_FILE_URL } from '@/constants'
+import {
+  getTelegramFile,
+  getTelegramFileUrl,
+  stripImageExtension,
+} from '@/lib/telegram'
 
 interface ChatImageParams {
   params: Promise<{ id: string }>
 }
 
+const getImageContentType = (filePath: string, upstreamContentType: string) => {
+  if (upstreamContentType && upstreamContentType !== 'application/octet-stream') {
+    return upstreamContentType
+  }
+
+  if (filePath.endsWith('.webp')) {
+    return 'image/webp'
+  }
+
+  if (filePath.endsWith('.png')) {
+    return 'image/png'
+  }
+
+  return 'image/jpeg'
+}
+
 export async function GET(request: Request, { params }: ChatImageParams) {
   const { id } = await params
-  const file_id = id.split('.').at(0)
-  const imgFile = await fetch(`${BASE_TG_URL}/getFile`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ file_id }),
-    next: { revalidate: 30 }, // 30 sec revalidation
-  }).then((r) => r.json())
+  const fileId = stripImageExtension(id)
+  const imgFile = await getTelegramFile(fileId)
 
-  const response = new Response(
-    await fetch(`${TG_FILE_URL}/${imgFile.result.file_path}`).then(
-      (r) => r.body,
-    ),
-  )
-  response.headers.set('Content-Type', 'image/jpeg')
-  return response
+  if (!imgFile?.file_path) {
+    return Response.redirect(new URL('/favicon.png', request.url))
+  }
+
+  const imageResponse = await fetch(getTelegramFileUrl(imgFile.file_path), {
+    next: { revalidate: 30 },
+  })
+
+  if (!imageResponse.ok || !imageResponse.body) {
+    return Response.redirect(new URL('/favicon.png', request.url))
+  }
+
+  return new Response(imageResponse.body, {
+    headers: {
+      'Content-Type': getImageContentType(
+        imgFile.file_path,
+        imageResponse.headers.get('Content-Type') || '',
+      ),
+    },
+  })
 }

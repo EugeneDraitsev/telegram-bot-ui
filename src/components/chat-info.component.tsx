@@ -2,7 +2,7 @@ import { Chat } from '@/types'
 import { getChatName } from '@/utils'
 
 interface ChatInfoProps {
-  data: Chat
+  data?: Chat | null
   className?: string
 }
 
