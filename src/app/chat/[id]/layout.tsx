@@ -7,6 +7,8 @@ import { ChatInfo } from '@/components'
 import { getTelegramChat } from '@/lib/telegram'
 import { getChatName } from '@/utils'
 
+export const dynamic = 'force-dynamic'
+
 const getChatInfo = cache((chatId: string) => getTelegramChat(chatId))
 
 interface ChatLayoutParams {
@@ -60,13 +62,4 @@ export default async function ChatLayout({
       {children}
     </>
   )
-}
-
-export async function generateStaticParams() {
-  // TODO: fetch 100 last active chats
-  const chats = ['-1001306676509']
-
-  return chats.map((chatId) => ({
-    id: chatId,
-  }))
 }
