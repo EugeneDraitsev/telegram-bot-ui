@@ -5,7 +5,7 @@ import Index from '../app/page'
 import { ThemeProvider } from '@/contexts'
 
 describe('Index Page', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     render(
       <ThemeProvider>
         <Index />
