@@ -53,7 +53,9 @@ export const HistoricalBars = ({ data }: HistoricalBarsProps) => (
         labelStyle={{ fontSize: 12, lineHeight: '12px', marginBottom: 10 }}
         itemStyle={{ fontSize: 12, lineHeight: '12px' }}
         wrapperStyle={{ opacity: 0.9 }}
-        formatter={(x: number) => x.toLocaleString() as any}
+        formatter={(value) =>
+          typeof value === 'number' ? value.toLocaleString() : value
+        }
       />
     </BarChart>
   </ResponsiveContainer>

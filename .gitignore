@@ -28,5 +28,6 @@ yarn-error.log*
 .env
 .vscode
 storybook-static
+public/storybook
 tsconfig.tsbuildinfo
 debug-storybook.log
