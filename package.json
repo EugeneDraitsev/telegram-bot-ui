@@ -17,33 +17,33 @@
   },
   "dependencies": {
     "lodash-es": "^4.18.1",
-    "next": "^16.2.6",
+    "next": "^16.2.7",
     "polished": "^4.3.1",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "react-feather": "^2.0.10",
     "recharts": "3.8.1",
-    "styled-components": "^6.4.1"
+    "styled-components": "^6.4.2"
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "^20.9.0",
-    "@storybook/addon-docs": "10.4.0",
-    "@storybook/nextjs-vite": "10.4.0",
+    "@storybook/addon-docs": "10.4.2",
+    "@storybook/nextjs-vite": "10.4.2",
     "@tailwindcss/postcss": "^4.3.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^30.0.0",
     "@types/lodash-es": "^4.17.12",
-    "@types/react": "19.2.14",
+    "@types/react": "19.2.16",
     "@types/react-dom": "19.2.3",
     "eslint": "^9.39.4",
-    "eslint-config-next": "^16.2.6",
+    "eslint-config-next": "^16.2.7",
     "prettier": "^3.8.3",
-    "storybook": "10.4.0",
+    "storybook": "10.4.2",
     "tailwindcss": "^4.3.0",
     "typescript": "6.0.3",
-    "vite": "^8.0.13"
+    "vite": "^8.0.16"
   },
   "overrides": {
     "postcss": "^8.5.10"
