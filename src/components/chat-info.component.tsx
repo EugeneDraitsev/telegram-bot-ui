@@ -12,11 +12,7 @@ export const ChatInfo = ({ data, className }: ChatInfoProps) => (
       <div
         className="w-[70px] h-[70px] bg-contain rounded-full border-2 border-white"
         style={{
-          backgroundImage: `url(${
-            data?.photo?.big_file_id
-              ? `/chat/image/${data?.photo?.big_file_id}.jpg`
-              : '/favicon.png'
-          })`,
+          backgroundImage: 'url(/favicon.png)',
         }}
       />
       <div className="ml-5">

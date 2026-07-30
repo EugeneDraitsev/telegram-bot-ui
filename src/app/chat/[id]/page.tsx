@@ -7,6 +7,7 @@ import { times } from 'lodash-es'
 import {
   Spinner,
   Card,
+  ChatInfo,
   LastDayStatistics,
   HistoricalStatistics,
 } from '@/components'
@@ -46,12 +47,15 @@ const LoadingCard = styled(GraphCard)`
 
 type ChatPageProps = {
   params: Promise<{ id: string }>
+  searchParams: Promise<{ access?: string | string[] }>
 }
 
-const ChatPage = ({ params }: ChatPageProps) => {
+const ChatPage = ({ params, searchParams }: ChatPageProps) => {
   const { id } = use(params)
-  const { loading, data, error } = useChatData(id)
-  const { usersData, historicalData } = data
+  const { access } = use(searchParams)
+  const accessToken = Array.isArray(access) ? access[0] : access
+  const { loading, data, error } = useChatData(id, accessToken)
+  const { chatInfo, usersData, historicalData } = data
 
   if (error) {
     return <LoadingWrapper>{error || 'Something Went Wrong'}</LoadingWrapper>
@@ -59,6 +63,7 @@ const ChatPage = ({ params }: ChatPageProps) => {
 
   return (
     <>
+      {!loading && <ChatInfo data={chatInfo} />}
       <Wrapper>
         {loading && (
           <Container>

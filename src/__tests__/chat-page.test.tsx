@@ -35,16 +35,23 @@ describe('Chat Page', () => {
     })
 
     const params = Promise.resolve({ id: 'test-chat-id' })
+    const searchParams = Promise.resolve({ access: 'test-access-token' })
 
     await act(async () => {
       render(
         <ThemeProvider>
-          <ChatPage params={params} />
+          <ChatPage params={params} searchParams={searchParams} />
         </ThemeProvider>,
       )
       // Important: let the suspended promise settle INSIDE act
       await params
+      await searchParams
     })
+
+    expect(hooks.useChatData).toHaveBeenCalledWith(
+      'test-chat-id',
+      'test-access-token',
+    )
 
     // Use find* to wait for the post-suspense UI
     expect(await screen.findAllByText('Barchart')).toHaveLength(2)
@@ -60,14 +67,16 @@ describe('Chat Page', () => {
     })
 
     const params = Promise.resolve({ id: 'test-chat-id' })
+    const searchParams = Promise.resolve({ access: 'test-access-token' })
 
     await act(async () => {
       render(
         <ThemeProvider>
-          <ChatPage params={params} />
+          <ChatPage params={params} searchParams={searchParams} />
         </ThemeProvider>,
       )
       await params
+      await searchParams
     })
 
     // Wait for the loading UI
@@ -89,14 +98,16 @@ describe('Chat Page', () => {
     })
 
     const params = Promise.resolve({ id: 'test-chat-id' })
+    const searchParams = Promise.resolve({ access: 'test-access-token' })
 
     await act(async () => {
       render(
         <ThemeProvider>
-          <ChatPage params={params} />
+          <ChatPage params={params} searchParams={searchParams} />
         </ThemeProvider>,
       )
       await params
+      await searchParams
     })
 
     expect(await screen.findByText('Something Went Wrong')).toBeInTheDocument()
