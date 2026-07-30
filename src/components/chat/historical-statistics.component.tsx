@@ -1,13 +1,20 @@
 'use client'
 
-import React, { useState } from 'react'
+import dynamic from 'next/dynamic'
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { orderBy, round, sumBy } from 'lodash-es'
 
-import { Tabs } from '@/components'
+import { Tabs } from '@/components/tabs.component'
 import { GraphCard, Header, SubTitle, Title } from './chat.styles'
-import { HistoricalBars } from '../graphs/historical-bars.component'
 import type { HistoricalData as HistoricalDataType } from '@/types'
+
+const HistoricalBars = dynamic(
+  () =>
+    import('../graphs/historical-bars.component').then(
+      (module) => module.HistoricalBars,
+    ),
+  { ssr: false },
+)
 
 interface HistoricalStatisticsProps {
   historicalData: HistoricalDataType[]
@@ -34,7 +41,18 @@ export const HistoricalStatistics = ({
   historicalData,
 }: HistoricalStatisticsProps) => {
   const [tab, setTab] = useState(0)
-  const allMessagesCount = sumBy(historicalData, 'msgCount')
+  const { allMessagesCount, sortedData } = useMemo(
+    () => ({
+      allMessagesCount: historicalData.reduce(
+        (total, user) => total + user.msgCount,
+        0,
+      ),
+      sortedData: [...historicalData].sort(
+        (left, right) => right.msgCount - left.msgCount,
+      ),
+    }),
+    [historicalData],
+  )
 
   return (
     <Wrapper>
@@ -51,19 +69,22 @@ export const HistoricalStatistics = ({
       </Header>
       {tab === 0 && (
         <HistoricalData>
-          {orderBy(historicalData, 'msgCount', 'desc').map((user) => (
+          {sortedData.map((user) => (
             <React.Fragment key={user?.id}>
               <UserValues>{user?.username}</UserValues>
               <UserValues>
                 {user?.msgCount.toLocaleString()} (
-                {round((user?.msgCount / allMessagesCount) * 100, 2)}%)
+                {allMessagesCount > 0
+                  ? ((user.msgCount / allMessagesCount) * 100).toFixed(2)
+                  : '0.00'}
+                %)
               </UserValues>
             </React.Fragment>
           ))}
         </HistoricalData>
       )}
       {tab === 1 && (
-        <HistoricalBars data={orderBy(historicalData, 'msgCount', 'desc')} />
+        <HistoricalBars data={sortedData} />
       )}
     </Wrapper>
   )

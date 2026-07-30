@@ -1,6 +1,6 @@
 import type { Chat, DailyUserData } from '@/types'
 
-export const safeParse = (parseString: string) => {
+export const safeParse = (parseString: string): unknown => {
   try {
     return JSON.parse(parseString)
   } catch (e) {

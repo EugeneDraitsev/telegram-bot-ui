@@ -2,7 +2,7 @@
 
 import styled from 'styled-components'
 
-import { Card } from '@/components'
+import { Card } from '@/components/card.component'
 
 export const GraphCard = styled(Card)`
   display: flex;

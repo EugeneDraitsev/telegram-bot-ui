@@ -2,16 +2,13 @@
 
 import { use } from 'react'
 import styled from 'styled-components'
-import { times } from 'lodash-es'
 
-import {
-  Spinner,
-  Card,
-  ChatInfo,
-  LastDayStatistics,
-  HistoricalStatistics,
-} from '@/components'
-import { useChatData } from '@/hooks'
+import { Card } from '@/components/card.component'
+import { ChatInfo } from '@/components/chat-info.component'
+import { HistoricalStatistics } from '@/components/chat/historical-statistics.component'
+import { LastDayStatistics } from '@/components/chat/last-day-statistics.component'
+import { Spinner } from '@/components/spinner.component'
+import { useChatData } from '@/hooks/use-chat-data.hook'
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,7 +64,7 @@ const ChatPage = ({ params, searchParams }: ChatPageProps) => {
       <Wrapper>
         {loading && (
           <Container>
-            {times(2, (i) => (
+            {[0, 1].map((i) => (
               <LoadingCard key={i}>
                 <Spinner />
               </LoadingCard>

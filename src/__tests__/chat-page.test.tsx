@@ -4,30 +4,32 @@ import { render, screen, waitFor, act } from '@testing-library/react'
 import ChatPage from '../app/chat/[id]/page'
 import { ThemeProvider } from '../contexts'
 
-jest.mock('../hooks/use-chat-data.hook', () => ({
-  useChatData: jest.fn(),
-}))
 import * as hooks from '../hooks/use-chat-data.hook'
 
-// If you do not use next/router in this page, remove the spy to avoid noise
-// If you really need it, switch to next/navigation for App Router
-// const useRouter = jest.spyOn(require('next/router'), 'useRouter')
+const useChatDataMock = jest.spyOn(hooks, 'useChatData')
+
+beforeEach(() => {
+  useChatDataMock.mockReset()
+})
+
+afterAll(() => {
+  useChatDataMock.mockRestore()
+})
 
 describe('Chat Page', () => {
   it('shows the correct children and calls useChatData with correct arguments', async () => {
-    // @ts-ignore
-    ;(hooks.useChatData as jest.Mock).mockReturnValue({
+    useChatDataMock.mockReturnValue({
       data: {
         usersData: [
-          { id: 1, username: 'user1', messages: 62 },
-          { id: 2, username: 'user2', messages: 52 },
-          { id: 3, username: 'user3', messages: 30 },
-          { id: 4, username: 'user4', messages: 27 },
-          { id: 5, username: 'user5', messages: 16 },
-          { id: 6, username: 'user6', messages: 10 },
-          { id: 7, username: 'user7', messages: 9 },
-          { id: 8, username: 'user8', messages: 5 },
-          { id: 9, username: 'user9', messages: 3 },
+          { id: 1, username: 'user1', messages: 62, is_bot: false },
+          { id: 2, username: 'user2', messages: 52, is_bot: false },
+          { id: 3, username: 'user3', messages: 30, is_bot: false },
+          { id: 4, username: 'user4', messages: 27, is_bot: false },
+          { id: 5, username: 'user5', messages: 16, is_bot: false },
+          { id: 6, username: 'user6', messages: 10, is_bot: false },
+          { id: 7, username: 'user7', messages: 9, is_bot: false },
+          { id: 8, username: 'user8', messages: 5, is_bot: false },
+          { id: 9, username: 'user9', messages: 3, is_bot: false },
         ],
       },
       loading: false,
@@ -59,9 +61,8 @@ describe('Chat Page', () => {
   })
 
   it('shows spinner while loading', async () => {
-    // @ts-ignore
-    ;(hooks.useChatData as jest.Mock).mockReturnValue({
-      data: {},
+    useChatDataMock.mockReturnValue({
+      data: { usersData: [] },
       loading: true,
       error: '',
     })
@@ -90,9 +91,8 @@ describe('Chat Page', () => {
   })
 
   it('shows error if useChatData fails', async () => {
-    // @ts-ignore
-    ;(hooks.useChatData as jest.Mock).mockReturnValue({
-      data: {},
+    useChatDataMock.mockReturnValue({
+      data: { usersData: [] },
       loading: false,
       error: 'Something Went Wrong',
     })

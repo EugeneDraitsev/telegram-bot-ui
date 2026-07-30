@@ -1,4 +1,3 @@
-import { createContext } from 'react'
 import { ThemeProvider as StyledProvider } from 'styled-components'
 import { tint } from 'polished'
 import type { ReactNode } from 'react'
@@ -15,27 +14,19 @@ const colors = {
   inactiveText: '#2f2d2d',
 }
 
-type ThemeState = {
-  theme: Theme
-}
-
-const ThemeContext = createContext({} as ThemeState)
+const theme: Theme = { colors }
 
 interface ThemeProviderProps {
   children?: ReactNode
 }
 
-const TypedStyledProvider = StyledProvider as any
-
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const theme = { colors }
-
   return (
-    <ThemeContext.Provider value={{ theme }}>
+    <StyledProvider theme={theme}>
       <GlobalStyles />
-      <TypedStyledProvider theme={theme}>{children}</TypedStyledProvider>
-    </ThemeContext.Provider>
+      {children}
+    </StyledProvider>
   )
 }
 
-export { ThemeContext, ThemeProvider }
+export { ThemeProvider }

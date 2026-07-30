@@ -12,6 +12,9 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
+  title: 'Telegram Bot Stats',
+  manifest: '/manifest.json',
+  icons: { icon: '/favicon.png' },
   metadataBase: new URL('https://telegram-bot-ui.vercel.app/'),
   openGraph: {
     title: 'Telegram Bot Stats',
@@ -30,18 +33,11 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={roboto.className}>
-      <head>
-        <title>Telegram Bot Stats</title>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/favicon.png" />
-      </head>
       <body>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>

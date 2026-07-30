@@ -1,4 +1,5 @@
-import { DailyUsersPie, DailyUsersBars } from '@/components'
+import { DailyUsersBars } from '@/components/graphs/daily-users-bars.component'
+import { DailyUsersPie } from '@/components/graphs/daily-users-pie.component'
 import type { DailyUserData } from '@/types'
 
 const defaultStory = {
@@ -17,7 +18,7 @@ const data = [
   { id: 9, username: 'user9', messages: 3 },
 ]
 
-export const BarChart = () => <DailyUsersPie data={data as DailyUserData[]} />
-export const PieChart = () => <DailyUsersBars data={data as DailyUserData[]} />
+export const BarChart = () => <DailyUsersBars data={data as DailyUserData[]} />
+export const PieChart = () => <DailyUsersPie data={data as DailyUserData[]} />
 
 export default defaultStory

@@ -1,6 +1,6 @@
 import { GlobalRegistrator } from '@happy-dom/global-registrator'
 
-GlobalRegistrator.register()
+GlobalRegistrator.register({ url: 'http://localhost/' })
 
 // @ts-expect-error jest-dom is a side-effect import with ambient-only types.
 await import('@testing-library/jest-dom')
@@ -11,8 +11,21 @@ afterEach(() => {
 })
 
 class ResizeObserver {
-  observe() {
-    // do nothing
+  constructor(private readonly callback: ResizeObserverCallback) {}
+
+  observe(target: Element) {
+    this.callback(
+      [
+        {
+          target,
+          contentRect: {
+            width: 800,
+            height: 400,
+          },
+        } as ResizeObserverEntry,
+      ],
+      this as unknown as globalThis.ResizeObserver,
+    )
   }
   unobserve() {
     // do nothing

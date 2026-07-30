@@ -3,7 +3,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts'
-import { isEmpty } from 'lodash-es'
 
 import { getUserName } from '@/utils'
 import type { DailyUserData } from '@/types'
@@ -70,10 +69,10 @@ interface UsersBarChartProps {
 
 export const DailyUsersPie = ({ data }: UsersBarChartProps) => (
   <ChartWrapper>
-    {isEmpty(data) && (
+    {data.length === 0 && (
       <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>
     )}
-    {!isEmpty(data) && (
+    {data.length > 0 && (
       <>
         <ResponsiveContainer height={400}>
           <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 10 }}>

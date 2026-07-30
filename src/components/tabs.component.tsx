@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import styled from 'styled-components'
-import { range, map, indexOf, sum } from 'lodash-es'
 
 const Wrapper = styled.div`
   position: relative;
@@ -13,10 +13,9 @@ const Inner = styled.div`
   display: table;
   position: relative;
 `
-const Tab = styled.div<{
+const Tab = styled.button<{
   $active: boolean
   $tabWidth: string
-  onClick(): void
 }>`
   display: table-cell;
   max-width: ${(p) => p.$tabWidth};
@@ -26,7 +25,9 @@ const Tab = styled.div<{
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  color: #9b9b9b;
+  color: ${(p) => (p.$active ? '#4a4a4a' : '#9b9b9b')};
+  border: 0;
+  background: transparent;
   line-height: 50px;
   font-weight: 500;
   font-size: 12px;
@@ -38,21 +39,26 @@ const Tab = styled.div<{
   &:hover {
     background-color: rgba(0, 0, 0, 0.025);
   }
-  &.active {
-    color: #4a4a4a;
+  &:focus-visible {
+    outline: 2px solid ${(p) => p.theme.colors.primary};
+    outline-offset: -2px;
   }
 `
-const TabIndicator = styled.div<{ tabIndex: number; width: number; x: number }>`
-  display: ${(p) => (p.tabIndex >= 0 ? 'block' : 'none')};
+const TabIndicator = styled.div<{
+  $visible: boolean
+  $width: number
+  $x: number
+}>`
+  display: ${(p) => (p.$visible ? 'block' : 'none')};
   position: absolute;
   left: 0;
   bottom: 0;
   content: '';
-  width: ${(p) => p.width}px;
+  width: ${(p) => p.$width}px;
   height: 3px;
   background-color: ${(p) => p.theme.colors.primary};
   transition: transform 0.6s;
-  transform: translateX(${(p) => p.x}px);
+  transform: translateX(${(p) => p.$x}px);
 `
 
 interface TabsProps {
@@ -61,7 +67,7 @@ interface TabsProps {
   selectedIndex?: number
   className?: string
   tabWidth?: number
-  style?: object
+  style?: CSSProperties
   tabsNames?: string[]
   onTabClick(tab: number): void
 }
@@ -78,49 +84,64 @@ export const Tabs = (props: TabsProps) => {
     ...rest
   } = props
   const tabsWrapper = useRef<HTMLDivElement>(null)
-  const [loaded, setLoaded] = useState(false)
-  useEffect(() => setLoaded(true), [])
+  const selectedTab = rest.selectedTab ?? tabs[selectedIndex ?? 0]
+  const tabIndex = tabs.indexOf(selectedTab)
+  const [indicator, setIndicator] = useState({ width: 0, x: 0 })
 
-  const selectedTab = rest.selectedTab || tabs[selectedIndex!]
-  const tabIndex = indexOf(tabs, selectedTab)
-
-  const [indicatorWidth, indicatorX] = useMemo(() => {
-    // eslint-disable-next-line react-hooks/refs
-    if (tabsWrapper.current && loaded) {
-      // eslint-disable-next-line react-hooks/refs
-      const allTabs = Array.from(tabsWrapper.current.querySelectorAll('.tab'))
-      const activeTab = allTabs[tabIndex]
-      if (activeTab) {
-        const newWidth = activeTab.getBoundingClientRect().width
-        const newX = sum(
-          allTabs
-            .slice(0, tabIndex)
-            .map((x) => x.getBoundingClientRect().width),
-        )
-        return [newWidth, newX]
-      }
+  useLayoutEffect(() => {
+    const wrapper = tabsWrapper.current
+    if (!wrapper || tabIndex < 0) {
+      return
     }
-    return [0, 0]
-  }, [tabIndex, loaded])
+
+    const measure = () => {
+      const allTabs = Array.from(wrapper.querySelectorAll('button'))
+      const activeTab = allTabs[tabIndex]
+      if (!activeTab) {
+        return
+      }
+
+      setIndicator({
+        width: activeTab.getBoundingClientRect().width,
+        x: allTabs
+          .slice(0, tabIndex)
+          .reduce((total, tab) => total + tab.getBoundingClientRect().width, 0),
+      })
+    }
+
+    const frame = requestAnimationFrame(measure)
+    const observer =
+      typeof ResizeObserver === 'undefined'
+        ? undefined
+        : new ResizeObserver(measure)
+    observer?.observe(wrapper)
+    return () => {
+      cancelAnimationFrame(frame)
+      observer?.disconnect()
+    }
+  }, [tabIndex])
 
   return (
     <Wrapper className={className} style={style}>
-      <Inner ref={tabsWrapper}>
-        {map(range(tabs.length), (index) => (
+      <Inner ref={tabsWrapper} role="tablist">
+        {tabs.map((tab, index) => (
           <Tab
             $tabWidth={tabWidth ? `${tabWidth}px` : 'auto'}
-            $active={selectedTab === tabs[index]}
-            key={index}
-            className={selectedTab === tabs[index] ? 'tab active' : 'tab'}
+            $active={selectedTab === tab}
+            key={`${tab}-${index}`}
+            type="button"
+            role="tab"
+            aria-selected={selectedTab === tab}
             onClick={() => onTabClick(index)}
           >
-            {tabsNames[index] || tabs[index]}
+            {tabsNames[index] || tab}
           </Tab>
         ))}
         <TabIndicator
-          width={indicatorWidth}
-          x={indicatorX}
-          tabIndex={tabIndex}
+          $width={indicator.width}
+          $x={indicator.x}
+          $visible={tabIndex >= 0}
+          aria-hidden="true"
         />
       </Inner>
     </Wrapper>

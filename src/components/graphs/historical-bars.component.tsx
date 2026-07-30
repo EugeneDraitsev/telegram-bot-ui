@@ -11,7 +11,6 @@ import {
   YAxis,
 } from 'recharts'
 import { tint } from 'polished'
-import { map } from 'lodash-es'
 
 import type { HistoricalData } from '@/types'
 
@@ -31,8 +30,8 @@ export const HistoricalBars = ({ data }: HistoricalBarsProps) => (
       barSize={30}
     >
       <Bar dataKey="msgCount" minPointSize={2}>
-        {map(data, (d, i: number) => (
-          <Cell key={i} fill={getBarColor(i, data.length)} />
+        {data.map((user, index) => (
+          <Cell key={user.id} fill={getBarColor(index, data.length)} />
         ))}
       </Bar>
       <XAxis

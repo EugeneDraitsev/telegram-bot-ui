@@ -13,7 +13,6 @@ import {
   Tooltip,
   YAxis,
 } from 'recharts'
-import { isEmpty, map } from 'lodash-es'
 
 import { getUserName } from '@/utils'
 import type { DailyUserData } from '@/types'
@@ -45,10 +44,10 @@ interface DailyUsersBarsProps {
 
 export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => (
   <ChartWrapper>
-    {isEmpty(data) && (
+    {data.length === 0 && (
       <EmptyWrapper>You don&apos;t have data for the last 24h</EmptyWrapper>
     )}
-    {!isEmpty(data) && (
+    {data.length > 0 && (
       <ResponsiveContainer>
         <BarChart
           data={data}
@@ -60,8 +59,8 @@ export const DailyUsersBars = ({ data }: DailyUsersBarsProps) => (
             minPointSize={5}
             fill="#4A90E2"
           >
-            {map(data, (d, i: number) => (
-              <Cell key={i} fill={getBarColor(i, data.length)} />
+            {data.map((user, index) => (
+              <Cell key={user.id} fill={getBarColor(index, data.length)} />
             ))}
             <LabelList
               dataKey="messages"
