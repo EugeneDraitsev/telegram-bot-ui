@@ -55,7 +55,7 @@ const ChatPage = ({ params, searchParams }: ChatPageProps) => {
   const { chatInfo, usersData, historicalData } = data
 
   if (error) {
-    return <LoadingWrapper>{error || 'Something Went Wrong'}</LoadingWrapper>
+    return <LoadingWrapper>{error}</LoadingWrapper>
   }
 
   return (
