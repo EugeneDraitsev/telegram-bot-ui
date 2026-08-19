@@ -1,50 +1,25 @@
 import type { NextRequest } from 'next/server'
 
-const ADMIN_SESSION_COOKIE = 'telegram_admin_session'
-const OIDC_NONCE_COOKIE = 'telegram_admin_oidc_nonce'
-const OIDC_STATE_COOKIE = 'telegram_admin_oidc_state'
-const OIDC_VERIFIER_COOKIE = 'telegram_admin_oidc_verifier'
+jest.mock('server-only', () => ({}))
 
-const createAdminSessionMock = jest.fn()
-const fetchMock = jest.fn()
-const getTelegramOidcConfigurationMock = jest.fn(() => ({
-  clientId: '123456789',
-  clientSecret: 'telegram-client-secret',
-  redirectUri: 'https://telegram-bot-ui.vercel.app/admin/callback',
-}))
-const originalFetch = globalThis.fetch
-globalThis.fetch = fetchMock as typeof fetch
-
-class MockAdminApiError extends Error {
-  constructor(
-    message: string,
-    readonly status: number,
-  ) {
-    super(message)
-  }
-}
-
-jest.mock('@/lib/admin-api', () => ({
-  AdminApiError: MockAdminApiError,
-  createAdminSession: createAdminSessionMock,
-}))
-
-jest.mock('@/lib/admin-config', () => ({
-  getTelegramOidcConfiguration: getTelegramOidcConfigurationMock,
-}))
-
-jest.mock('@/lib/admin-session', () => ({
-  ADMIN_SESSION_COOKIE,
+const adminApi = await import('@/lib/admin-api')
+const adminConfig = await import('@/lib/admin-config')
+const {
+  OIDC_BACK_URL_COOKIE,
   OIDC_NONCE_COOKIE,
   OIDC_STATE_COOKIE,
   OIDC_VERIFIER_COOKIE,
-  adminCookieOptions: {
-    httpOnly: true,
-    sameSite: 'lax',
-    secure: true,
-    path: '/admin',
-  },
-}))
+  SESSION_COOKIE,
+} = await import('@/lib/admin-session')
+
+const createSessionMock = jest.spyOn(adminApi, 'createSession')
+const fetchMock = jest.fn()
+const getTelegramOidcConfigurationMock = jest.spyOn(
+  adminConfig,
+  'getTelegramOidcConfiguration',
+)
+const originalFetch = globalThis.fetch
+globalThis.fetch = fetchMock as typeof fetch
 
 const { GET } = await import('../app/admin/callback/route')
 
@@ -66,57 +41,72 @@ function callbackRequest(
 }
 
 describe('Telegram OIDC callback', () => {
+  beforeEach(() => {
+    getTelegramOidcConfigurationMock.mockReturnValue({
+      clientId: '123456789',
+      clientSecret: 'telegram-client-secret',
+      redirectUri: 'https://telegram-bot-ui.vercel.app/admin/callback',
+    })
+  })
+
   afterEach(() => {
-    createAdminSessionMock.mockReset()
+    createSessionMock.mockReset()
     fetchMock.mockReset()
     getTelegramOidcConfigurationMock.mockClear()
   })
 
   afterAll(() => {
     globalThis.fetch = originalFetch
+    createSessionMock.mockRestore()
+    getTelegramOidcConfigurationMock.mockRestore()
   })
 
-  test('rejects invalid callback state before making external requests', async () => {
+  test('rejects invalid state before requests and preserves a safe back URL', async () => {
     const response = await GET(
       callbackRequest('?code=code&state=wrong', {
         [OIDC_STATE_COOKIE]: 'expected',
         [OIDC_NONCE_COOKIE]: 'nonce',
         [OIDC_VERIFIER_COOKIE]: 'verifier',
+        [OIDC_BACK_URL_COOKIE]: '/chat/-1001',
       }),
     )
 
     expect(response.headers.get('location')).toBe(
-      'https://telegram-bot-ui.vercel.app/admin/sign-in?error=invalid_state',
+      'https://telegram-bot-ui.vercel.app/sign-in?error=invalid_state&backUrl=%2Fchat%2F-1001',
     )
     expect(fetchMock).not.toHaveBeenCalled()
-    expect(createAdminSessionMock).not.toHaveBeenCalled()
+    expect(createSessionMock).not.toHaveBeenCalled()
     expect(
       response.cookies
         .getAll()
         .filter(({ name }) =>
-          [OIDC_STATE_COOKIE, OIDC_NONCE_COOKIE, OIDC_VERIFIER_COOKIE].includes(
-            name,
-          ),
+          [
+            OIDC_STATE_COOKIE,
+            OIDC_NONCE_COOKIE,
+            OIDC_VERIFIER_COOKIE,
+            OIDC_BACK_URL_COOKIE,
+          ].includes(name),
         )
         .map(({ name, value }) => ({ name, value })),
     ).toEqual([
       { name: OIDC_STATE_COOKIE, value: '' },
       { name: OIDC_NONCE_COOKIE, value: '' },
       { name: OIDC_VERIFIER_COOKIE, value: '' },
+      { name: OIDC_BACK_URL_COOKIE, value: '' },
     ])
   })
 
-  test('exchanges a valid code and replaces OIDC cookies with an admin session', async () => {
+  test('exchanges PKCE code, creates a shared session, and returns to the chat', async () => {
     fetchMock.mockResolvedValue(
       new Response(JSON.stringify({ id_token: 'telegram-id-token' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       }),
     )
-    createAdminSessionMock.mockResolvedValue({
-      token: 'admin-session-token',
+    createSessionMock.mockResolvedValue({
+      token: 'session-token',
       expiresIn: 43_200,
-      admin: { id: '42' },
+      user: { id: '42', isAdmin: true },
     })
 
     const response = await GET(
@@ -124,27 +114,44 @@ describe('Telegram OIDC callback', () => {
         [OIDC_STATE_COOKIE]: 'expected',
         [OIDC_NONCE_COOKIE]: 'nonce',
         [OIDC_VERIFIER_COOKIE]: 'verifier',
+        [OIDC_BACK_URL_COOKIE]: '/chat/-1001',
       }),
     )
 
     expect(response.headers.get('location')).toBe(
-      'https://telegram-bot-ui.vercel.app/admin',
+      'https://telegram-bot-ui.vercel.app/chat/-1001',
     )
-    expect(fetchMock).toHaveBeenCalledTimes(1)
     const [, init] = fetchMock.mock.calls[0]
-    expect(init?.method).toBe('POST')
     expect(new URLSearchParams(String(init?.body)).get('code_verifier')).toBe(
       'verifier',
     )
-    expect(createAdminSessionMock).toHaveBeenCalledWith(
-      'telegram-id-token',
-      'nonce',
+    expect(createSessionMock).toHaveBeenCalledWith('telegram-id-token', 'nonce')
+    expect(response.cookies.get(SESSION_COOKIE)?.value).toBe('session-token')
+  })
+
+  test('never redirects to an external back URL', async () => {
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ id_token: 'telegram-id-token' }), {
+        status: 200,
+      }),
     )
-    expect(response.cookies.get(ADMIN_SESSION_COOKIE)?.value).toBe(
-      'admin-session-token',
+    createSessionMock.mockResolvedValue({
+      token: 'session-token',
+      expiresIn: 43_200,
+      user: { id: '7', isAdmin: false },
+    })
+
+    const response = await GET(
+      callbackRequest('?code=authorization-code&state=expected', {
+        [OIDC_STATE_COOKIE]: 'expected',
+        [OIDC_NONCE_COOKIE]: 'nonce',
+        [OIDC_VERIFIER_COOKIE]: 'verifier',
+        [OIDC_BACK_URL_COOKIE]: '//evil.example/steal',
+      }),
     )
-    expect(response.cookies.get(OIDC_STATE_COOKIE)?.value).toBe('')
-    expect(response.cookies.get(OIDC_NONCE_COOKIE)?.value).toBe('')
-    expect(response.cookies.get(OIDC_VERIFIER_COOKIE)?.value).toBe('')
+
+    expect(response.headers.get('location')).toBe(
+      'https://telegram-bot-ui.vercel.app/',
+    )
   })
 })

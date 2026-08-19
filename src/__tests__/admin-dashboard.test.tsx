@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import type {
   AdminChatPatch,
@@ -7,9 +7,12 @@ import type {
 } from '@/lib/admin-types'
 
 const refreshMock = jest.fn()
+const replaceMock = jest.fn()
 
 jest.mock('next/navigation', () => ({
-  useRouter: () => ({ refresh: refreshMock }),
+  usePathname: () => '/admin',
+  useRouter: () => ({ refresh: refreshMock, replace: replaceMock }),
+  useSearchParams: () => new URLSearchParams(),
 }))
 
 const { AdminDashboard } = await import('../app/admin/admin-dashboard')
@@ -39,20 +42,27 @@ const initialData: AdminChatsResponse = {
       lastActivityAt: 1_000,
     },
   ],
+  pagination: { page: 1, pageSize: 20, total: 2, totalPages: 1 },
+  summary: { total: 2, allowed: 1, enabled: 1 },
+  query: {
+    page: 1,
+    pageSize: 20,
+    q: '',
+    aiAccess: 'all',
+    sort: 'lastActivityAt',
+    direction: 'desc',
+  },
 }
 
 describe('admin dashboard', () => {
   beforeEach(() => {
     refreshMock.mockReset()
+    replaceMock.mockReset()
   })
 
-  test('searches chats by username and ID', async () => {
-    render(
-      <AdminDashboard
-        initialData={initialData}
-        updateChat={jest.fn()}
-      />,
-    )
+  test('debounces search into the server-backed URL query', async () => {
+    jest.useFakeTimers()
+    render(<AdminDashboard initialData={initialData} updateChat={jest.fn()} />)
 
     fireEvent.change(
       screen.getByRole('searchbox', {
@@ -60,23 +70,39 @@ describe('admin dashboard', () => {
       }),
       { target: { value: '@alpha_chat' } },
     )
+    expect(replaceMock).not.toHaveBeenCalled()
 
-    await waitFor(() => {
-      expect(screen.getByText('Alpha room')).toBeInTheDocument()
-      expect(screen.queryByText('Beta room')).not.toBeInTheDocument()
+    await act(async () => {
+      jest.advanceTimersByTime(300)
     })
+
+    expect(replaceMock).toHaveBeenCalledWith('/admin?q=%40alpha_chat')
+    jest.useRealTimers()
+  })
+
+  test('sends AI filters, sortable columns, and pagination to the URL', () => {
+    const pagedData: AdminChatsResponse = {
+      ...initialData,
+      pagination: { page: 1, pageSize: 20, total: 30, totalPages: 2 },
+      summary: { ...initialData.summary, total: 30 },
+    }
+    render(<AdminDashboard initialData={pagedData} updateChat={jest.fn()} />)
 
     fireEvent.change(
-      screen.getByRole('searchbox', {
-        name: /search chats by name, username or id/i,
-      }),
-      { target: { value: '-1002' } },
+      screen.getByRole('combobox', { name: 'Filter AI access' }),
+      {
+        target: { value: 'allowed' },
+      },
+    )
+    expect(replaceMock).toHaveBeenLastCalledWith('/admin?aiAccess=allowed')
+
+    fireEvent.click(screen.getByRole('button', { name: /^chat$/i }))
+    expect(replaceMock).toHaveBeenLastCalledWith(
+      '/admin?sort=name&direction=asc',
     )
 
-    await waitFor(() => {
-      expect(screen.getByText('Beta room')).toBeInTheDocument()
-      expect(screen.queryByText('Alpha room')).not.toBeInTheDocument()
-    })
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }))
+    expect(replaceMock).toHaveBeenLastCalledWith('/admin?page=2')
   })
 
   test('sends an explicit versioned allowlist update', async () => {
@@ -91,9 +117,7 @@ describe('admin dashboard', () => {
         },
       }),
     )
-    render(
-      <AdminDashboard initialData={initialData} updateChat={updateChat} />,
-    )
+    render(<AdminDashboard initialData={initialData} updateChat={updateChat} />)
 
     fireEvent.click(
       screen.getByRole('switch', { name: 'Allow AI for Alpha room' }),
@@ -108,48 +132,34 @@ describe('admin dashboard', () => {
       expect(
         screen.getByRole('switch', { name: 'Disallow AI for Alpha room' }),
       ).toBeChecked()
+      expect(refreshMock).toHaveBeenCalledTimes(1)
     })
   })
 
-  test('refreshes and adopts server state after a conflicting update', async () => {
-    const updateChat = jest.fn(
-      async (): Promise<AdminChatUpdateResult> => ({
+  test('refreshes only after a conflicting failed update', async () => {
+    const updateChat = jest
+      .fn()
+      .mockResolvedValueOnce({
         ok: false,
-        error: 'Chat configuration changed. Refresh and try again.',
-      }),
-    )
-    const { rerender } = render(
-      <AdminDashboard initialData={initialData} updateChat={updateChat} />,
-    )
+        error: 'Validation failed.',
+      } satisfies AdminChatUpdateResult)
+      .mockResolvedValueOnce({
+        ok: false,
+        error: 'Chat configuration changed.',
+        conflict: true,
+      } satisfies AdminChatUpdateResult)
+    render(<AdminDashboard initialData={initialData} updateChat={updateChat} />)
 
     fireEvent.click(
       screen.getByRole('switch', { name: 'Allow AI for Alpha room' }),
     )
+    await screen.findByText('Validation failed.')
+    expect(refreshMock).not.toHaveBeenCalled()
 
-    await waitFor(() => {
-      expect(refreshMock).toHaveBeenCalledTimes(1)
-      expect(
-        screen.getByText('Chat configuration changed. Refresh and try again.'),
-      ).toBeInTheDocument()
-    })
-
-    const refreshedData: AdminChatsResponse = {
-      ...initialData,
-      chats: initialData.chats.map((chat) =>
-        chat.chatId === '-1001'
-          ? { ...chat, aiAllowed: true, version: 3 }
-          : chat,
-      ),
-    }
-    rerender(
-      <AdminDashboard initialData={refreshedData} updateChat={updateChat} />,
+    fireEvent.click(
+      screen.getByRole('switch', { name: 'Allow AI for Alpha room' }),
     )
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('switch', { name: 'Disallow AI for Alpha room' }),
-      ).toBeChecked()
-      expect(screen.getByText('Config v3')).toBeInTheDocument()
-    })
+    await screen.findByText('Chat configuration changed.')
+    expect(refreshMock).toHaveBeenCalledTimes(1)
   })
 })

@@ -2,9 +2,12 @@ import 'server-only'
 
 import { getAdminApiBaseUrl } from './admin-config'
 import type {
+  AdminChatListOptions,
   AdminChatsResponse,
-  AdminSessionResponse,
+  ChatAccessResponse,
   ChatConfiguration,
+  SessionResponse,
+  UserChatsResponse,
 } from './admin-types'
 
 export class AdminApiError extends Error {
@@ -21,10 +24,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
-async function requestAdminApi<T>(
-  path: string,
-  init: RequestInit,
-): Promise<T> {
+async function requestAdminApi<T>(path: string, init: RequestInit): Promise<T> {
   const response = await fetch(`${getAdminApiBaseUrl()}${path}`, {
     ...init,
     cache: 'no-store',
@@ -46,18 +46,47 @@ async function requestAdminApi<T>(
   return value as T
 }
 
-export function createAdminSession(
+export function createSession(
   idToken: string,
   nonce: string,
-): Promise<AdminSessionResponse> {
-  return requestAdminApi('/admin/session', {
+): Promise<SessionResponse> {
+  return requestAdminApi('/session', {
     method: 'POST',
     body: JSON.stringify({ idToken, nonce }),
   })
 }
 
-export function getAdminChats(token: string): Promise<AdminChatsResponse> {
-  return requestAdminApi('/admin/chats', {
+export function getUserChats(token: string): Promise<UserChatsResponse> {
+  return requestAdminApi('/chats', {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+}
+
+export function getChatAccess(
+  token: string,
+  chatId: string,
+): Promise<ChatAccessResponse> {
+  return requestAdminApi(`/chats/${encodeURIComponent(chatId)}/access`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+}
+
+export function getAdminChats(
+  token: string,
+  options: AdminChatListOptions = {},
+): Promise<AdminChatsResponse> {
+  const search = new URLSearchParams()
+  if (options.page) search.set('page', String(options.page))
+  if (options.pageSize) search.set('pageSize', String(options.pageSize))
+  if (options.q) search.set('q', options.q)
+  if (options.aiAccess) search.set('aiAccess', options.aiAccess)
+  if (options.sort) search.set('sort', options.sort)
+  if (options.direction) search.set('direction', options.direction)
+  const query = search.size ? `?${search}` : ''
+
+  return requestAdminApi(`/admin/chats${query}`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   })

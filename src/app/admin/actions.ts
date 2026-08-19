@@ -3,18 +3,15 @@
 import { redirect } from 'next/navigation'
 
 import { AdminApiError, patchAdminChat } from '@/lib/admin-api'
-import { getAdminSessionToken } from '@/lib/admin-session'
-import type {
-  AdminChatPatch,
-  AdminChatUpdateResult,
-} from '@/lib/admin-types'
+import { getSessionToken } from '@/lib/admin-session'
+import type { AdminChatPatch, AdminChatUpdateResult } from '@/lib/admin-types'
 
 export async function updateChatConfiguration(
   input: AdminChatPatch,
 ): Promise<AdminChatUpdateResult> {
-  const token = await getAdminSessionToken()
+  const token = await getSessionToken()
   if (!token) {
-    redirect('/admin/sign-in?error=session_expired')
+    redirect('/sign-in?error=session_expired&backUrl=%2Fadmin')
   }
 
   try {
@@ -26,10 +23,17 @@ export async function updateChatConfiguration(
     return { ok: true, configuration }
   } catch (error) {
     if (error instanceof AdminApiError) {
-      if (error.status === 401 || error.status === 403) {
-        redirect('/admin/sign-in?error=session_expired')
+      if (error.status === 401) {
+        redirect('/sign-in?error=session_expired&backUrl=%2Fadmin')
       }
-      return { ok: false, error: error.message }
+      if (error.status === 403) {
+        redirect('/')
+      }
+      return {
+        ok: false,
+        error: error.message,
+        conflict: error.status === 409,
+      }
     }
     return { ok: false, error: 'Could not update this chat. Try again.' }
   }

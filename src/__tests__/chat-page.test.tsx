@@ -1,10 +1,12 @@
-import React from 'react'
-import { render, screen, waitFor, act } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
-import ChatPage from '../app/chat/[id]/page'
 import { ThemeProvider } from '../contexts'
-
 import * as hooks from '../hooks/use-chat-data.hook'
+
+jest.mock('server-only', () => ({}))
+
+const { ChatDashboard } = await import('../app/chat/[id]/chat-dashboard')
+const { ChatAccessMessage } = await import('../app/chat/[id]/page')
 
 const useChatDataMock = jest.spyOn(hooks, 'useChatData')
 
@@ -17,99 +19,46 @@ afterAll(() => {
 })
 
 describe('Chat Page', () => {
-  it('shows the correct children and calls useChatData with correct arguments', async () => {
+  test('renders statistics with the resolved access token', async () => {
     useChatDataMock.mockReturnValue({
       data: {
         usersData: [
           { id: 1, username: 'user1', messages: 62, is_bot: false },
           { id: 2, username: 'user2', messages: 52, is_bot: false },
-          { id: 3, username: 'user3', messages: 30, is_bot: false },
-          { id: 4, username: 'user4', messages: 27, is_bot: false },
-          { id: 5, username: 'user5', messages: 16, is_bot: false },
-          { id: 6, username: 'user6', messages: 10, is_bot: false },
-          { id: 7, username: 'user7', messages: 9, is_bot: false },
-          { id: 8, username: 'user8', messages: 5, is_bot: false },
-          { id: 9, username: 'user9', messages: 3, is_bot: false },
         ],
       },
       loading: false,
       error: '',
     })
 
-    const params = Promise.resolve({ id: 'test-chat-id' })
-    const searchParams = Promise.resolve({ access: 'test-access-token' })
-
-    await act(async () => {
-      render(
-        <ThemeProvider>
-          <ChatPage params={params} searchParams={searchParams} />
-        </ThemeProvider>,
-      )
-      // Important: let the suspended promise settle INSIDE act
-      await params
-      await searchParams
-    })
-
-    expect(hooks.useChatData).toHaveBeenCalledWith(
-      'test-chat-id',
-      'test-access-token',
+    render(
+      <ThemeProvider>
+        <ChatDashboard chatId="-1001" accessToken="short-lived-token" />
+      </ThemeProvider>,
     )
 
-    // Use find* to wait for the post-suspense UI
+    expect(hooks.useChatData).toHaveBeenCalledWith('-1001', 'short-lived-token')
     expect(await screen.findAllByText('Barchart')).toHaveLength(2)
     expect(await screen.findByText('Piechart')).toBeInTheDocument()
   })
 
-  it('shows spinner while loading', async () => {
-    useChatDataMock.mockReturnValue({
-      data: { usersData: [] },
-      loading: true,
-      error: '',
-    })
+  test('shows a Telegram login that returns to the requested chat', () => {
+    render(<ChatAccessMessage chatId="-1001306676509" />)
 
-    const params = Promise.resolve({ id: 'test-chat-id' })
-    const searchParams = Promise.resolve({ access: 'test-access-token' })
-
-    await act(async () => {
-      render(
-        <ThemeProvider>
-          <ChatPage params={params} searchParams={searchParams} />
-        </ThemeProvider>,
-      )
-      await params
-      await searchParams
-    })
-
-    // Wait for the loading UI
-    expect(await screen.findAllByLabelText('spinner')).toHaveLength(2)
-
-    // While loading, charts should not be there; use waitFor with a negative assertion
-    await waitFor(() => {
-      expect(screen.queryAllByText('Barchart')).toHaveLength(0)
-      expect(screen.queryByText('Piechart')).not.toBeInTheDocument()
-    })
+    expect(screen.getByText('Sign in to continue.')).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Continue with Telegram' }),
+    ).toHaveAttribute('href', '/login?backUrl=%2Fchat%2F-1001306676509')
   })
 
-  it('shows error if useChatData fails', async () => {
-    useChatDataMock.mockReturnValue({
-      data: { usersData: [] },
-      loading: false,
-      error: 'Something Went Wrong',
-    })
+  test('shows a clear denial for a chat outside the user list', () => {
+    render(<ChatAccessMessage chatId="-1001" denied />)
 
-    const params = Promise.resolve({ id: 'test-chat-id' })
-    const searchParams = Promise.resolve({ access: 'test-access-token' })
-
-    await act(async () => {
-      render(
-        <ThemeProvider>
-          <ChatPage params={params} searchParams={searchParams} />
-        </ThemeProvider>,
-      )
-      await params
-      await searchParams
-    })
-
-    expect(await screen.findByText('Something Went Wrong')).toBeInTheDocument()
+    expect(
+      screen.getByText('This chat is not in your list.'),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'View your chats' }),
+    ).toHaveAttribute('href', '/')
   })
 })

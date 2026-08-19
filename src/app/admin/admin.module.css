@@ -306,7 +306,8 @@
 }
 
 .sortSelect select,
-.directionButton {
+.pagination select,
+.pagination button {
   height: 38px;
   border: 1px solid #dfe4ea;
   border-radius: 9px;
@@ -320,14 +321,10 @@
   padding: 0 30px 0 11px;
 }
 
-.directionButton {
-  width: 38px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
 .sortSelect select:focus-visible,
-.directionButton:focus-visible,
+.pagination select:focus-visible,
+.pagination button:focus-visible,
+.sortButton:focus-visible,
 .switch:focus-visible,
 .logoutLink:focus-visible,
 .telegramButton:focus-visible,
@@ -372,6 +369,27 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.sortButton {
+  min-width: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+.sortButton span {
+  color: var(--blue-dark);
+  font-size: 13px;
 }
 
 .chatRow {
@@ -530,6 +548,40 @@
   margin: 6px 0 0;
   color: var(--muted);
   font-size: 12px;
+}
+
+.pagination {
+  min-height: 58px;
+  padding: 10px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  background: #fafbfc;
+  font-size: 11px;
+}
+
+.pagination label,
+.pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.pagination select {
+  padding: 0 22px 0 8px;
+}
+
+.pagination button {
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .mobileLabel,
@@ -764,6 +816,17 @@
 
   .controls {
     justify-content: stretch;
+  }
+
+  .pagination {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .pagination > span {
+    flex: 1;
+    align-self: center;
+    text-align: center;
   }
 
   .searchBox {
