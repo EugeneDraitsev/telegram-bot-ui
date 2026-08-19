@@ -6,7 +6,13 @@ import type {
   AdminChatUpdateResult,
 } from '@/lib/admin-types'
 
-import { AdminDashboard } from '../app/admin/admin-dashboard'
+const refreshMock = jest.fn()
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ refresh: refreshMock }),
+}))
+
+const { AdminDashboard } = await import('../app/admin/admin-dashboard')
 
 const initialData: AdminChatsResponse = {
   admin: { id: '42', name: 'Owner' },
@@ -36,6 +42,10 @@ const initialData: AdminChatsResponse = {
 }
 
 describe('admin dashboard', () => {
+  beforeEach(() => {
+    refreshMock.mockReset()
+  })
+
   test('searches chats by username and ID', async () => {
     render(
       <AdminDashboard
@@ -98,6 +108,48 @@ describe('admin dashboard', () => {
       expect(
         screen.getByRole('switch', { name: 'Disallow AI for Alpha room' }),
       ).toBeChecked()
+    })
+  })
+
+  test('refreshes and adopts server state after a conflicting update', async () => {
+    const updateChat = jest.fn(
+      async (): Promise<AdminChatUpdateResult> => ({
+        ok: false,
+        error: 'Chat configuration changed. Refresh and try again.',
+      }),
+    )
+    const { rerender } = render(
+      <AdminDashboard initialData={initialData} updateChat={updateChat} />,
+    )
+
+    fireEvent.click(
+      screen.getByRole('switch', { name: 'Allow AI for Alpha room' }),
+    )
+
+    await waitFor(() => {
+      expect(refreshMock).toHaveBeenCalledTimes(1)
+      expect(
+        screen.getByText('Chat configuration changed. Refresh and try again.'),
+      ).toBeInTheDocument()
+    })
+
+    const refreshedData: AdminChatsResponse = {
+      ...initialData,
+      chats: initialData.chats.map((chat) =>
+        chat.chatId === '-1001'
+          ? { ...chat, aiAllowed: true, version: 3 }
+          : chat,
+      ),
+    }
+    rerender(
+      <AdminDashboard initialData={refreshedData} updateChat={updateChat} />,
+    )
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('switch', { name: 'Disallow AI for Alpha room' }),
+      ).toBeChecked()
+      expect(screen.getByText('Config v3')).toBeInTheDocument()
     })
   })
 })

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useDeferredValue, useMemo, useState } from 'react'
 
 import type {
@@ -87,7 +88,10 @@ export function AdminDashboard({
   initialData,
   updateChat,
 }: AdminDashboardProps) {
-  const [chats, setChats] = useState(initialData.chats)
+  const router = useRouter()
+  const [localConfigurations, setLocalConfigurations] = useState<
+    Record<string, ChatConfiguration>
+  >({})
   const [query, setQuery] = useState('')
   const [sortKey, setSortKey] = useState<SortKey>('lastActivityAt')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
@@ -98,6 +102,17 @@ export function AdminDashboard({
     { kind: 'error' | 'success'; text: string } | undefined
   >()
   const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase())
+
+  const chats = useMemo(
+    () =>
+      initialData.chats.map((chat) => {
+        const local = localConfigurations[chat.chatId]
+        return local && local.version > chat.version
+          ? mergeConfiguration(chat, local)
+          : chat
+      }),
+    [initialData.chats, localConfigurations],
+  )
 
   const counts = useMemo(
     () => ({
@@ -153,16 +168,14 @@ export function AdminDashboard({
       const result = await updateChat(input)
       if (!result.ok) {
         setNotice({ kind: 'error', text: result.error })
+        router.refresh()
         return
       }
 
-      setChats((current) =>
-        current.map((chat) =>
-          chat.chatId === input.chatId
-            ? mergeConfiguration(chat, result.configuration)
-            : chat,
-        ),
-      )
+      setLocalConfigurations((current) => ({
+        ...current,
+        [input.chatId]: result.configuration,
+      }))
       setNotice({ kind: 'success', text: `${chatName} updated.` })
     } catch {
       setNotice({
