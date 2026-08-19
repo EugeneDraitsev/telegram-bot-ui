@@ -31,3 +31,5 @@ storybook-static
 public/storybook
 tsconfig.tsbuildinfo
 debug-storybook.log
+
+.vercel
