@@ -3,7 +3,6 @@ import 'server-only'
 import { cookies } from 'next/headers'
 
 export const SESSION_COOKIE = 'telegram_session'
-export const LEGACY_ADMIN_SESSION_COOKIE = 'telegram_admin_session'
 export const OIDC_STATE_COOKIE = 'telegram_admin_oidc_state'
 export const OIDC_VERIFIER_COOKIE = 'telegram_admin_oidc_verifier'
 export const OIDC_NONCE_COOKIE = 'telegram_admin_oidc_nonce'
@@ -44,8 +43,5 @@ export function getSafeBackUrl(
 
 export async function getSessionToken(): Promise<string | undefined> {
   const store = await cookies()
-  return (
-    store.get(SESSION_COOKIE)?.value ??
-    store.get(LEGACY_ADMIN_SESSION_COOKIE)?.value
-  )
+  return store.get(SESSION_COOKIE)?.value
 }

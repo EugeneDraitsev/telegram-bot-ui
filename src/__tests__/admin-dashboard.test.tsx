@@ -62,14 +62,16 @@ describe('admin dashboard', () => {
 
   test('debounces search into the server-backed URL query', async () => {
     jest.useFakeTimers()
-    render(<AdminDashboard initialData={initialData} updateChat={jest.fn()} />)
-
-    fireEvent.change(
-      screen.getByRole('searchbox', {
-        name: /search chats by name, username or id/i,
-      }),
-      { target: { value: '@alpha_chat' } },
+    const updateChat = jest.fn()
+    const { rerender } = render(
+      <AdminDashboard initialData={initialData} updateChat={updateChat} />,
     )
+
+    const searchInput = screen.getByRole('searchbox', {
+      name: /search chats by name, username or id/i,
+    })
+    searchInput.focus()
+    fireEvent.change(searchInput, { target: { value: '@alpha_chat' } })
     expect(replaceMock).not.toHaveBeenCalled()
 
     await act(async () => {
@@ -77,6 +79,22 @@ describe('admin dashboard', () => {
     })
 
     expect(replaceMock).toHaveBeenCalledWith('/admin?q=%40alpha_chat')
+    fireEvent.change(searchInput, {
+      target: { value: '@alpha_chat newest text' },
+    })
+    rerender(
+      <AdminDashboard
+        initialData={{
+          ...initialData,
+          query: { ...initialData.query, q: '@alpha_chat' },
+        }}
+        updateChat={updateChat}
+      />,
+    )
+
+    expect(searchInput).toHaveFocus()
+    expect(searchInput).toHaveValue('@alpha_chat newest text')
+    jest.clearAllTimers()
     jest.useRealTimers()
   })
 

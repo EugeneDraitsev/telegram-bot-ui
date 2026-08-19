@@ -112,7 +112,9 @@ export function AdminDashboard({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const searchTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const submittedSearch = useRef(initialData.query.q)
   const [, startNavigation] = useTransition()
+  const [searchQuery, setSearchQuery] = useState(initialData.query.q)
   const [localConfigurations, setLocalConfigurations] = useState<
     Record<string, ChatConfiguration>
   >({})
@@ -127,6 +129,13 @@ export function AdminDashboard({
     },
     [],
   )
+
+  useEffect(() => {
+    if (initialData.query.q !== submittedSearch.current) {
+      submittedSearch.current = initialData.query.q
+      setSearchQuery(initialData.query.q)
+    }
+  }, [initialData.query.q])
 
   const chats = useMemo(
     () =>
@@ -167,7 +176,9 @@ export function AdminDashboard({
   function scheduleSearch(value: string) {
     if (searchTimer.current) clearTimeout(searchTimer.current)
     searchTimer.current = setTimeout(() => {
-      navigate({ q: value.trim() || undefined, page: undefined })
+      const query = value.trim()
+      submittedSearch.current = query
+      navigate({ q: query || undefined, page: undefined })
     }, 300)
   }
 
@@ -289,11 +300,13 @@ export function AdminDashboard({
                   <path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
                 </svg>
                 <input
-                  defaultValue={query.q}
-                  key={query.q}
                   type="search"
                   placeholder="Search name, @username or ID"
-                  onChange={(event) => scheduleSearch(event.target.value)}
+                  value={searchQuery}
+                  onChange={(event) => {
+                    setSearchQuery(event.target.value)
+                    scheduleSearch(event.target.value)
+                  }}
                 />
               </label>
               <label className={styles.sortSelect}>
