@@ -1,17 +1,25 @@
-import type { StorybookConfig } from '@storybook/nextjs-vite'
+import { fileURLToPath } from 'node:url'
+
+import type { StorybookConfig } from '@storybook/react-vite'
+import { mergeConfig } from 'vite'
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.stories.tsx'],
   addons: ['@storybook/addon-docs'],
 
   framework: {
-    name: '@storybook/nextjs-vite',
+    name: '@storybook/react-vite',
     options: {},
   },
 
-  viteFinal: (config) => ({
-    ...config,
-    publicDir: false,
-  }),
+  viteFinal: (config) =>
+    mergeConfig(config, {
+      publicDir: false,
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL('../src', import.meta.url)),
+        },
+      },
+    }),
 }
 export default config

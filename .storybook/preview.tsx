@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { definePreview } from '@storybook/nextjs-vite'
+import { definePreview } from '@storybook/react-vite'
 
 import { ThemeProvider } from '@/contexts'
 import '../src/app/global.css'
