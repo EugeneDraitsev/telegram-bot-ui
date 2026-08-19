@@ -1,14 +1,16 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-import { AdminApiError, createAdminSession } from '@/lib/admin-api'
+import { createSession } from '@/lib/admin-api'
 import { getTelegramOidcConfiguration } from '@/lib/admin-config'
 import {
-  ADMIN_SESSION_COOKIE,
+  getSafeBackUrl,
+  OIDC_BACK_URL_COOKIE,
   OIDC_NONCE_COOKIE,
   OIDC_STATE_COOKIE,
   OIDC_VERIFIER_COOKIE,
-  adminCookieOptions,
+  SESSION_COOKIE,
+  sessionCookieOptions,
 } from '@/lib/admin-session'
 
 export const runtime = 'nodejs'
@@ -22,14 +24,19 @@ function clearOidcCookies(response: NextResponse): void {
     OIDC_STATE_COOKIE,
     OIDC_NONCE_COOKIE,
     OIDC_VERIFIER_COOKIE,
+    OIDC_BACK_URL_COOKIE,
   ]) {
-    response.cookies.set(name, '', { ...adminCookieOptions, maxAge: 0 })
+    response.cookies.set(name, '', { ...sessionCookieOptions, maxAge: 0 })
   }
 }
 
 function errorRedirect(request: NextRequest, code: string): NextResponse {
-  const url = new URL('/admin/sign-in', request.url)
+  const url = new URL('/sign-in', request.url)
   url.searchParams.set('error', code)
+  const backUrl = getSafeBackUrl(
+    request.cookies.get(OIDC_BACK_URL_COOKIE)?.value,
+  )
+  if (backUrl !== '/') url.searchParams.set('backUrl', backUrl)
   const response = NextResponse.redirect(url)
   clearOidcCookies(response)
   return response
@@ -69,25 +76,24 @@ export async function GET(request: NextRequest) {
     })
 
     const tokens = (await tokenResponse.json().catch(() => ({}))) as
-      | TelegramTokenResponse
-      | undefined
+      TelegramTokenResponse | undefined
     if (!tokenResponse.ok || typeof tokens?.id_token !== 'string') {
       return errorRedirect(request, 'token_exchange_failed')
     }
 
-    const session = await createAdminSession(tokens.id_token, nonce)
-    const response = NextResponse.redirect(new URL('/admin', request.url))
-    response.cookies.set(ADMIN_SESSION_COOKIE, session.token, {
-      ...adminCookieOptions,
+    const session = await createSession(tokens.id_token, nonce)
+    const backUrl = getSafeBackUrl(
+      request.cookies.get(OIDC_BACK_URL_COOKIE)?.value,
+    )
+    const response = NextResponse.redirect(new URL(backUrl, request.url))
+    response.cookies.set(SESSION_COOKIE, session.token, {
+      ...sessionCookieOptions,
       maxAge: session.expiresIn,
     })
     clearOidcCookies(response)
     response.headers.set('Cache-Control', 'no-store')
     return response
-  } catch (error) {
-    if (error instanceof AdminApiError && error.status === 403) {
-      return errorRedirect(request, 'not_allowed')
-    }
+  } catch {
     return errorRedirect(request, 'login_failed')
   }
 }

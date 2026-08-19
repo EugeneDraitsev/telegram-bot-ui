@@ -1,19 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useDeferredValue, useMemo, useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 
 import type {
   AdminChatPatch,
+  AdminChatSortKey,
   AdminChatsResponse,
   AdminChatUpdateResult,
   ChatConfiguration,
+  SortDirection,
 } from '@/lib/admin-types'
 import styles from './admin.module.css'
-
-type SortKey = 'lastActivityAt' | 'name' | 'allowUpdatedAt' | 'toggledAt'
-type SortDirection = 'asc' | 'desc'
 
 interface AdminDashboardProps {
   initialData: AdminChatsResponse
@@ -84,24 +83,59 @@ function TelegramMark() {
   )
 }
 
+function SortButton({
+  activeDirection,
+  children,
+  onClick,
+}: {
+  activeDirection?: SortDirection
+  children: React.ReactNode
+  onClick: () => void
+}) {
+  return (
+    <button className={styles.sortButton} type="button" onClick={onClick}>
+      {children}
+      {activeDirection ? (
+        <span aria-label={`${activeDirection}ending`}>
+          {activeDirection === 'asc' ? '↑' : '↓'}
+        </span>
+      ) : null}
+    </button>
+  )
+}
+
 export function AdminDashboard({
   initialData,
   updateChat,
 }: AdminDashboardProps) {
   const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const searchTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+  const submittedSearch = useRef(initialData.query.q)
+  const [, startNavigation] = useTransition()
+  const [searchQuery, setSearchQuery] = useState(initialData.query.q)
   const [localConfigurations, setLocalConfigurations] = useState<
     Record<string, ChatConfiguration>
   >({})
-  const [query, setQuery] = useState('')
-  const [sortKey, setSortKey] = useState<SortKey>('lastActivityAt')
-  const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
-  const [pendingChats, setPendingChats] = useState<Set<string>>(
-    () => new Set(),
-  )
+  const [pendingChats, setPendingChats] = useState<Set<string>>(() => new Set())
   const [notice, setNotice] = useState<
     { kind: 'error' | 'success'; text: string } | undefined
   >()
-  const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase())
+
+  useEffect(
+    () => () => {
+      if (searchTimer.current) clearTimeout(searchTimer.current)
+    },
+    [],
+  )
+
+  useEffect(() => {
+    if (initialData.query.q !== submittedSearch.current) {
+      submittedSearch.current = initialData.query.q
+      setSearchQuery(initialData.query.q)
+    }
+  }, [initialData.query.q])
 
   const chats = useMemo(
     () =>
@@ -114,52 +148,39 @@ export function AdminDashboard({
     [initialData.chats, localConfigurations],
   )
 
-  const counts = useMemo(
-    () => ({
-      total: chats.length,
-      allowed: chats.filter((chat) => chat.aiAllowed).length,
-      enabled: chats.filter(
-        (chat) => chat.aiAllowed && chat.agenticEnabled,
-      ).length,
-    }),
-    [chats],
-  )
-
-  const visibleChats = useMemo(() => {
-    const filtered = deferredQuery
-      ? chats.filter((chat) =>
-          [
-            chat.name,
-            chat.username,
-            chat.username ? `@${chat.username}` : undefined,
-            chat.chatId,
-          ]
-            .filter(Boolean)
-            .some((value) =>
-              String(value).toLocaleLowerCase().includes(deferredQuery),
-            ),
-        )
-      : chats
-
-    return [...filtered].sort((left, right) => {
-      let comparison: number
-      if (sortKey === 'name') {
-        comparison = left.name.localeCompare(right.name, undefined, {
-          numeric: true,
-          sensitivity: 'base',
-        })
-      } else {
-        comparison = (left[sortKey] ?? 0) - (right[sortKey] ?? 0)
-      }
-      return sortDirection === 'asc' ? comparison : -comparison
-    })
-  }, [chats, deferredQuery, sortDirection, sortKey])
-
   const adminName =
     initialData.admin.name ||
     (initialData.admin.username
       ? `@${initialData.admin.username}`
       : `Telegram ${initialData.admin.id}`)
+
+  function navigate(updates: Record<string, string | undefined>) {
+    const next = new URLSearchParams(searchParams.toString())
+    for (const [key, value] of Object.entries(updates)) {
+      if (value) next.set(key, value)
+      else next.delete(key)
+    }
+    startNavigation(() => {
+      router.replace(next.size ? `${pathname}?${next}` : pathname)
+    })
+  }
+
+  function sortBy(sort: AdminChatSortKey) {
+    const direction =
+      initialData.query.sort === sort && initialData.query.direction === 'asc'
+        ? 'desc'
+        : 'asc'
+    navigate({ sort, direction, page: undefined })
+  }
+
+  function scheduleSearch(value: string) {
+    if (searchTimer.current) clearTimeout(searchTimer.current)
+    searchTimer.current = setTimeout(() => {
+      const query = value.trim()
+      submittedSearch.current = query
+      navigate({ q: query || undefined, page: undefined })
+    }, 300)
+  }
 
   async function saveChat(input: AdminChatPatch, chatName: string) {
     setPendingChats((current) => new Set(current).add(input.chatId))
@@ -168,7 +189,7 @@ export function AdminDashboard({
       const result = await updateChat(input)
       if (!result.ok) {
         setNotice({ kind: 'error', text: result.error })
-        router.refresh()
+        if (result.conflict) router.refresh()
         return
       }
 
@@ -177,6 +198,7 @@ export function AdminDashboard({
         [input.chatId]: result.configuration,
       }))
       setNotice({ kind: 'success', text: `${chatName} updated.` })
+      router.refresh()
     } catch {
       setNotice({
         kind: 'error',
@@ -191,11 +213,20 @@ export function AdminDashboard({
     }
   }
 
+  const { pagination, query, summary } = initialData
+  const firstVisible = pagination.total
+    ? (pagination.page - 1) * pagination.pageSize + 1
+    : 0
+  const lastVisible = Math.min(
+    pagination.page * pagination.pageSize,
+    pagination.total,
+  )
+
   return (
     <main className={styles.dashboard}>
       <header className={styles.topBar}>
         <div className={styles.topBarInner}>
-          <div className={styles.brand}>
+          <Link className={styles.brand} href="/">
             <span className={styles.brandIcon}>
               <TelegramMark />
             </span>
@@ -203,18 +234,14 @@ export function AdminDashboard({
               <strong>Control room</strong>
               <small>Telegram agent</small>
             </span>
-          </div>
+          </Link>
           <div className={styles.ownerMenu}>
             <span className={styles.ownerAvatar}>{initials(adminName)}</span>
             <span className={styles.ownerIdentity}>
               <strong>{adminName}</strong>
               <small>Owner · {initialData.admin.id}</small>
             </span>
-            <Link
-              className={styles.logoutLink}
-              href="/admin/logout"
-              prefetch={false}
-            >
+            <Link className={styles.logoutLink} href="/logout" prefetch={false}>
               Sign out
             </Link>
           </div>
@@ -238,17 +265,17 @@ export function AdminDashboard({
         <dl className={styles.metrics}>
           <div>
             <dt>Known chats</dt>
-            <dd>{counts.total}</dd>
+            <dd>{summary.total}</dd>
             <span>Seen by the bot</span>
           </div>
           <div>
             <dt>AI allowed</dt>
-            <dd>{counts.allowed}</dd>
+            <dd>{summary.allowed}</dd>
             <span>Owner allowlist</span>
           </div>
           <div>
             <dt>Agent active</dt>
-            <dd>{counts.enabled}</dd>
+            <dd>{summary.enabled}</dd>
             <span>Allowed and switched on</span>
           </div>
         </dl>
@@ -258,9 +285,10 @@ export function AdminDashboard({
             <div>
               <h2 id="chat-directory">Chat directory</h2>
               <p>
-                {visibleChats.length === chats.length
-                  ? `${chats.length} chats`
-                  : `${visibleChats.length} of ${chats.length} chats`}
+                Showing {firstVisible}–{lastVisible} of {pagination.total}
+                {pagination.total !== summary.total
+                  ? ` filtered · ${summary.total} known`
+                  : ' chats'}
               </p>
             </div>
             <div className={styles.controls}>
@@ -274,35 +302,27 @@ export function AdminDashboard({
                 <input
                   type="search"
                   placeholder="Search name, @username or ID"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
+                  value={searchQuery}
+                  onChange={(event) => {
+                    setSearchQuery(event.target.value)
+                    scheduleSearch(event.target.value)
+                  }}
                 />
               </label>
               <label className={styles.sortSelect}>
-                <span className={styles.visuallyHidden}>Sort chats</span>
+                <span className={styles.visuallyHidden}>Filter AI access</span>
                 <select
-                  value={sortKey}
-                  onChange={(event) => setSortKey(event.target.value as SortKey)}
+                  aria-label="Filter AI access"
+                  value={query.aiAccess}
+                  onChange={(event) =>
+                    navigate({ aiAccess: event.target.value, page: undefined })
+                  }
                 >
-                  <option value="lastActivityAt">Last active</option>
-                  <option value="name">Name</option>
-                  <option value="allowUpdatedAt">Allow changed</option>
-                  <option value="toggledAt">Agent changed</option>
+                  <option value="all">All AI access</option>
+                  <option value="allowed">AI allowed</option>
+                  <option value="blocked">AI blocked</option>
                 </select>
               </label>
-              <button
-                className={styles.directionButton}
-                type="button"
-                aria-label={`Sort ${sortDirection === 'asc' ? 'descending' : 'ascending'}`}
-                title={`Currently ${sortDirection === 'asc' ? 'ascending' : 'descending'}`}
-                onClick={() =>
-                  setSortDirection((current) =>
-                    current === 'asc' ? 'desc' : 'asc',
-                  )
-                }
-              >
-                {sortDirection === 'asc' ? '↑' : '↓'}
-              </button>
             </div>
           </div>
 
@@ -313,15 +333,43 @@ export function AdminDashboard({
             {notice?.text ?? '\u00a0'}
           </div>
 
-          <div className={styles.tableHeader} aria-hidden="true">
-            <span>Chat</span>
-            <span>Last active</span>
-            <span>AI access</span>
-            <span>Agent</span>
+          <div className={styles.tableHeader}>
+            <SortButton
+              activeDirection={
+                query.sort === 'name' ? query.direction : undefined
+              }
+              onClick={() => sortBy('name')}
+            >
+              Chat
+            </SortButton>
+            <SortButton
+              activeDirection={
+                query.sort === 'lastActivityAt' ? query.direction : undefined
+              }
+              onClick={() => sortBy('lastActivityAt')}
+            >
+              Last active
+            </SortButton>
+            <SortButton
+              activeDirection={
+                query.sort === 'aiAccess' ? query.direction : undefined
+              }
+              onClick={() => sortBy('aiAccess')}
+            >
+              AI access
+            </SortButton>
+            <SortButton
+              activeDirection={
+                query.sort === 'agent' ? query.direction : undefined
+              }
+              onClick={() => sortBy('agent')}
+            >
+              Agent
+            </SortButton>
           </div>
 
           <div className={styles.chatList}>
-            {visibleChats.map((chat) => {
+            {chats.map((chat) => {
               const pending = pendingChats.has(chat.chatId)
               return (
                 <article className={styles.chatRow} key={chat.chatId}>
@@ -343,7 +391,9 @@ export function AdminDashboard({
                     <span className={styles.mobileLabel}>Last active</span>
                     <strong>{formatDate(chat.lastActivityAt)}</strong>
                     <small>
-                      {chat.configured ? `Config v${chat.version}` : 'No config yet'}
+                      {chat.configured
+                        ? `Config v${chat.version}`
+                        : 'No config yet'}
                     </small>
                   </div>
 
@@ -392,13 +442,51 @@ export function AdminDashboard({
             })}
           </div>
 
-          {visibleChats.length === 0 ? (
+          {chats.length === 0 ? (
             <div className={styles.emptyState}>
               <span aria-hidden="true">⌕</span>
               <strong>No matching chats</strong>
               <p>Try a name, username, or the numeric Telegram chat ID.</p>
             </div>
           ) : null}
+
+          <footer className={styles.pagination}>
+            <label>
+              <span>Rows</span>
+              <select
+                aria-label="Rows per page"
+                value={pagination.pageSize}
+                onChange={(event) =>
+                  navigate({ pageSize: event.target.value, page: undefined })
+                }
+              >
+                {[10, 20, 50, 100].map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <span>
+              Page {pagination.page} of {pagination.totalPages}
+            </span>
+            <div>
+              <button
+                disabled={pagination.page <= 1}
+                type="button"
+                onClick={() => navigate({ page: String(pagination.page - 1) })}
+              >
+                Previous
+              </button>
+              <button
+                disabled={pagination.page >= pagination.totalPages}
+                type="button"
+                onClick={() => navigate({ page: String(pagination.page + 1) })}
+              >
+                Next
+              </button>
+            </div>
+          </footer>
         </section>
       </div>
     </main>

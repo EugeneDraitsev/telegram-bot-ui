@@ -1,85 +1,87 @@
-'use client'
+import Link from 'next/link'
 
-import { use } from 'react'
-import styled from 'styled-components'
+import { AdminApiError, getChatAccess } from '@/lib/admin-api'
+import { getSessionToken } from '@/lib/admin-session'
+import styles from '../../home.module.css'
+import { ChatDashboard } from './chat-dashboard'
 
-import { Card } from '@/components/card.component'
-import { ChatInfo } from '@/components/chat-info.component'
-import { HistoricalStatistics } from '@/components/chat/historical-statistics.component'
-import { LastDayStatistics } from '@/components/chat/last-day-statistics.component'
-import { Spinner } from '@/components/spinner.component'
-import { useChatData } from '@/hooks/use-chat-data.hook'
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: auto;
-`
-const Container = styled.div`
-  width: 1200px;
-  max-width: 100vw;
-`
-const LoadingWrapper = styled(Wrapper)`
-  min-height: 100vh;
-`
-const GraphCard = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px;
-  padding: 15px 0;
-  @media (max-width: 800px) {
-    margin: 10px;
-    max-width: calc(100vw - 20px);
-  }
-`
-const LoadingCard = styled(GraphCard)`
-  height: 506px;
-`
-
-type ChatPageProps = {
+interface ChatPageProps {
   params: Promise<{ id: string }>
   searchParams: Promise<{ access?: string | string[] }>
 }
 
-const ChatPage = ({ params, searchParams }: ChatPageProps) => {
-  const { id } = use(params)
-  const { access } = use(searchParams)
-  const accessToken = Array.isArray(access) ? access[0] : access
-  const { loading, data, error } = useChatData(id, accessToken)
-  const { chatInfo, usersData, historicalData } = data
-
-  if (error) {
-    return <LoadingWrapper>{error}</LoadingWrapper>
-  }
-
+export function ChatAccessMessage({
+  chatId,
+  denied = false,
+}: {
+  chatId: string
+  denied?: boolean
+}) {
+  const backUrl = `/chat/${encodeURIComponent(chatId)}`
+  const loginHref = `/login?${new URLSearchParams({ backUrl })}`
   return (
-    <>
-      {!loading && <ChatInfo data={chatInfo} />}
-      <Wrapper>
-        {loading && (
-          <Container>
-            {[0, 1].map((i) => (
-              <LoadingCard key={i}>
-                <Spinner />
-              </LoadingCard>
-            ))}
-          </Container>
+    <main className={styles.page}>
+      <section className={styles.hero}>
+        <span className={styles.mark}>T</span>
+        <p className={styles.eyebrow}>Private chat statistics</p>
+        <h1>
+          {denied ? 'This chat is not in your list.' : 'Sign in to continue.'}
+        </h1>
+        <p className={styles.lead}>
+          {denied
+            ? 'The bot has not observed activity from your Telegram account in this chat.'
+            : 'Telegram login lets us match this page to chats where the bot has observed your account.'}
+        </p>
+        {denied ? (
+          <Link className={styles.primaryAction} href="/">
+            View your chats
+          </Link>
+        ) : (
+          <Link
+            className={styles.primaryAction}
+            href={loginHref}
+            prefetch={false}
+          >
+            Continue with Telegram
+          </Link>
         )}
-        {!loading && (
-          <Container>
-            <LastDayStatistics usersData={usersData} />
-            <HistoricalStatistics historicalData={historicalData || []} />
-          </Container>
-        )}
-      </Wrapper>
-    </>
+      </section>
+    </main>
   )
 }
 
-export default ChatPage
+export default async function ChatPage({
+  params,
+  searchParams,
+}: ChatPageProps) {
+  const { id } = await params
+  const access = (await searchParams).access
+  const legacyAccessToken = Array.isArray(access) ? access[0] : access
+  if (legacyAccessToken) {
+    return <ChatDashboard chatId={id} accessToken={legacyAccessToken} />
+  }
+
+  const sessionToken = await getSessionToken()
+  if (!sessionToken) return <ChatAccessMessage chatId={id} />
+
+  let accessToken: string | undefined
+  let accessDenied = false
+  try {
+    accessToken = (await getChatAccess(sessionToken, id)).accessToken
+  } catch (error) {
+    if (error instanceof AdminApiError && error.status === 401) {
+      accessToken = undefined
+    } else if (error instanceof AdminApiError && error.status === 403) {
+      accessDenied = true
+    } else {
+      throw error
+    }
+  }
+
+  if (accessDenied) return <ChatAccessMessage chatId={id} denied />
+  return accessToken ? (
+    <ChatDashboard chatId={id} accessToken={accessToken} />
+  ) : (
+    <ChatAccessMessage chatId={id} />
+  )
+}

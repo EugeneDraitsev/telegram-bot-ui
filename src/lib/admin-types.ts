@@ -1,8 +1,12 @@
-export interface AdminIdentity {
+export interface SessionIdentity {
   id: string
   name?: string
   username?: string
   picture?: string
+}
+
+export interface SessionUser extends SessionIdentity {
+  isAdmin: boolean
 }
 
 export interface ChatConfiguration {
@@ -25,14 +29,59 @@ export interface AdminChatRecord extends ChatConfiguration {
 }
 
 export interface AdminChatsResponse {
-  admin: AdminIdentity
+  admin: SessionIdentity
   chats: AdminChatRecord[]
+  pagination: {
+    page: number
+    pageSize: number
+    total: number
+    totalPages: number
+  }
+  summary: {
+    total: number
+    allowed: number
+    enabled: number
+  }
+  query: AdminChatListOptions
 }
 
-export interface AdminSessionResponse {
+export type AdminChatSortKey = 'name' | 'lastActivityAt' | 'aiAccess' | 'agent'
+export type SortDirection = 'asc' | 'desc'
+export type AiAccessFilter = 'all' | 'allowed' | 'blocked'
+
+export interface AdminChatListOptions {
+  page?: number
+  pageSize?: number
+  q?: string
+  aiAccess?: AiAccessFilter
+  sort?: AdminChatSortKey
+  direction?: SortDirection
+}
+
+export interface SessionResponse {
   token: string
   expiresIn: number
-  admin: AdminIdentity
+  user: SessionUser
+}
+
+export interface UserChatRecord {
+  chatId: string
+  name: string
+  username?: string
+  type?: string
+  lastActivityAt?: number
+  messageCount: number
+}
+
+export interface UserChatsResponse {
+  user: SessionUser
+  chats: UserChatRecord[]
+}
+
+export interface ChatAccessResponse {
+  chatId: string
+  accessToken: string
+  expiresIn: number
 }
 
 export interface AdminChatPatch {
@@ -44,4 +93,4 @@ export interface AdminChatPatch {
 
 export type AdminChatUpdateResult =
   | { ok: true; configuration: ChatConfiguration }
-  | { ok: false; error: string }
+  | { ok: false; error: string; conflict?: boolean }
