@@ -38,8 +38,31 @@ describe('Chat Page', () => {
     )
 
     expect(hooks.useChatData).toHaveBeenCalledWith('-1001', 'short-lived-token')
+    expect(screen.getByRole('banner')).toBeInTheDocument()
     expect(await screen.findAllByText('Barchart')).toHaveLength(2)
     expect(await screen.findByText('Piechart')).toBeInTheDocument()
+  })
+
+  test('keeps the header and shows placeholder cards while loading', () => {
+    useChatDataMock.mockReturnValue({
+      data: { usersData: [] },
+      loading: true,
+      error: '',
+    })
+
+    render(
+      <ThemeProvider>
+        <ChatDashboard chatId="-1001" accessToken="short-lived-token" />
+      </ThemeProvider>,
+    )
+
+    expect(screen.getByRole('banner')).toBeInTheDocument()
+    expect(
+      screen.getByRole('status', { name: 'Loading chat statistics' }),
+    ).toBeInTheDocument()
+    // The header must stay a placeholder instead of falling back to a name.
+    expect(screen.queryByText('Unknown Chat')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('spinner')).not.toBeInTheDocument()
   })
 
   test('shows a Telegram login that returns to the requested chat', () => {

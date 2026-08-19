@@ -2,11 +2,10 @@
 
 import styled from 'styled-components'
 
-import { Card } from '@/components/card.component'
 import { ChatInfo } from '@/components/chat-info.component'
 import { HistoricalStatistics } from '@/components/chat/historical-statistics.component'
 import { LastDayStatistics } from '@/components/chat/last-day-statistics.component'
-import { Spinner } from '@/components/spinner.component'
+import { StatisticsSkeleton } from '@/components/chat/statistics-skeleton.component'
 import { useChatData } from '@/hooks/use-chat-data.hook'
 
 const Wrapper = styled.div`
@@ -20,25 +19,8 @@ const Container = styled.div`
   width: 1200px;
   max-width: 100vw;
 `
-const LoadingWrapper = styled(Wrapper)`
+const ErrorWrapper = styled(Wrapper)`
   min-height: 100vh;
-`
-const GraphCard = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px;
-  padding: 15px 0;
-  @media (max-width: 800px) {
-    margin: 10px;
-    max-width: calc(100vw - 20px);
-  }
-`
-const LoadingCard = styled(GraphCard)`
-  height: 506px;
 `
 
 export function ChatDashboard({
@@ -51,19 +33,16 @@ export function ChatDashboard({
   const { loading, data, error } = useChatData(chatId, accessToken)
   const { chatInfo, usersData, historicalData } = data
 
-  if (error) return <LoadingWrapper>{error}</LoadingWrapper>
+  if (error) return <ErrorWrapper>{error}</ErrorWrapper>
 
   return (
     <>
-      {!loading && <ChatInfo data={chatInfo} />}
+      <ChatInfo data={chatInfo} loading={loading} />
       <Wrapper>
         {loading ? (
-          <Container>
-            {[0, 1].map((index) => (
-              <LoadingCard key={index}>
-                <Spinner />
-              </LoadingCard>
-            ))}
+          <Container role="status" aria-label="Loading chat statistics">
+            <StatisticsSkeleton />
+            <StatisticsSkeleton />
           </Container>
         ) : (
           <Container>

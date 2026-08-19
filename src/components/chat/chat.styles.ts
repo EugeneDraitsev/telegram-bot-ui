@@ -1,6 +1,6 @@
 'use client'
 
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { Card } from '@/components/card.component'
 
@@ -41,4 +41,20 @@ export const SubTitle = styled.div`
   line-height: 18px;
   padding: 5px 0;
   font-weight: normal;
+`
+
+const pulse = keyframes`
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+`
+export const SkeletonBlock = styled.div<{ $width: string; $height: string }>`
+  flex-shrink: 0;
+  width: ${(p) => p.$width};
+  height: ${(p) => p.$height};
+  border-radius: 4px;
+  background: #ececec;
+  animation: ${pulse} 1.4s ease-in-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `
