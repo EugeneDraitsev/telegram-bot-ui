@@ -12,11 +12,8 @@ import {
 } from 'recharts'
 import { tint } from 'polished'
 
+import { STATISTICS_TIME_ZONE } from '@/constants'
 import type { MessageCountPoint, MessageCountRange } from '@/types'
-
-// Buckets are UTC instants; formatting them in the app's display zone keeps the
-// label pointing at the same moment without shifting a bucket into another day.
-const ZONE = 'Europe/Stockholm'
 
 const AXIS_FORMATS: Record<MessageCountRange, Intl.DateTimeFormatOptions> = {
   day: { hour: '2-digit', minute: '2-digit' },
@@ -33,7 +30,7 @@ const TOOLTIP_FORMATS: Record<MessageCountRange, Intl.DateTimeFormatOptions> = {
 }
 
 const format = (value: number, options: Intl.DateTimeFormatOptions) =>
-  new Intl.DateTimeFormat('en-GB', { ...options, timeZone: ZONE }).format(value)
+  new Intl.DateTimeFormat('en-GB', { ...options, timeZone: STATISTICS_TIME_ZONE }).format(value)
 
 interface MessageVolumeBarsProps {
   data: MessageCountPoint[]
