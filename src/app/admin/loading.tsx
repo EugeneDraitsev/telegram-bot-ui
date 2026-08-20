@@ -1,17 +1,19 @@
 import styles from './admin.module.css'
 
-// Mirrors the dashboard shell rather than showing a spinner: the static chrome
-// is real, and only the parts that wait on DynamoDB are placeholders, so the
-// page does not visibly rebuild itself once the data lands.
+// Mirrors the dashboard shell rather than showing a spinner. Static chrome is
+// real; every placeholder is sized to the element it stands in for, measured
+// against the loaded dashboard, so the page does not resize when data lands.
 const ROWS = 6
 
 function Block({
   width,
   height,
+  marginTop,
   onDark,
 }: {
   width: number | string
   height: number
+  marginTop?: number
   onDark?: boolean
 }) {
   return (
@@ -19,7 +21,7 @@ function Block({
       className={[styles.skeleton, onDark ? styles.skeletonOnDark : '']
         .filter(Boolean)
         .join(' ')}
-      style={{ width, height }}
+      style={{ width, height, marginTop }}
     />
   )
 }
@@ -48,7 +50,8 @@ export default function AdminLoading() {
           </div>
           <div className={styles.ownerMenu}>
             <Block width={34} height={34} onDark />
-            <Block width={120} height={30} onDark />
+            <Block width={83} height={36} onDark />
+            <Block width={70} height={36} onDark />
           </div>
         </div>
       </header>
@@ -58,18 +61,29 @@ export default function AdminLoading() {
           <div>
             <p className={styles.eyebrow}>Live configuration</p>
             <h1>Chats</h1>
-            <p>Control the outer AI allowlist and each chat&apos;s agent switch.</p>
+            <p>
+              Control the outer AI allowlist and each chat&apos;s agent switch.
+            </p>
           </div>
+          <span className={styles.connectionStatus}>
+            <span /> AWS connected
+          </span>
         </section>
 
         <dl className={styles.metrics}>
-          {['Known chats', 'AI allowed', 'Agent active'].map((label) => (
+          {[
+            ['Known chats', 'Seen by the bot'],
+            ['AI allowed', 'Owner allowlist'],
+            ['Agent active', 'Allowed and switched on'],
+          ].map(([label]) => (
             <div key={label}>
               <dt>{label}</dt>
               <dd>
-                <Block width={56} height={30} />
+                <Block width={72} height={45} />
               </dd>
-              <Block width={110} height={11} />
+              <span style={{ display: 'flex', alignItems: 'center', height: 24 }}>
+                <Block width={124} height={13} />
+              </span>
             </div>
           ))}
         </dl>
@@ -78,13 +92,15 @@ export default function AdminLoading() {
           <div className={styles.directoryHeader}>
             <div>
               <h2 id="chat-directory">Chat directory</h2>
-              <Block width={150} height={12} />
+              <Block width={150} height={17} marginTop={4} />
             </div>
             <div className={styles.controls}>
-              <Block width={230} height={38} />
-              <Block width={150} height={38} />
+              <Block width={320} height={38} />
+              <Block width={132} height={38} />
             </div>
           </div>
+
+          <div className={styles.notice}>&nbsp;</div>
 
           <div className={styles.tableHeader}>
             <span>Chat</span>
@@ -99,27 +115,34 @@ export default function AdminLoading() {
                 <div className={styles.chatIdentity}>
                   <Block width={39} height={39} />
                   <span className={styles.chatDetails}>
-                    <Block width="min(190px, 70%)" height={13} />
-                    <Block width="min(120px, 50%)" height={11} />
+                    <Block width="min(190px, 78%)" height={20} marginTop={0} />
+                    <Block width="min(120px, 55%)" height={17} marginTop={3} />
+                    <Block width={96} height={15} marginTop={4} />
                   </span>
                 </div>
+
                 <div className={styles.activityCell}>
-                  <Block width="min(130px, 80%)" height={13} />
+                  <Block width={110} height={17} />
+                  <Block width={56} height={11} marginTop={6} />
                 </div>
+
                 <div className={styles.flagCell}>
-                  <Block width={92} height={24} />
+                  <Block width={84} height={23} />
+                  <Block width={96} height={11} marginTop={6} />
                 </div>
+
                 <div className={styles.flagCell}>
-                  <Block width={92} height={24} />
+                  <Block width={84} height={23} />
+                  <Block width={96} height={11} marginTop={6} />
                 </div>
               </article>
             ))}
           </div>
 
           <footer className={styles.pagination}>
-            <Block width={90} height={38} />
-            <Block width={110} height={12} />
-            <Block width={170} height={38} />
+            <Block width={107} height={38} />
+            <Block width={68} height={17} />
+            <Block width={130} height={38} />
           </footer>
         </section>
       </div>
