@@ -10,9 +10,17 @@ interface ChatInfoProps {
   loading?: boolean
   chatId: string
   hasPhoto?: boolean
+  memberCount?: number
 }
 
 const placeholder = 'bg-neutral-400/50 animate-pulse'
+
+const getSubtitle = (data?: Chat | null, memberCount?: number) => {
+  if (typeof memberCount === 'number') {
+    return `${memberCount.toLocaleString()} ${memberCount === 1 ? 'member' : 'members'}`
+  }
+  return data?.description ?? ''
+}
 
 export const ChatInfo = ({
   data,
@@ -20,45 +28,48 @@ export const ChatInfo = ({
   loading,
   chatId,
   hasPhoto,
+  memberCount,
 }: ChatInfoProps) => (
   <header
     className={['flex justify-center w-full bg-neutral-300', className]
       .filter(Boolean)
       .join(' ')}
   >
-    <div className="flex items-center justify-between gap-4 w-full max-w-[1200px] text-left py-3 px-4">
+    <div className="flex items-center justify-between gap-4 w-full max-w-[1200px] text-left py-2 px-4">
       <div className="flex items-center min-w-0">
         {loading ? (
           <div
-            className={`shrink-0 w-[70px] h-[70px] rounded-full border-2 border-white ${placeholder}`}
+            className={`shrink-0 w-12 h-12 rounded-full border-2 border-white ${placeholder}`}
           />
         ) : (
           <ChatAvatar
             chatId={chatId}
             name={getChatName(data)}
             hasPhoto={hasPhoto}
-            size={70}
+            size={48}
           />
         )}
-        {/* The two placeholder rows are 24px and 20px tall on purpose: they
-            match the title and description line boxes below, so the text does
-            not shift once the chat data arrives. */}
-        <div className="ml-5 min-w-0">
+        {/* The placeholder rows are 24px and 16px tall on purpose: they match
+            the title and subtitle line boxes below, so the text does not shift
+            once the chat data arrives. */}
+        <div className="ml-4 min-w-0">
           {loading ? (
             <>
               <div className="h-6 flex items-center">
-                <div className={`h-4 w-40 rounded ${placeholder}`} />
+                <div className={`h-3.5 w-36 rounded ${placeholder}`} />
               </div>
-              <div className="h-5 flex items-center">
-                <div className={`h-3 w-60 rounded ${placeholder}`} />
+              <div className="h-4 flex items-center">
+                <div className={`h-2.5 w-24 rounded ${placeholder}`} />
               </div>
             </>
           ) : (
             <>
-              <h1 className="text-2xl font-light leading-none">
+              <h1 className="text-xl font-light leading-6 truncate">
                 {getChatName(data)}
               </h1>
-              <p className="text-sm">{data?.description}</p>
+              <p className="text-xs leading-4 text-neutral-600 truncate">
+                {getSubtitle(data, memberCount)}
+              </p>
             </>
           )}
         </div>

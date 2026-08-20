@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { AdminApiError, getChatAccess } from '@/lib/admin-api'
 import { getSessionToken } from '@/lib/admin-session'
-import { getChatPhotoFileId } from '@/lib/telegram'
+import { getChatMemberCount, getChatPhotoFileId } from '@/lib/telegram'
 import styles from '../../home.module.css'
 import { ChatDashboard } from './chat-dashboard'
 
@@ -51,6 +51,16 @@ export function ChatAccessMessage({
   )
 }
 
+// Both Telegram lookups are cached for a day, so this costs nothing on repeat
+// views of the same chat.
+async function getChatHeaderInfo(chatId: string) {
+  const [photoFileId, memberCount] = await Promise.all([
+    getChatPhotoFileId(chatId),
+    getChatMemberCount(chatId),
+  ])
+  return { hasPhoto: Boolean(photoFileId), memberCount }
+}
+
 export default async function ChatPage({
   params,
   searchParams,
@@ -63,7 +73,7 @@ export default async function ChatPage({
       <ChatDashboard
         chatId={id}
         accessToken={legacyAccessToken}
-        hasPhoto={Boolean(await getChatPhotoFileId(id))}
+        {...(await getChatHeaderInfo(id))}
       />
     )
   }
@@ -92,7 +102,7 @@ export default async function ChatPage({
     <ChatDashboard
       chatId={id}
       accessToken={accessToken}
-      hasPhoto={Boolean(await getChatPhotoFileId(id))}
+      {...(await getChatHeaderInfo(id))}
     />
   )
 }

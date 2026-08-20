@@ -76,6 +76,21 @@ export const getChatPhotoFileId = async (
 ): Promise<string | undefined> =>
   (await getTelegramChat(chatId))?.photo?.small_file_id
 
+// Chat descriptions are usually empty, so the header shows the member count
+// instead. Undefined when the bot cannot see the chat.
+export const getChatMemberCount = async (
+  chatId: string,
+): Promise<number | undefined> => {
+  try {
+    const count = await requestTelegram<number>('getChatMemberCount', {
+      chat_id: chatId,
+    })
+    return typeof count === 'number' ? count : undefined
+  } catch {
+    return undefined
+  }
+}
+
 // Which chats actually have a photo, so a list can fall back to initials
 // instead of rendering a broken image. One getChat per chat, but the responses
 // are cached for a day, so a list only pays for chats it has not shown recently.

@@ -27,10 +27,12 @@ export function ChatDashboard({
   chatId,
   accessToken,
   hasPhoto,
+  memberCount,
 }: {
   chatId: string
   accessToken: string
   hasPhoto?: boolean
+  memberCount?: number
 }) {
   const { loading, data, error } = useChatData(chatId, accessToken)
   const { chatInfo, usersData, historicalData } = data
@@ -44,6 +46,7 @@ export function ChatDashboard({
         loading={loading}
         chatId={chatId}
         hasPhoto={hasPhoto}
+        memberCount={memberCount}
       />
       <Wrapper>
         {loading ? (

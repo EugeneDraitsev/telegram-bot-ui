@@ -1,5 +1,12 @@
 @import 'tailwindcss';
 
+/* Reserve the scrollbar gutter at all times. Without it, a page that grows past
+   the viewport after loading gains a scrollbar, the viewport narrows, and every
+   centred element jumps sideways by half the scrollbar width. */
+html {
+  scrollbar-gutter: stable;
+}
+
 @keyframes rotate-360 {
   from {
     transform: rotate(0deg);
