@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { ChatInfo } from '@/components/chat-info.component'
 import { HistoricalStatistics } from '@/components/chat/historical-statistics.component'
 import { LastDayStatistics } from '@/components/chat/last-day-statistics.component'
+import { MessageVolume } from '@/components/chat/message-volume.component'
 import { StatisticsSkeleton } from '@/components/chat/statistics-skeleton.component'
 import { useChatData } from '@/hooks/use-chat-data.hook'
 
@@ -35,7 +36,7 @@ export function ChatDashboard({
   memberCount?: number
 }) {
   const { loading, data, error } = useChatData(chatId, accessToken)
-  const { chatInfo, usersData, historicalData } = data
+  const { chatInfo, usersData, historicalData, messageCounts } = data
 
   if (error) return <ErrorWrapper>{error}</ErrorWrapper>
 
@@ -53,10 +54,12 @@ export function ChatDashboard({
           <Container role="status" aria-label="Loading chat statistics">
             <StatisticsSkeleton />
             <StatisticsSkeleton />
+            <StatisticsSkeleton />
           </Container>
         ) : (
           <Container>
             <LastDayStatistics usersData={usersData} />
+            <MessageVolume messageCounts={messageCounts} />
             <HistoricalStatistics historicalData={historicalData || []} />
           </Container>
         )}
