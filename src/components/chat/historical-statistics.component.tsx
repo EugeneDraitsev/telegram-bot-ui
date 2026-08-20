@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import { Tabs } from '@/components/tabs.component'
 import { GraphCard, Header, SubTitle, Title } from './chat.styles'
+import { ChartPlaceholder } from './statistics-skeleton.component'
 import type { HistoricalData as HistoricalDataType } from '@/types'
 
 const HistoricalBars = dynamic(
@@ -13,7 +14,7 @@ const HistoricalBars = dynamic(
     import('../graphs/historical-bars.component').then(
       (module) => module.HistoricalBars,
     ),
-  { ssr: false },
+  { ssr: false, loading: ChartPlaceholder },
 )
 
 interface HistoricalStatisticsProps {

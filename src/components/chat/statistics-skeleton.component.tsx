@@ -26,6 +26,18 @@ const TabsGroup = styled.div`
   height: 50px;
 `
 
+// Charts are loaded with next/dynamic, so they arrive one chunk later than the
+// data. Without a placeholder of the chart's own height the card collapses to
+// its header for a few hundred milliseconds and then jumps back.
+export const ChartPlaceholder = () => (
+  <SkeletonBlock
+    role="progressbar"
+    aria-label="Loading chart"
+    $width="calc(100% - 40px)"
+    $height="400px"
+  />
+)
+
 export const StatisticsSkeleton = () => (
   <SkeletonCard>
     <Header>
@@ -37,6 +49,6 @@ export const StatisticsSkeleton = () => (
         <SkeletonBlock $width="min(180px, 30vw)" $height="24px" />
       </TabsGroup>
     </Header>
-    <SkeletonBlock $width="calc(100% - 40px)" $height="400px" />
+    <ChartPlaceholder />
   </SkeletonCard>
 )

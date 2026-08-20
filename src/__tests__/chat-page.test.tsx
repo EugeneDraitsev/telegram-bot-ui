@@ -39,6 +39,11 @@ describe('Chat Page', () => {
 
     expect(hooks.useChatData).toHaveBeenCalledWith('-1001', 'short-lived-token')
     expect(screen.getByRole('banner')).toBeInTheDocument()
+    // The charts are lazy chunks: until they land the card must hold its height
+    // with a placeholder instead of collapsing to its header.
+    expect(
+      screen.getAllByRole('progressbar', { name: 'Loading chart' }).length,
+    ).toBeGreaterThan(0)
     expect(await screen.findAllByText('Barchart')).toHaveLength(2)
     expect(await screen.findByText('Piechart')).toBeInTheDocument()
   })
@@ -57,6 +62,10 @@ describe('Chat Page', () => {
     )
 
     expect(screen.getByRole('banner')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'All chats' })).toHaveAttribute(
+      'href',
+      '/',
+    )
     expect(
       screen.getByRole('status', { name: 'Loading chat statistics' }),
     ).toBeInTheDocument()

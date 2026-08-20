@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 
 import { Tabs } from '@/components/tabs.component'
 import { GraphCard, Header, SubTitle, Title } from './chat.styles'
+import { ChartPlaceholder } from './statistics-skeleton.component'
 import type { DailyUserData } from '@/types'
 
 const DailyUsersBars = dynamic(
@@ -12,14 +13,14 @@ const DailyUsersBars = dynamic(
     import('../graphs/daily-users-bars.component').then(
       (module) => module.DailyUsersBars,
     ),
-  { ssr: false },
+  { ssr: false, loading: ChartPlaceholder },
 )
 const DailyUsersPie = dynamic(
   () =>
     import('../graphs/daily-users-pie.component').then(
       (module) => module.DailyUsersPie,
     ),
-  { ssr: false },
+  { ssr: false, loading: ChartPlaceholder },
 )
 
 interface LastDayStatisticsProps {
