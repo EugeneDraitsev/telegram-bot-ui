@@ -36,3 +36,13 @@ export type HistoricalData = {
   msgCount: number
   username: string
 }
+
+export type MessageCountRange = 'day' | 'week' | 'month' | 'year'
+
+export type MessageCountPoint = {
+  /** Bucket start, epoch milliseconds UTC. */
+  t: number
+  count: number
+}
+
+export type MessageCounts = Record<MessageCountRange, MessageCountPoint[]>

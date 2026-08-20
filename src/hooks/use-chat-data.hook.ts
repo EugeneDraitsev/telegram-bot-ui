@@ -2,12 +2,18 @@ import { useEffect, useState } from 'react'
 
 import { safeParse } from '@/utils'
 import { CONFIG } from '@/constants'
-import type { Chat, DailyUserData, HistoricalData } from '@/types'
+import type {
+  Chat,
+  DailyUserData,
+  HistoricalData,
+  MessageCounts,
+} from '@/types'
 
 export type ChatData = {
   chatInfo?: Chat
   usersData: DailyUserData[]
   historicalData?: HistoricalData[]
+  messageCounts?: MessageCounts
 }
 
 type ChatDataMessage = Partial<ChatData> & { error?: unknown }
@@ -75,6 +81,7 @@ export const useChatData = (
       const historicalData = Array.isArray(message.historicalData)
         ? message.historicalData
         : undefined
+      const messageCounts = message.messageCounts
       if (!message.chatInfo && !usersData && !historicalData) {
         setError(
           `Seems like we don't have any events for this chat (${chatId}) for last 24h`,
@@ -87,6 +94,7 @@ export const useChatData = (
         chatInfo: message.chatInfo ?? current.chatInfo,
         usersData: usersData ?? current.usersData,
         historicalData: historicalData ?? current.historicalData,
+        messageCounts: messageCounts ?? current.messageCounts,
       }))
     }
     socket.onerror = () => {
