@@ -7,9 +7,10 @@ const { MessageVolume } = await import(
   '../components/chat/message-volume.component'
 )
 
+// The last bucket is the current, partial one, exactly as the backend sends it.
 const series = (length: number, count: number, step: number) =>
   Array.from({ length }, (_, index) => ({
-    t: Date.UTC(2026, 7, 20) - (length - index) * step,
+    t: Date.UTC(2026, 7, 20) - (length - 1 - index) * step,
     count,
   }))
 
@@ -51,10 +52,29 @@ describe('message volume card', () => {
     expect(screen.getByText(new RegExp(total))).toBeInTheDocument()
   })
 
-  test('renders an empty card instead of failing without counts', () => {
+  test('ends on the current bucket rather than the previous one', () => {
+    const last = messageCounts.year[messageCounts.year.length - 1]
+
+    expect(last.t).toBe(Date.UTC(2026, 7, 20))
+  })
+
+  test('says the counts are unavailable rather than claiming zero', () => {
     renderVolume(undefined)
 
-    expect(screen.getByText(/0 messages/)).toBeInTheDocument()
+    expect(screen.getByText(/Data unavailable/)).toBeInTheDocument()
+    expect(screen.queryByText(/0 messages/)).not.toBeInTheDocument()
     expect(screen.getByRole('tab', { name: 'Day' })).toBeInTheDocument()
+  })
+
+  test('still reports a genuinely quiet chat as zero', () => {
+    renderVolume({
+      day: series(24, 0, HOUR),
+      week: series(7, 0, DAY),
+      month: series(30, 0, DAY),
+      year: series(12, 0, 30 * DAY),
+    })
+
+    expect(screen.getByText(/0 messages/)).toBeInTheDocument()
+    expect(screen.queryByText(/Data unavailable/)).not.toBeInTheDocument()
   })
 })
