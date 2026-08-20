@@ -98,6 +98,19 @@ describe('admin dashboard', () => {
     jest.useRealTimers()
   })
 
+  test('links every chat row to its own statistics page', () => {
+    render(<AdminDashboard initialData={initialData} updateChat={jest.fn()} />)
+
+    expect(screen.getByRole('link', { name: 'Alpha room' })).toHaveAttribute(
+      'href',
+      '/chat/-1001',
+    )
+    expect(screen.getByRole('link', { name: 'Beta room' })).toHaveAttribute(
+      'href',
+      '/chat/-1002',
+    )
+  })
+
   test('sends AI filters, sortable columns, and pagination to the URL', () => {
     const pagedData: AdminChatsResponse = {
       ...initialData,

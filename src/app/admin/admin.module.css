@@ -428,11 +428,57 @@
   object-fit: cover;
 }
 
-.chatDetails strong {
+@keyframes admin-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.skeleton {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #e6ebf1;
+  animation: admin-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.skeletonOnDark {
+  background: rgb(255 255 255 / 13%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
+.chatDetails strong,
+.chatLink {
   overflow: hidden;
   font-size: 13px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.chatLink {
+  color: inherit;
+  font-weight: 700;
+}
+
+.chatLink:hover {
+  color: var(--blue-dark);
+  text-decoration: underline;
+}
+
+.chatLink:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .chatDetails > span {

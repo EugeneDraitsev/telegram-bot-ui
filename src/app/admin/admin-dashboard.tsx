@@ -392,7 +392,13 @@ export function AdminDashboard({
                       )}
                     </span>
                     <span className={styles.chatDetails}>
-                      <strong>{chat.name}</strong>
+                      <Link
+                        className={styles.chatLink}
+                        href={`/chat/${encodeURIComponent(chat.chatId)}`}
+                        title={`Open ${chat.name} statistics`}
+                      >
+                        {chat.name}
+                      </Link>
                       <span>
                         {chat.username ? `@${chat.username} · ` : ''}
                         <b>{chat.type ?? 'chat'}</b>
