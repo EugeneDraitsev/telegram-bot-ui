@@ -26,9 +26,11 @@ const ErrorWrapper = styled(Wrapper)`
 export function ChatDashboard({
   chatId,
   accessToken,
+  hasPhoto,
 }: {
   chatId: string
   accessToken: string
+  hasPhoto?: boolean
 }) {
   const { loading, data, error } = useChatData(chatId, accessToken)
   const { chatInfo, usersData, historicalData } = data
@@ -37,7 +39,12 @@ export function ChatDashboard({
 
   return (
     <>
-      <ChatInfo data={chatInfo} loading={loading} />
+      <ChatInfo
+        data={chatInfo}
+        loading={loading}
+        chatId={chatId}
+        hasPhoto={hasPhoto}
+      />
       <Wrapper>
         {loading ? (
           <Container role="status" aria-label="Loading chat statistics">

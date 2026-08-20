@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 
+import { getChatPhotoUrl } from '@/components/chat-avatar.component'
 import type {
   AdminChatPatch,
   AdminChatSortKey,
@@ -17,6 +18,7 @@ import styles from './admin.module.css'
 interface AdminDashboardProps {
   initialData: AdminChatsResponse
   updateChat: (input: AdminChatPatch) => Promise<AdminChatUpdateResult>
+  photos?: Record<string, boolean>
 }
 
 const dateFormatter = new Intl.DateTimeFormat('en-GB', {
@@ -107,6 +109,7 @@ function SortButton({
 export function AdminDashboard({
   initialData,
   updateChat,
+  photos = {},
 }: AdminDashboardProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -375,7 +378,18 @@ export function AdminDashboard({
                 <article className={styles.chatRow} key={chat.chatId}>
                   <div className={styles.chatIdentity}>
                     <span className={styles.chatAvatar} aria-hidden="true">
-                      {initials(chat.name)}
+                      {photos[chat.chatId] ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={getChatPhotoUrl(chat.chatId)}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          className={styles.chatAvatarImage}
+                        />
+                      ) : (
+                        initials(chat.name)
+                      )}
                     </span>
                     <span className={styles.chatDetails}>
                       <strong>{chat.name}</strong>

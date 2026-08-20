@@ -1,4 +1,5 @@
 export * from './card.component'
+export * from './chat-avatar.component'
 export * from './chat-info.component'
 export * from './spinner.component'
 export * from './tabs.component'

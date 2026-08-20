@@ -1,7 +1,9 @@
 import Link from 'next/link'
 
+import { ChatAvatar } from '@/components/chat-avatar.component'
 import { AdminApiError, getUserChats } from '@/lib/admin-api'
 import { getSessionToken } from '@/lib/admin-session'
+import { resolveChatPhotos } from '@/lib/telegram'
 import type { UserChatsResponse } from '@/lib/admin-types'
 import styles from './home.module.css'
 
@@ -47,7 +49,13 @@ export function SignedOutHome({ expired = false }: { expired?: boolean }) {
   )
 }
 
-export function UserHome({ data }: { data: UserChatsResponse }) {
+export function UserHome({
+  data,
+  photos = {},
+}: {
+  data: UserChatsResponse
+  photos?: Record<string, boolean>
+}) {
   const name = displayName(data)
   return (
     <main className={styles.page}>
@@ -80,7 +88,15 @@ export function UserHome({ data }: { data: UserChatsResponse }) {
                 href={`/chat/${encodeURIComponent(chat.chatId)}`}
                 key={chat.chatId}
               >
-                <span className={styles.chatType}>{chat.type ?? 'chat'}</span>
+                <div className={styles.chatCardTop}>
+                  <ChatAvatar
+                    chatId={chat.chatId}
+                    name={chat.name}
+                    hasPhoto={photos[chat.chatId]}
+                    size={44}
+                  />
+                  <span className={styles.chatType}>{chat.type ?? 'chat'}</span>
+                </div>
                 <strong>{chat.name}</strong>
                 <span>
                   {chat.username ? `@${chat.username} · ` : ''}
@@ -119,5 +135,6 @@ export default async function IndexPage() {
     if (!(error instanceof AdminApiError) || error.status !== 401) throw error
   }
 
-  return data ? <UserHome data={data} /> : <SignedOutHome expired />
+  if (!data) return <SignedOutHome expired />
+  return <UserHome data={data} photos={await resolveChatPhotos(data.chats)} />
 }

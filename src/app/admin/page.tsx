@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 
 import { AdminApiError, getAdminChats } from '@/lib/admin-api'
 import { getSessionToken } from '@/lib/admin-session'
+import { resolveChatPhotos } from '@/lib/telegram'
 import type {
   AdminChatListOptions,
   AdminChatSortKey,
@@ -60,6 +61,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   }
 
   return (
-    <AdminDashboard initialData={data} updateChat={updateChatConfiguration} />
+    <AdminDashboard
+      initialData={data}
+      updateChat={updateChatConfiguration}
+      photos={await resolveChatPhotos(data.chats)}
+    />
   )
 }

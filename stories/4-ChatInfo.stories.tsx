@@ -14,7 +14,7 @@ export const ChatInfo = () => {
   }
   return (
     <>
-      <ChatInfoComponent data={chatInfo as Chat} />
+      <ChatInfoComponent data={chatInfo as Chat} chatId="-1001111472139" />
     </>
   )
 }
@@ -23,7 +23,7 @@ export const EdgeCaseChatInfo = () => {
   const chatInfo = {}
   return (
     <>
-      <ChatInfoComponent data={chatInfo as Chat} />
+      <ChatInfoComponent data={chatInfo as Chat} chatId="-1" />
     </>
   )
 }

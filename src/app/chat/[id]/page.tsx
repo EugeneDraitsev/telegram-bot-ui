@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import { AdminApiError, getChatAccess } from '@/lib/admin-api'
 import { getSessionToken } from '@/lib/admin-session'
+import { getChatPhotoFileId } from '@/lib/telegram'
 import styles from '../../home.module.css'
 import { ChatDashboard } from './chat-dashboard'
 
@@ -58,7 +59,13 @@ export default async function ChatPage({
   const access = (await searchParams).access
   const legacyAccessToken = Array.isArray(access) ? access[0] : access
   if (legacyAccessToken) {
-    return <ChatDashboard chatId={id} accessToken={legacyAccessToken} />
+    return (
+      <ChatDashboard
+        chatId={id}
+        accessToken={legacyAccessToken}
+        hasPhoto={Boolean(await getChatPhotoFileId(id))}
+      />
+    )
   }
 
   const sessionToken = await getSessionToken()
@@ -79,9 +86,13 @@ export default async function ChatPage({
   }
 
   if (accessDenied) return <ChatAccessMessage chatId={id} denied />
-  return accessToken ? (
-    <ChatDashboard chatId={id} accessToken={accessToken} />
-  ) : (
-    <ChatAccessMessage chatId={id} />
+  if (!accessToken) return <ChatAccessMessage chatId={id} />
+
+  return (
+    <ChatDashboard
+      chatId={id}
+      accessToken={accessToken}
+      hasPhoto={Boolean(await getChatPhotoFileId(id))}
+    />
   )
 }

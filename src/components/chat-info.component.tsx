@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
+import { ChatAvatar } from '@/components/chat-avatar.component'
 import { Chat } from '@/types'
 import { getChatName } from '@/utils'
 
@@ -8,11 +8,19 @@ interface ChatInfoProps {
   data?: Chat | null
   className?: string
   loading?: boolean
+  chatId: string
+  hasPhoto?: boolean
 }
 
 const placeholder = 'bg-neutral-400/50 animate-pulse'
 
-export const ChatInfo = ({ data, className, loading }: ChatInfoProps) => (
+export const ChatInfo = ({
+  data,
+  className,
+  loading,
+  chatId,
+  hasPhoto,
+}: ChatInfoProps) => (
   <header
     className={['flex justify-center w-full bg-neutral-300', className]
       .filter(Boolean)
@@ -25,12 +33,11 @@ export const ChatInfo = ({ data, className, loading }: ChatInfoProps) => (
             className={`shrink-0 w-[70px] h-[70px] rounded-full border-2 border-white ${placeholder}`}
           />
         ) : (
-          <Image
-            src="/favicon.png"
-            alt=""
-            width={70}
-            height={70}
-            className="shrink-0 rounded-full border-2 border-white"
+          <ChatAvatar
+            chatId={chatId}
+            name={getChatName(data)}
+            hasPhoto={hasPhoto}
+            size={70}
           />
         )}
         {/* The two placeholder rows are 24px and 20px tall on purpose: they
